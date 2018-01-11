@@ -2,7 +2,7 @@
   <div class='drink-snippet'>
     <img class='drink-snippet__thumb' :src="drink.strDrinkThumb" alt="">
     <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
-    <button class='drink-snippet__fav' :class="favoriteDrinkIds.indexOf(drink.idDrink) >= 0 ? 'favorite' : ''" @click='toggleFavoriteDrink'>&#x02606</button>
+    <span class='drink-snippet__fav' :class="isFavorite ? 'drink-snippet__fav--favorite' : ''" @click='toggleFavoriteDrink'></span>
   </div>
 </template>
 
@@ -20,7 +20,10 @@ export default {
     }
   },
   computed: mapState({
-    favoriteDrinkIds: state => state.favoriteDrinkIds
+    favoriteDrinkIds: state => state.favoriteDrinkIds,
+    isFavorite(state){
+      return state.favoriteDrinkIds.indexOf(this.drink.idDrink) >= 0
+    }
   }),
 }
 </script>
@@ -30,6 +33,15 @@ export default {
     width: 100px;
     height: 100px;
     background: #ccc;
+  }
+  .drink-snippet__fav{
+    cursor: pointer
+  }
+  .drink-snippet__fav::before{
+    content: '☆'
+  }
+  .drink-snippet__fav--favorite::before{
+    content: '★'
   }
 </style>
 

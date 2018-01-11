@@ -1,6 +1,7 @@
-# my-project
+# The Barmaid
+The Barmaid is a simple web application based on the Vue.js framework.
 
-> A Vue.js project
+ [TheCocktailDB API](http://www.thecocktaildb.com/api.php) is being used as a source of data to work with.
 
 ## Build Setup
 
@@ -14,5 +15,3 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).

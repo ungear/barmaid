@@ -48,7 +48,7 @@ export default {
         this.$emit('searchByIngredient', this.searchIngredient);
     }
   },
-  created(){
+  created: function(){
     getIngredients()
       .then(ingredients => this.ingredients = ingredients)
       .catch(function (error) {})

@@ -39,10 +39,8 @@ export default {
   },
   mounted(){
     getDrinkById(this.$route.params.id)
-      .then(response => {
-          this.drinkData = response.data.drinks && response.data.drinks.length
-            ? response.data.drinks[0]
-            : {};
+      .then(drink => {
+          this.drinkData = drink;
         })
         .catch(function (error) {
           debugger

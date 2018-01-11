@@ -4,8 +4,6 @@ const API_URL = 'http://www.thecocktaildb.com/api/json/v1/';
 const API_KEY = '1';
 const API_BASE_URL = API_URL + API_KEY + '/';
 
-const DATA_URL = '/cachedData/';
-
 var ingredientsCache;
 
 export const getDrinksByIngreidient = function(ingredient){
@@ -33,7 +31,7 @@ export const getIngredients = function(){
     return Promise.resolve(ingredientsCache)  
   }
   else{
-    let url = DATA_URL + 'ingredients.json';
+    let url = API_BASE_URL + 'list.php?i=list';
     return axios.get(url).then(response => {
       // save ingerients to cache to avoid multiple requests
       ingredientsCache = response.data.drinks

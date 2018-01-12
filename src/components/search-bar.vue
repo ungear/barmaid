@@ -16,7 +16,9 @@
     </div>
     <div class="search-bar__section">
       <div class="search-bar__header"></div>
-      <button class="search-bar__body search-bar__body--button" @click="onSearchBtnClick">Search</button>
+      <button class="search-bar__body search-bar__body--button" 
+        @click="isSearchButtonActive && onSearchBtnClick()"
+        :disabled='!isSearchButtonActive'>Search</button>
     </div>
   </div>
 </template>
@@ -28,10 +30,23 @@ export default {
   name: 'search-bar',
   data: function(){
     return{
-      searchName: '',
-      searchIngredient: '',
+      searchName: null,
+      searchIngredient: null,
       searchBy: 'name',
       ingredients: [],
+    }
+  },
+  computed:{
+    isSearchButtonActive(){
+      return this.searchBy === 'name'
+        ? !!this.searchName
+        : !!this.searchIngredient
+    }
+  },
+  watch:{
+    searchBy: function(newValue, oldValue){
+      if(newValue === 'name') this.searchIngredient = null
+      else this.searchName = null
     }
   },
   methods:{
@@ -68,7 +83,10 @@ export default {
       background: #eee;
     }
     &.search-bar__body--button{
-      cursor: pointer
+      cursor: pointer;
+      &:disabled{
+        cursor: not-allowed;
+      }
     }
   }
 </style>

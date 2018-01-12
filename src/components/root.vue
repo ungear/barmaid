@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-header></app-header>
-    <router-view></router-view>
+    <router-view id='main'></router-view>
     <footer>footer</footer>
   </div>
 </template>
@@ -17,8 +17,18 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  #app{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  #main{
+    flex: 1
+  }
+  footer{
+    background:#C9CCD4
+  }
 </style>
 
 

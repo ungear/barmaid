@@ -66,7 +66,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .search-bar{
     display: flex;
   }
@@ -76,11 +76,11 @@ export default {
   }
   .search-bar__switcher{}
   .search-bar__body{
-    border: 1px solid #ccc;
+    border: 1px solid #697180;
     display: block;
     height: 20px;
     &:disabled{
-      background: #eee;
+      background: #C9CCD4;
     }
     &.search-bar__body--button{
       cursor: pointer;

@@ -11,8 +11,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  header{
+    padding: 0.5em;
+    background: #148faa;
+    a{
+      color:#fff;
+      text-decoration: none;
+      font-weight: 900;
 
+    }
+    a + a {
+      margin-left: 0.5em;
+    }
+  }
 </style>
 
 

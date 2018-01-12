@@ -12,9 +12,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../colorScheme.scss';
   header{
     padding: 0.5em;
-    background: #148faa;
+    background: $blueMunsell;
     a{
       color:#fff;
       text-decoration: none;

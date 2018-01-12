@@ -18,6 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
+  @import '../colorScheme.scss';
   #app{
     display: flex;
     flex-direction: column;
@@ -27,7 +28,7 @@ export default {
     flex: 1
   }
   footer{
-    background:#C9CCD4
+    background:$lightGray
   }
 </style>
 

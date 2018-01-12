@@ -67,6 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../colorScheme.scss';
+
   .search-bar{
     display: flex;
   }
@@ -76,11 +78,11 @@ export default {
   }
   .search-bar__switcher{}
   .search-bar__body{
-    border: 1px solid #697180;
+    border: 1px solid $aurometalsaurus;
     display: block;
     height: 20px;
     &:disabled{
-      background: #C9CCD4;
+      background: $lightGray;
     }
     &.search-bar__body--button{
       cursor: pointer;

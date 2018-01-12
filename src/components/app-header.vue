@@ -1,5 +1,6 @@
 <template>
   <header>
+    <img :src="require('../assets/glass_n1_32.png')">
     <router-link :to="{name:'home'}">Home</router-link>
     <router-link :to="{name:'favorite'}">Favorite</router-link>
   </header>

@@ -1,8 +1,8 @@
 <template>
-  <header>
-    <img :src="require('../assets/glass_n1_32.png')">
-    <router-link :to="{name:'home'}">Home</router-link>
-    <router-link :to="{name:'favorite'}">Favorite</router-link>
+  <header class='header-row'>
+    <img class='header-row__item' :src="require('../assets/glass_n1_32.png')">
+    <router-link class='header-row__item' :to="{name:'home'}">Home</router-link>
+    <router-link class='header-row__item' :to="{name:'favorite'}">Favorite</router-link>
   </header>
 </template>
 
@@ -14,9 +14,15 @@ export default {
 
 <style lang="scss" scoped>
   @import '../colorScheme.scss';
-  header{
+  header.header-row{
     padding: 0.5em;
     background: $blueMunsell;
+    flex: 0 0 52px;
+    display: flex;
+    align-items: center;
+    .header-row__item{
+
+    }
     a{
       color:#fff;
       text-decoration: none;

@@ -25,7 +25,8 @@ export default {
     height: 100%;
   }
   #main{
-    flex: 1
+    flex: 1;
+    padding: 0.5em;
   }
   footer{
     background:$lightGray

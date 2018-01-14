@@ -1,8 +1,8 @@
 <template>
-<div class="">
-  <search-bar  @searchByName="searchByName" @searchByIngredient='searchByIngredient'></search-bar>
-  <results :collection="collection"></results>
-</div>
+  <div class="drink-searching">
+    <search-bar  @searchByName="searchByName" @searchByIngredient='searchByIngredient'></search-bar>
+    <results :collection="collection"></results>
+  </div>
 </template>
 
 <script>
@@ -44,6 +44,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

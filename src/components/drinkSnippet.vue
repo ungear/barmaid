@@ -29,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../colorScheme.scss';
   .drink-snippet{
     display: flex;
     align-items: center;
@@ -40,16 +41,23 @@ export default {
     }
     .drink-snippet__name{
       margin-left: 1em;
+      text-decoration: none;
+      color: #000;
+      &:hover{
+        color: $blueMunsell;
+      }
     }
     .drink-snippet__fav{
       margin-left: 0.5em;
       cursor: pointer;
+      font-size: 1.6em;
     }
     .drink-snippet__fav::before{
-      content: '☆'
+      content: '☆';
     }
     .drink-snippet__fav--favorite::before{
-      content: '★'
+      content: '★';
+      color: $gold;
     }
   }
  

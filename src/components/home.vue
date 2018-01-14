@@ -1,7 +1,8 @@
 <template>
   <div class="drink-searching">
-    <search-bar  @searchByName="searchByName" @searchByIngredient='searchByIngredient'></search-bar>
-    <results :collection="collection"></results>
+    <h3 class='drink-searching__title'>Search drinks</h3>
+    <search-bar class='drink-searching__searchbar' @searchByName="searchByName" @searchByIngredient='searchByIngredient'></search-bar>
+    <results class='drink-searching__results' :collection="collection"></results>
   </div>
 </template>
 
@@ -45,5 +46,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.drink-searching{
+  .drink-searching__searchbar{
+    margin-top: 0.5em;
+  }
+  .drink-searching__results{
+    margin-top:1em;
+  }
+}
 </style>

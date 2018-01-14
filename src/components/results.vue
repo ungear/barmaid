@@ -1,6 +1,6 @@
 <template>
   <div class='found-drinks'>
-    <drink-snippet :drink="x" v-for="x in collection" v-bind:key="x.drinkId"></drink-snippet>
+    <drink-snippet class='found-drinks__item' :drink="x" v-for="x in collection" v-bind:key="x.drinkId"></drink-snippet>
   </div>
 </template>
 
@@ -17,8 +17,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .drink-snippet + .drink-snippet {
-    margin-top: 1em;
+  .found-drinks{
+    .found-drinks__item + .found-drinks__item {
+      margin-top: 1em;
+    }
   }
-
 </style>

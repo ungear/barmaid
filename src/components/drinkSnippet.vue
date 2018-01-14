@@ -28,21 +28,31 @@ export default {
 }
 </script>
 
-<style>
-  .drink-snippet__thumb{
-    width: 100px;
-    height: 100px;
-    background: #ccc;
+<style lang="scss" scoped>
+  .drink-snippet{
+    display: flex;
+    align-items: center;
+    .drink-snippet__thumb{
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      border-radius: 50%
+    }
+    .drink-snippet__name{
+      margin-left: 1em;
+    }
+    .drink-snippet__fav{
+      margin-left: 0.5em;
+      cursor: pointer;
+    }
+    .drink-snippet__fav::before{
+      content: '☆'
+    }
+    .drink-snippet__fav--favorite::before{
+      content: '★'
+    }
   }
-  .drink-snippet__fav{
-    cursor: pointer
-  }
-  .drink-snippet__fav::before{
-    content: '☆'
-  }
-  .drink-snippet__fav--favorite::before{
-    content: '★'
-  }
+ 
 </style>
 
 

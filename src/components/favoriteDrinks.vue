@@ -29,8 +29,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .drink-snippet + .drink-snippet {
+    margin-top: 1em;
+  }
 </style>
 
 

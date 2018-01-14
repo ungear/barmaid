@@ -81,6 +81,7 @@ export default {
     border: 1px solid $aurometalsaurus;
     display: block;
     height: 20px;
+    background:$white;
     &:disabled{
       background: $lightGray;
     }

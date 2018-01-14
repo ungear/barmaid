@@ -26,10 +26,12 @@ export default {
   },
   methods:{
     searchByName: function(name){
+      this.collection = [];
       searchDrinksByName(name)
         .then(this._processSearchRequest.bind(this))
     },
     searchByIngredient: function(ing){
+      this.collection = [];
       searchDrinksByIng(ing)
         .then(this._processSearchRequest.bind(this))
     },

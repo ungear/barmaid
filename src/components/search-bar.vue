@@ -82,6 +82,7 @@ export default {
     display: block;
     height: 20px;
     background:$white;
+    transition: background-color 0.2s;
     &:disabled{
       background: $lightGray;
     }

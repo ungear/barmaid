@@ -1,8 +1,10 @@
 <template lang="html">
-  <div class="">
-    <h3>{{drinkData.strDrink}}</h3>
+  <div class="drink-details">
+    <div class='drink-details__header'>
+      <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
+      <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
+    </div>
     <img :src="drinkData.strDrinkThumb" width='200' height='200'>
-    <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
     <h4>Ingredients:</h4>
     <ul>
       <li v-for='ing in ingredients' v-if="ing.name">
@@ -64,5 +66,10 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss" scoped>
+.drink-details{
+  .drink-details__name{
+    display: inline-block
+  } 
+}
 </style>

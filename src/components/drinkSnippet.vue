@@ -2,20 +2,24 @@
   <div class='drink-snippet'>
     <img class='drink-snippet__thumb' :src="drink.strDrinkThumb" alt="">
     <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
-    <span class='drink-snippet__fav' :class="isFavorite ? 'drink-snippet__fav--favorite' : ''" @click='toggleFavoriteDrink'></span>
+    <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import FavoriteMark from './favorite-mark.vue'
 
 export default {
   name: 'drink-snippet',
+  components:{
+    FavoriteMark
+  },
   props:{
     drink: Object
   },
   methods:{
-    toggleFavoriteDrink(drinkId){
+    toggleFavorite(){
       this.$store.dispatch('toggleFavoriteDrink', this.drink.idDrink)
     }
   },
@@ -47,20 +51,7 @@ export default {
         color: $blueMunsell;
       }
     }
-    .drink-snippet__fav{
-      margin-left: 0.5em;
-      cursor: pointer;
-      font-size: 1.6em;
-    }
-    .drink-snippet__fav::before{
-      content: '☆';
-    }
-    .drink-snippet__fav--favorite::before{
-      content: '★';
-      color: $gold;
-    }
   }
- 
 </style>
 
 

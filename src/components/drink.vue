@@ -2,6 +2,7 @@
   <div class="">
     <h3>{{drinkData.strDrink}}</h3>
     <img :src="drinkData.strDrinkThumb" width='200' height='200'>
+    <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
     <h4>Ingredients:</h4>
     <ul>
       <li v-for='ing in ingredients' v-if="ing.name">
@@ -16,12 +17,21 @@
 
 <script>
 import { getDrinkById } from '../services/apiService';
+import { mapState } from 'vuex'
+import FavoriteMark from './favorite-mark.vue'
+
 export default {
   name: 'drink',
+  components:{
+    FavoriteMark
+  },
   data(){
     return {drinkData: {}}
   },
-  computed: {
+  computed: mapState({
+    isFavorite(state){
+      return state.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
+    }, 
     ingredients: function () {
       let ingrediantNamePrefix = 'strIngredient';
       let ingredientMeasurePrefix = 'strMeasure';
@@ -35,6 +45,11 @@ export default {
         }
       }
       return ings;
+    }
+  }),
+  methods:{
+    toggleFavorite(){
+      this.$store.dispatch('toggleFavoriteDrink', this.drinkData.idDrink)
     }
   },
   mounted(){

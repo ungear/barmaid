@@ -1,7 +1,9 @@
 <template>
   <div>
     <app-header></app-header>
-    <router-view id='main'></router-view>
+    <transition name="fade">
+      <router-view id='main'></router-view>
+    </transition>
     <footer>footer</footer>
   </div>
 </template>
@@ -30,6 +32,17 @@ export default {
   }
   footer{
     background:$lightGray
+  }
+
+  .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter-active{
+    transition: opacity .3s;
+    transition-delay: .4s; 
+  }
+  .fade-enter, .fade-leave-to{
+    opacity: 0;
   }
 </style>
 

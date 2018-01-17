@@ -16,6 +16,8 @@ export default {
 
 
 <style lang="scss" scoped>
+  @import '../colorScheme.scss';
+
   .spinner {
     width: 50px;
     height: 40px;
@@ -24,7 +26,7 @@ export default {
   }
 
   .spinner > div {
-    background-color: #333;
+    background-color: $lightGray;
     height: 100%;
     width: 6px;
     display: inline-block;

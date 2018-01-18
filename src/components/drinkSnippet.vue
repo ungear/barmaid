@@ -45,12 +45,16 @@ export default {
       background: #ccc;
       border-radius: 50%;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       .drink-snippet__thumb-image{
         width: 100px;
         height: 100px;
-        transition: transform .5s;
+        transition: width .5s, height .5s;
         &:hover{
-          transform: scale(1.5);
+          width: 120px;
+          height: 120px;
         }
       }
     }

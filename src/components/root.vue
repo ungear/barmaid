@@ -4,17 +4,18 @@
     <transition name="fade">
       <router-view id='main'></router-view>
     </transition>
-    <footer>footer</footer>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import AppHeader from './app-header.vue'
+import AppFooter from './app-footer.vue'
 
 export default {
   name: 'root',
   components:{
-    AppHeader,
+    AppHeader, AppFooter
   },
 }
 </script>

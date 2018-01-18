@@ -1,6 +1,8 @@
 <template>
   <div class='drink-snippet'>
-    <img class='drink-snippet__thumb' :src="drink.strDrinkThumb" alt="">
+    <div class='drink-snippet__thumb'>
+      <img class='drink-snippet__thumb-image' :src="drink.strDrinkThumb" alt="">
+    </div>
     <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
     <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
   </div>
@@ -41,7 +43,16 @@ export default {
       width: 100px;
       height: 100px;
       background: #ccc;
-      border-radius: 50%
+      border-radius: 50%;
+      overflow: hidden;
+      .drink-snippet__thumb-image{
+        width: 100px;
+        height: 100px;
+        transition: transform .5s;
+        &:hover{
+          transform: scale(1.5);
+        }
+      }
     }
     .drink-snippet__name{
       margin-left: 1em;

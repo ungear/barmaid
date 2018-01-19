@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-header></app-header>
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
       <router-view id='main'></router-view>
     </transition>
     <app-footer></app-footer>
@@ -35,12 +35,8 @@ export default {
     background:$lightGray
   }
 
-  .fade-leave-active {
+  .fade-leave-active, .fade-enter-active {
     transition: opacity .3s;
-  }
-  .fade-enter-active{
-    transition: opacity .3s;
-    transition-delay: .4s; 
   }
   .fade-enter, .fade-leave-to{
     opacity: 0;

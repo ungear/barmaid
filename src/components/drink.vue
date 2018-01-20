@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { getDrinkById } from '../services/apiService';
+import { getDrinkById, getIngredientByName } from '../services/apiService';
 import { mapState } from 'vuex'
 import FavoriteMark from './favorite-mark.vue'
 
@@ -28,7 +28,7 @@ export default {
     FavoriteMark
   },
   data(){
-    return {drinkData: {}}
+    return {drinkData: {}, detailedIngredients: []}
   },
   computed: mapState({
     isFavorite(state){
@@ -58,6 +58,9 @@ export default {
     getDrinkById(this.$route.params.id)
       .then(drink => {
           this.drinkData = drink;
+          this.ingredients.forEach(({name}) => {
+            getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
+          })
         })
         .catch(function (error) {
           debugger

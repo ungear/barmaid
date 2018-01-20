@@ -6,6 +6,13 @@
     </div>
     <img :src="drinkData.strDrinkThumb" width='200' height='200'>
     <h4>Ingredients:</h4>
+    <div class='ingredients-thumbs'>
+      <img v-for='dIng in detailedIngredients' 
+        class='ingredients-thumbs__thumb' 
+        :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.strIngredient + "-Small.png"'
+        :alt='dIng.strIngredient'
+        :title='dIng.strIngredient'/>
+    </div>
     <ul>
       <li v-for='ing in ingredients' v-if="ing.name">
         <span>{{ing.name}}</span>
@@ -73,6 +80,9 @@ export default {
 .drink-details{
   .drink-details__name{
     display: inline-block
-  } 
+  }
+  .ingredients-thumbs{
+    padding: 10px 0;
+  }
 }
 </style>

@@ -18,7 +18,7 @@ export default {
   computed: mapState({
     favoriteDrinkIds: state => state.favoriteDrinkIds,
     sortedFavoriteDrinks: function() {
-      return this.favoriteDrinks.sort(sortDrinksByName);
+      return this.favoriteDrinks//.sort(sortDrinksByName);
     }
   }),
   data: function(){ 

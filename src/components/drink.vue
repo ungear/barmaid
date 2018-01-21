@@ -19,7 +19,9 @@
         <span v-if="ing.measure"> - {{ing.measure}}</span>
       </li>
     </ul>
-    <h4>Instructions:</h4>
+    <h4>Glass</h4>
+    <p>{{drinkData.strGlass}}</p>
+    <h4>Instructions</h4>
     <p>{{drinkData.strInstructions}}</p>
   </div>
 </template>

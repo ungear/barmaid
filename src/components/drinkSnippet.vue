@@ -103,6 +103,7 @@ export default {
     .drink-snippet__name{
       text-decoration: none;
       color: #000;
+      font-weight: 700;
       &:hover{
         color: $blueMunsell;
       }

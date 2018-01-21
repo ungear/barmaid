@@ -3,22 +3,44 @@
     <div class='drink-snippet__thumb'>
       <img class='drink-snippet__thumb-image' :src="drink.strDrinkThumb" alt="">
     </div>
-    <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
-    <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
+    <div class='drink-snippet__info'>
+      <div class='drink-snippet__row'>
+        <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
+        <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
+      </div>
+      <div class='drink-snippet__row'>
+        <spinner class='drink-snippet__spinner'
+          v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
+        <span v-if='drinkDetails.strAlcoholic === "Alcoholic"'>A</span>
+        <span v-if='drinkDetails.strAlcoholic === "Non alcoholic"'>N</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import FavoriteMark from './favorite-mark.vue'
+import { getDrinkById } from '../services/apiService';
+import FavoriteMark from './favorite-mark.vue';
+import Spinner from './spinner.vue';
+
+const detailsLoadingStages = {
+  inProgress: 0,
+  loaded: 1,
+  failed: 2
+}
 
 export default {
   name: 'drink-snippet',
-  components:{
-    FavoriteMark
-  },
+  components:{ FavoriteMark, Spinner },
   props:{
     drink: Object
+  },
+  data: function(){
+    return {
+      drinkDetails: {},
+      currentDetailsLoadingStage: null
+    }
   },
   methods:{
     toggleFavorite(){
@@ -31,6 +53,14 @@ export default {
       return state.favoriteDrinkIds.indexOf(this.drink.idDrink) >= 0
     }
   }),
+  created(){ this.detailsLoadingStages = detailsLoadingStages},
+  mounted(){
+    this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
+    getDrinkById(this.drink.idDrink).then(drink => {
+      this.drinkDetails = drink;
+      this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
+    })
+  }
 }
 </script>
 
@@ -38,7 +68,6 @@ export default {
   @import '../colorScheme.scss';
   .drink-snippet{
     display: flex;
-    align-items: center;
     .drink-snippet__thumb{
       width: 100px;
       height: 100px;
@@ -58,8 +87,20 @@ export default {
         }
       }
     }
-    .drink-snippet__name{
+    .drink-snippet__info{
+      display: flex;
+      flex-direction: column;
       margin-left: 1em;
+      .drink-snippet__row{
+        display: flex;
+        height: 100%;
+        align-items: center;
+      }
+    }
+    .drink-snippet__spinner{
+      transform: scale(0.5);
+    }
+    .drink-snippet__name{
       text-decoration: none;
       color: #000;
       &:hover{

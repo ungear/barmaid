@@ -1,6 +1,6 @@
 <template>
   <div class='found-drinks'>
-    <drink-snippet class='found-drinks__item' :drink="x" v-for="x in collection" v-bind:key="x.drinkId"></drink-snippet>
+    <drink-snippet class='found-drinks__item' :drinkShort="x" v-for="x in collection" v-bind:key="x.drinkId"></drink-snippet>
   </div>
 </template>
 

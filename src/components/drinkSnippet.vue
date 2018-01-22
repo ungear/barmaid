@@ -1,11 +1,11 @@
 <template>
   <div class='drink-snippet'>
     <div class='drink-snippet__thumb'>
-      <img class='drink-snippet__thumb-image' :src="drink.strDrinkThumb" alt="">
+      <img class='drink-snippet__thumb-image' :src="drinkBaseData.strDrinkThumb" alt="">
     </div>
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
-        <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drink.idDrink}}'>{{drink.strDrink}}</router-link>
+        <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drinkBaseData.idDrink}}'>{{drinkBaseData.strDrink}}</router-link>
         <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
       </div>
       <div class='drink-snippet__row'>
@@ -36,7 +36,8 @@ export default {
   name: 'drink-snippet',
   components:{ FavoriteMark, Spinner },
   props:{
-    drink: Object
+    drinkShort: DrinkShort,
+    drinkFull: DrinkFull
   },
   data: function(){
     return {
@@ -46,29 +47,32 @@ export default {
   },
   methods:{
     toggleFavorite(){
-      this.$store.dispatch('toggleFavoriteDrink', this.drink.idDrink)
+      this.$store.dispatch('toggleFavoriteDrink', this.drinkBaseData.idDrink)
     }
   },
   computed: mapState({
+    drinkBaseData(){
+      let dataSource = this.drinkFull ? this.drinkFull : this.drinkShort;
+      return new DrinkShort(dataSource)
+    },
     favoriteDrinkIds: state => state.favoriteDrinkIds,
     isFavorite(state){
-      return state.favoriteDrinkIds.indexOf(this.drink.idDrink) >= 0
+      return state.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
     }
   }),
   created(){
-    let gotShortDrinkModel = this.drink instanceof DrinkShort;
-    let gotFullDrinkModel = this.drink instanceof DrinkFull;
-    if(!gotShortDrinkModel && !gotFullDrinkModel){
-      throw new TypeError('Passed Drink object is neither Short nor Full Drink')
-    }
-    this.detailsLoadingStages = detailsLoadingStages
-  },
-  mounted(){
-    this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
-    getDrinkById(this.drink.idDrink).then(drink => {
-      this.drinkDetails = drink;
+    this.detailsLoadingStages = detailsLoadingStages;
+    if(this.drinkFull){
+      this.drinkDetails = this.drinkFull;
       this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
-    })
+    }
+    else {
+      this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
+      getDrinkById(this.drinkBaseData.idDrink).then(drink => {
+        this.drinkDetails = new DrinkFull(drink);
+        this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
+      })
+    }
   }
 }
 </script>

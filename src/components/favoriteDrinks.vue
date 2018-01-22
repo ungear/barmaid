@@ -2,7 +2,7 @@
   <div class='found-drinks'>
     <h3>Your favorite drinks:</h3>
     <div class='found-drinks__list'>
-      <drink-snippet :drink="x" v-for="x in sortedFavoriteDrinks" v-bind:key="x.drinkId"></drink-snippet>
+      <drink-snippet :drinkFull="x" v-for="x in sortedFavoriteDrinks" v-bind:key="x.drinkId"></drink-snippet>
     </div>
   </div>
 </template>

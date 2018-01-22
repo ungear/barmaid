@@ -2,7 +2,7 @@
   <div class='found-drinks'>
     <h3>Your favorite drinks:</h3>
     <div class='found-drinks__list'>
-      <drink-snippet :drinkFull="x" v-for="x in sortedFavoriteDrinks" v-bind:key="x.drinkId"></drink-snippet>
+      <drink-snippet :drinkFull="x" v-for="x in sortedFavoriteDrinks" v-bind:key="x.idDrink"></drink-snippet>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   computed: mapState({
     favoriteDrinkIds: state => state.favoriteDrinkIds,
     sortedFavoriteDrinks: function() {
-      return this.favoriteDrinks//.sort(sortDrinksByName);
+      return this.favoriteDrinks.sort(sortDrinksByName);
     }
   }),
   data: function(){ 

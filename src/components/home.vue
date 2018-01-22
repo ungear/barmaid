@@ -13,6 +13,7 @@ import SearchBar from './search-bar.vue';
 import Results from './results.vue';
 import Spinner from './spinner.vue';
 import { searchDrinksByName, searchDrinksByIng } from '../services/apiService';
+import {DrinkShort} from '../models/drinkShort';
 
 const searchingStages = {
   noResults: 0,
@@ -54,7 +55,7 @@ export default {
     _processSearchRequest(response){
       this.searchingInProgress = false;
       this.collection = response.data.drinks
-        ? response.data.drinks
+        ? response.data.drinks.map(x => new DrinkShort(x))
         : [];
       
       this.currentSearchingStage = this.collection.length

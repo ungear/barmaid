@@ -23,6 +23,8 @@ import { mapState } from 'vuex'
 import { getDrinkById } from '../services/apiService';
 import FavoriteMark from './favorite-mark.vue';
 import Spinner from './spinner.vue';
+import {DrinkShort} from '../models/drinkShort';
+import {DrinkFull} from '../models/drinkFull';
 
 const detailsLoadingStages = {
   inProgress: 0,
@@ -53,7 +55,14 @@ export default {
       return state.favoriteDrinkIds.indexOf(this.drink.idDrink) >= 0
     }
   }),
-  created(){ this.detailsLoadingStages = detailsLoadingStages},
+  created(){
+    let gotShortDrinkModel = this.drink instanceof DrinkShort;
+    let gotFullDrinkModel = this.drink instanceof DrinkFull;
+    if(!gotShortDrinkModel && !gotFullDrinkModel){
+      throw new TypeError('Passed Drink object is neither Short nor Full Drink')
+    }
+    this.detailsLoadingStages = detailsLoadingStages
+  },
   mounted(){
     this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
     getDrinkById(this.drink.idDrink).then(drink => {

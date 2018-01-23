@@ -11,8 +11,7 @@
       <div class='drink-snippet__row'>
         <spinner class='drink-snippet__spinner'
           v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
-        <span v-if='drinkDetails.strAlcoholic === "Alcoholic"'>A</span>
-        <span v-if='drinkDetails.strAlcoholic === "Non alcoholic"'>N</span>
+        <span v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>{{drinkDetails.strAlcoholic[0]}}</span>
       </div>
     </div>
   </div>

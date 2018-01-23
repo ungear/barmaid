@@ -14,10 +14,15 @@
         <div 
           class='drink-snippet__alc-type-icon'
           v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>{{drinkDetails.strAlcoholic[0]}}</div>
-        <span v-for='(ing, key) in drinkDetails.ingredients' 
-          class='drink-snippet__ingredient-tag'
-          :key='ing.name'
-          v-if='key <= 2'>{{ing.name}}</span>
+        <div class='drink-snippet__ingredients'>
+          <div class="ingredients-list">
+            <span v-for='(ing, key) in drinkDetails.ingredients' 
+              class='ingredients-list__tag'
+              :key='ing.name'
+              >{{ing.name}}</span>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -89,6 +94,7 @@ export default {
     .drink-snippet__thumb{
       width: 100px;
       height: 100px;
+      flex: 0 0 auto;
       background: #ccc;
       border-radius: 50%;
       overflow: hidden;
@@ -122,6 +128,7 @@ export default {
       text-decoration: none;
       color: #000;
       font-weight: 700;
+      font-size: 1.3em;
       &:hover{
         color: $blueMunsell;
       }
@@ -134,22 +141,29 @@ export default {
       display: inline-block;
       width: 20px;
       height: 20px;
+      flex: 0 0 20px;
       font-size:0.8em;
       text-align: center;
     }
-    .drink-snippet__ingredient-tag{
-      display: inline-block;
-      border: 1px solid black;
-      border-radius: 5px;
-      background: #ccc;
-      padding: 0px 3px;
-    }
-    .drink-snippet__ingredient-tag + .drink-snippet__ingredient-tag{
+    .drink-snippet__ingredients{
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: hidden;
       margin-left: 10px;
     }
-    .drink-snippet__ingredient-tag:first-of-type{
-      margin-left: 10px;
-
+    .ingredients-list{   
+      display: flex;
+      flex: 1 0 auto;
+      .ingredients-list__tag{
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 5px;
+        background: #ccc;
+        padding: 0px 3px;
+      }
+      .ingredients-list__tag + .ingredients-list__tag{
+        margin-left: 10px;
+      }
     }
   }
 </style>

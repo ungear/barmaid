@@ -18,6 +18,9 @@ export default {
 
 <style lang="scss" scoped>
   .found-drinks{
+    .found-drinks__item{
+      display: flex;
+    }
     .found-drinks__item + .found-drinks__item {
       margin-top: 1em;
     }

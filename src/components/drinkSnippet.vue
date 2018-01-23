@@ -11,7 +11,13 @@
       <div class='drink-snippet__row'>
         <spinner class='drink-snippet__spinner'
           v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
-        <span v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>{{drinkDetails.strAlcoholic[0]}}</span>
+        <div 
+          class='drink-snippet__alc-type-icon'
+          v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>{{drinkDetails.strAlcoholic[0]}}</div>
+        <span v-for='(ing, key) in drinkDetails.ingredients' 
+          class='drink-snippet__ingredient-tag'
+          :key='ing.name'
+          v-if='key <= 2'>{{ing.name}}</span>
       </div>
     </div>
   </div>
@@ -119,6 +125,31 @@ export default {
       &:hover{
         color: $blueMunsell;
       }
+    }
+    .drink-snippet__alc-type-icon{
+      border: 1px solid black;
+      border-radius: 50%;
+      background: #ccc;
+      padding: 3px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      font-size:0.8em;
+      text-align: center;
+    }
+    .drink-snippet__ingredient-tag{
+      display: inline-block;
+      border: 1px solid black;
+      border-radius: 5px;
+      background: #ccc;
+      padding: 0px 3px;
+    }
+    .drink-snippet__ingredient-tag + .drink-snippet__ingredient-tag{
+      margin-left: 10px;
+    }
+    .drink-snippet__ingredient-tag:first-of-type{
+      margin-left: 10px;
+
     }
   }
 </style>

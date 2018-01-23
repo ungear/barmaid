@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {DrinkFull} from '../models/drinkFull';
 
 const API_URL = 'http://www.thecocktaildb.com/api/json/v1/';
 const API_KEY = '1';
@@ -23,7 +24,7 @@ export const searchDrinksByIng = function(ing){
 
 export const getDrinkById = function(id){
   let url = API_BASE_URL + 'lookup.php?i=' + id;
-  return axios.get(url).then(response => response.data.drinks[0]);
+  return axios.get(url).then(response => new DrinkFull(response.data.drinks[0]));
 }
 
 export const getIngredients = function(){

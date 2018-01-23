@@ -11,7 +11,6 @@
 import { mapState } from 'vuex'
 import DrinkSnippet from './drinkSnippet.vue'
 import { getDrinkById } from '../services/apiService';
-import {DrinkFull} from '../models/drinkFull';
 
 export default {
   name: 'favoriteDrinks',
@@ -29,8 +28,8 @@ export default {
   },
   created: function(){
     this.favoriteDrinkIds.forEach(id => {
-      getDrinkById(id).then(drink => { 
-        this.favoriteDrinks.push(new DrinkFull(drink))
+      getDrinkById(id).then(drinkFull => { 
+        this.favoriteDrinks.push(drinkFull)
       })
     })
   }

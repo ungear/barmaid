@@ -67,8 +67,8 @@ export default {
     }
     else {
       this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
-      getDrinkById(this.drinkBaseData.idDrink).then(drink => {
-        this.drinkDetails = new DrinkFull(drink);
+      getDrinkById(this.drinkBaseData.idDrink).then(drinkFull => {
+        this.drinkDetails = drinkFull;
         this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
       })
     }

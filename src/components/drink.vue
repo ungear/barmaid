@@ -14,7 +14,7 @@
         :title='dIng.strIngredient'/>
     </div>
     <ul>
-      <li v-for='ing in ingredients' v-if="ing.name">
+      <li v-for='ing in drinkData.ingredients' v-if="ing.name">
         <span>{{ing.name}}</span>
         <span v-if="ing.measure"> - {{ing.measure}}</span>
       </li>
@@ -42,20 +42,6 @@ export default {
   computed: mapState({
     isFavorite(state){
       return state.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
-    }, 
-    ingredients: function () {
-      let ingrediantNamePrefix = 'strIngredient';
-      let ingredientMeasurePrefix = 'strMeasure';
-      let ings = [];
-      for(let i = 1; i <= 15; i++ ){
-        if(this.drinkData[ingrediantNamePrefix + i]){
-          ings.push({
-            name: this.drinkData[ingrediantNamePrefix + i].trim(),
-            measure: this.drinkData[ingredientMeasurePrefix + i].trim(),
-          })
-        }
-      }
-      return ings;
     }
   }),
   methods:{
@@ -63,11 +49,11 @@ export default {
       this.$store.dispatch('toggleFavoriteDrink', this.drinkData.idDrink)
     }
   },
-  mounted(){
+  created(){
     getDrinkById(this.$route.params.id)
-      .then(drink => {
-          this.drinkData = drink;
-          this.ingredients.forEach(({name}) => {
+      .then(drinkFullModel => {
+          this.drinkData = drinkFullModel;
+          this.drinkData.ingredients.forEach(({name}) => {
             getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
           })
         })

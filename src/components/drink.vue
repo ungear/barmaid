@@ -13,7 +13,7 @@
         :alt='dIng.strIngredient'
         :title='dIng.strIngredient'/>
     </div>
-    <ul>
+    <ul class='ingredients-list'>
       <li v-for='ing in drinkData.ingredients' v-if="ing.name">
         <span>{{ing.name}}</span>
         <span v-if="ing.measure"> - {{ing.measure}}</span>
@@ -71,6 +71,9 @@ export default {
   }
   .ingredients-thumbs{
     padding: 10px 0;
+  }
+  .ingredients-list{
+    margin-left: 20px;
   }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <app-header></app-header>
+    <app-header ></app-header>
     <transition name="fade" mode="out-in">
-      <router-view id='main'></router-view>
+      <router-view id='main' class='container'></router-view>
     </transition>
     <app-footer></app-footer>
   </div>
@@ -40,6 +40,11 @@ export default {
   }
   .fade-enter, .fade-leave-to{
     opacity: 0;
+  }
+
+  .container{
+    width: 800px;
+    margin: auto;
   }
 </style>
 

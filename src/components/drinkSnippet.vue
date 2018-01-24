@@ -21,7 +21,6 @@
               :key='ing.name'
               >{{ing.name}}</span>
           </div>
-          <div class='drink-snippet__ingredients-shadow'></div>
         </div>
       </div>
     </div>
@@ -152,28 +151,18 @@ export default {
       flex-wrap: nowrap;
       overflow: hidden;
       margin-left: 10px;
-      position: relative;
       width: 100%;
-      .drink-snippet__ingredients-shadow{
-        position: absolute;
-        right: 0;
-        width: 50px;
-        height: 100%;
-        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-      }
     }
     .ingredients-list{   
-      display: flex;
-      flex: 1 0 auto;
+      // display: flex;
+      // flex: 1 0 auto;
       .ingredients-list__tag{
         display: inline-block;
         border: 1px solid black;
         border-radius: 5px;
         background: #ccc;
         padding: 0px 3px;
-      }
-      .ingredients-list__tag + .ingredients-list__tag{
-        margin-left: 10px;
+        margin: 5px 10px 0 0;
       }
     }
   }

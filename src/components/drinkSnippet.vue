@@ -13,7 +13,9 @@
           v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
         <div 
           class='drink-snippet__alc-type-icon'
-          v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>{{drinkDetails.strAlcoholic[0]}}</div>
+          v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>
+          <span>{{drinkDetails.strAlcoholic[0]}}</span>
+        </div>
         <div class='drink-snippet__ingredients'>
           <div class="ingredients-list">
             <span v-for='(ing, key) in drinkDetails.ingredients' 
@@ -139,12 +141,12 @@ export default {
       border-radius: 50%;
       background: #ccc;
       padding: 3px;
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      flex: 0 0 20px;
+      display: flex;
+      height: 30px;
+      flex: 0 0 30px;
       font-size:0.8em;
-      text-align: center;
+      align-items: center;
+      justify-content: center;
     }
     .drink-snippet__ingredients{
       display: flex;
@@ -154,13 +156,11 @@ export default {
       width: 100%;
     }
     .ingredients-list{   
-      // display: flex;
-      // flex: 1 0 auto;
       .ingredients-list__tag{
         display: inline-block;
         border: 1px solid black;
         border-radius: 5px;
-        background: #ccc;
+        background: #eee;
         padding: 0px 3px;
         margin: 5px 10px 0 0;
       }

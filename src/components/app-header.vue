@@ -1,7 +1,7 @@
 <template>
   <header class='header-row'>
     <div class='container header__header-container'>
-      <router-link class='header-row__item' :to="{name:'home'}">Home</router-link>
+      <router-link class='header-row__item' :to="{name:'search'}">Search</router-link>
       <router-link class='header-row__item' :to="{name:'favorite'}">Favorite</router-link>
     </div>
   </header>

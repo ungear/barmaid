@@ -49,6 +49,8 @@ function sortDrinksByName(a,b){
     }
   }
   .drink-snippet + .drink-snippet {
+    padding-top: 1em;
+    border-top: 1px solid #ccc;
     margin-top: 1em;
   }
 </style>

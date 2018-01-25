@@ -183,7 +183,7 @@ export default {
         border: 1px solid black;
         border-radius: 5px;
         background: #eee;
-        padding: 0px 3px;
+        padding: 0px 7px;
         margin: 5px 10px 0 0;
       }
     }

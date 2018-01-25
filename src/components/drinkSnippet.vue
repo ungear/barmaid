@@ -21,7 +21,7 @@
           <div class="ingredients-list">
             <span v-for='(ing, key) in drinkDetails.ingredients' 
               class='ingredients-list__tag'
-              :key='ing.name'
+              :key='key'
               >{{ing.name}}</span>
           </div>
         </div>

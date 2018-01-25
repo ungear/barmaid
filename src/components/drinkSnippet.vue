@@ -13,6 +13,7 @@
           v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
         <div 
           class='drink-snippet__alc-type-icon'
+          :class='"drink-snippet__alc-type-icon--" + drinkDetails.strAlcoholic[0].toLowerCase()'
           v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>
           <span>{{drinkDetails.strAlcoholic[0]}}</span>
         </div>
@@ -90,6 +91,12 @@ export default {
 
 <style lang="scss" scoped>
   @import '../colorScheme.scss';
+  @import '../functions.scss';
+
+  $alcColor: red;
+  $nonAlcColor: green;
+  $optionalColor: orange;
+
   .drink-snippet{
     display: flex;
     .drink-snippet__thumb{
@@ -139,7 +146,6 @@ export default {
     .drink-snippet__alc-type-icon{
       border: 1px solid black;
       border-radius: 50%;
-      background: #ccc;
       padding: 3px;
       display: flex;
       height: 30px;
@@ -147,6 +153,22 @@ export default {
       font-size:0.8em;
       align-items: center;
       justify-content: center;
+      cursor: default;
+      &--a{
+        border-color: $alcColor;
+        background-color:tint($alcColor, 80%);
+        color: $alcColor;
+      }
+      &--n{
+        border-color: $nonAlcColor;
+        background-color:tint($nonAlcColor, 80%);
+        color: $nonAlcColor;
+      }
+      &--o{
+        border-color: $optionalColor;
+        background-color:tint($optionalColor, 80%);
+        color: $optionalColor;
+      }
     }
     .drink-snippet__ingredients{
       display: flex;

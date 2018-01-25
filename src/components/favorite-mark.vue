@@ -1,5 +1,8 @@
 <template>
-  <span class='favorite-mark' :class="isFavorite ? 'favorite-mark--favorite' : ''" @click='toggle'></span>
+  <span class='favorite-mark' 
+    :class="isFavorite ? 'favorite-mark--favorite' : ''" 
+    :title=title
+    @click='toggle'></span>
 </template>
 
 <script>
@@ -7,6 +10,13 @@ export default {
   name: 'favorite-mark',
   props:{
     isFavorite: Boolean
+  },
+  computed:{
+    title(){
+      return this.isFavorite
+        ? 'Delete from the Favorite list'
+        : 'Add to the Favotire list'
+    }
   },
   methods:{
     toggle(){

@@ -22,6 +22,7 @@ export default {
 
 <style lang="scss">
   @import '../colorScheme.scss';
+  @import '~normalize.css/normalize.css';
   #app{
     display: flex;
     flex-direction: column;

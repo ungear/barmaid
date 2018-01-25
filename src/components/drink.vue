@@ -50,7 +50,8 @@ export default {
     }
   },
   created(){
-    getDrinkById(this.$route.params.id)
+    let drinkId = this.$route.params.link.split('-')[0];
+    getDrinkById(drinkId)
       .then(drinkFullModel => {
           this.drinkData = drinkFullModel;
           this.drinkData.ingredients.forEach(({name}) => {

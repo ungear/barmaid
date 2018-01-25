@@ -5,7 +5,7 @@
     </div>
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
-        <router-link class='drink-snippet__name' :to='{name: "drink", params: {id: drinkBaseData.idDrink}}'>{{drinkBaseData.strDrink}}</router-link>
+        <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drinkBaseData.strDrink}}</router-link>
         <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
       </div>
       <div class='drink-snippet__row'>
@@ -70,6 +70,13 @@ export default {
     favoriteDrinkIds: state => state.favoriteDrinkIds,
     isFavorite(state){
       return state.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
+    },
+    drinkLinkString(){
+      console.log(this.drinkBaseData.strDrink)
+      return [
+        this.drinkBaseData.idDrink,
+        this.drinkBaseData.strDrink.toLowerCase().replace(/\s/g, '-')
+      ].join('-');
     }
   }),
   created(){

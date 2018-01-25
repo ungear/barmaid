@@ -8,7 +8,7 @@ const lazyFavoriteDrinks = () => import(/* webpackChunkName: "favoriteDrinks" */
 const routes = [
   { path: '/', name: 'search', component: Search },
   { path: '/favorite-drinks', name: 'favorite', component: lazyFavoriteDrinks },
-  { path: '/drink/:id', name: 'drink',component: Drink },
+  { path: '/drink/:link', name: 'drink',component: Drink },
   { path: '*', redirect: { name: 'home'} },
 ]
 export default new VueRouter({

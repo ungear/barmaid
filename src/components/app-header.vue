@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'app-header',
   computed: mapState({
-    favoriteDrinksnumber: state => state.favoriteDrinkIds.length
+    favoriteDrinksnumber: state => state.favorites.favoriteDrinkIds.length
   }),
 }
 </script>

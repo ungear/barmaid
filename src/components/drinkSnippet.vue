@@ -67,9 +67,9 @@ export default {
       let dataSource = this.drinkFull ? this.drinkFull : this.drinkShort;
       return new DrinkShort(dataSource)
     },
-    favoriteDrinkIds: state => state.favoriteDrinkIds,
+    favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
     isFavorite(state){
-      return state.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
+      return this.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
     },
     drinkLinkString(){
       return [

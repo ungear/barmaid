@@ -16,7 +16,7 @@ export default {
   name: 'favoriteDrinks',
   components: {DrinkSnippet},
   computed: mapState({
-    favoriteDrinkIds: state => state.favoriteDrinkIds,
+    favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
     sortedFavoriteDrinks: function() {
       return this.favoriteDrinks.sort(sortDrinksByName);
     }

@@ -41,7 +41,7 @@ export default {
   },
   computed: mapState({
     isFavorite(state){
-      return state.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
+      return state.favorites.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
     }
   }),
   methods:{

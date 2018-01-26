@@ -58,23 +58,22 @@ export default {
   },
   methods:{
     onSearchBtnClick: function(){
-      this.$store.dispatch('changeSearchingParams', {
-        name: this.searchName,
-        ingredient: this.searchIngredient,
+      this.$store.dispatch('startDrinkSearching', {
+        param: this.searchBy === SEARCH_BY.name ? this.searchName : this.searchIngredient,
         searchBy: this.searchBy
       })
-
-      if(this.searchBy === SEARCH_BY.name)
-        this.$emit('searchByName', this.searchName);
-      else
-        this.$emit('searchByIngredient', this.searchIngredient);
     }
   },
   created: function(){
-    this.searchName = this.searchingParamsState.name;
-    this.searchIngredient = this.searchingParamsState.ingredient;
+    this.searchName = this.searchingParamsState.searchBy === SEARCH_BY.name 
+      ? this.searchingParamsState.param
+      : null;
+    this.searchIngredient = this.searchingParamsState.searchBy === SEARCH_BY.ingredient 
+      ? this.searchingParamsState.param
+      : null;
     this.searchBy = this.searchingParamsState.searchBy;
     this.searchByTypes = SEARCH_BY;
+    
     getIngredients()
       .then(ingredients => this.ingredients = ingredients)
       .catch(function (error) {})

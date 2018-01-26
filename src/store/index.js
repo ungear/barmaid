@@ -9,8 +9,7 @@ Vue.use(Vuex)
 const state = {
   favoriteDrinkIds: favoriteDrinksStorage.getFavoriteDrinkIds(),
   searching:{ 
-    name: null, 
-    ingredient: null, 
+    param: null, 
     searchBy: SEARCH_BY.name,
     results: []
   }
@@ -29,8 +28,9 @@ const actions = {
     favoriteDrinksStorage.setFavoriteDrinkIds(state.favoriteDrinkIds)
   },
 
-  changeSearchingParams: ({ commit, state }, newParams)  => {
-    commit('changeSearchingParams', newParams)
+  startDrinkSearching: ({ commit, state }, {param, searchBy}) => {
+    console.log(param, searchBy)
+    commit('changeSearchingParams', {param, searchBy})
   }
   // increment: ({ commit }) => commit('increment'),
   // decrement: ({ commit }) => commit('decrement'),
@@ -57,11 +57,11 @@ const mutations = {
     let index = state.favoriteDrinkIds.indexOf(drinkId);
     if(index >= 0) state.favoriteDrinkIds.splice(index, 1)
   },
-  changeSearchingParams(state, newParams){
-    state.searching.name = newParams.name;
-    state.searching.ingredient = newParams.ingredient;
-    state.searching.searchBy = newParams.searchBy;
-  }
+  changeSearchingParams(state, {param, searchBy}){
+    state.searching.param = param;
+    state.searching.searchBy = searchBy;
+  },
+
   // increment (state) {
   //   state.count++
   // },
@@ -70,13 +70,14 @@ const mutations = {
   // }
 }
 
-// const getters = {
-//   evenOrOdd: state => state.count % 2 === 0 ? 'even' : 'odd'
-// }
+const getters = {
+  isSearchingByName: state => state.searching.searchBy === SEARCH_BY.name,
+  isSearchingByIngredient: state => state.searching.searchBy === SEARCH_BY.ingredient,
+}
 
 export default new Vuex.Store({
   state,
-  //getters,
+  getters,
   actions,
   mutations
 })

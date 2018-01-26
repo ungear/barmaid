@@ -5,8 +5,6 @@ const API_URL = 'http://www.thecocktaildb.com/api/json/v1/';
 const API_KEY = '1';
 const API_BASE_URL = API_URL + API_KEY + '/';
 
-var ingredientsCache;
-
 export const getDrinksByIngreidient = function(ingredient){
   let url = API_BASE_URL + 'filter.php?i=' + ingredient;
   return axios.get(url);
@@ -28,19 +26,10 @@ export const getDrinkById = function(id){
 }
 
 export const getIngredients = function(){
-  if(ingredientsCache){
-    return Promise.resolve(ingredientsCache)  
-  }
-  else{
-    let url = API_BASE_URL + 'list.php?i=list';
-    return axios.get(url).then(response => {
-      // save ingerients to cache to avoid multiple requests
-      ingredientsCache = response.data.drinks
-        ? response.data.drinks.map(i => capitalizeFirstLetter(i.strIngredient1)).sort()
-        : [];
-      return ingredientsCache;
-    });
-  }
+  let url = API_BASE_URL + 'list.php?i=list';
+  return axios.get(url).then(response => {
+    return response.data.drinks.map(i => capitalizeFirstLetter(i.strIngredient1)).sort();
+  });
 }
 
 export const getIngredientByName = function(name){

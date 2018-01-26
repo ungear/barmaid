@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { getIngredients } from '../services/apiService';
 import {SEARCH_BY} from '../consts/consts'
 import { mapState } from 'vuex'
 
@@ -38,11 +37,11 @@ export default {
       searchName: null,
       searchIngredient: null,
       searchBy: null,
-      ingredients: [],
     }
   },
   computed:mapState({
     searchingParamsState: state => state.searching,
+    ingredients: state => state.ingredients.flatNamesList,
     isSearchButtonActive(){
       return this.searchBy === SEARCH_BY.name
         ? !!this.searchName
@@ -51,6 +50,7 @@ export default {
   }),
   watch:{
     searchBy: function(newValue, oldValue){
+      // clean form feilds
       if(newValue === SEARCH_BY.name) this.searchIngredient = null
       else this.searchName = null
     }
@@ -72,10 +72,7 @@ export default {
       : null;
     this.searchBy = this.searchingParamsState.searchBy;
     this.searchByTypes = SEARCH_BY;
-
-    getIngredients()
-      .then(ingredients => this.ingredients = ingredients)
-      .catch(function (error) {})
+    this.$store.dispatch('getAllIngredients')
   }
 }
 

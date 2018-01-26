@@ -4,7 +4,10 @@
       <label class="search-bar__header search-bar__header--label">
         <input type="radio" name="search-by" v-model='searchBy' value="name"> by name
       </label>
-      <input class='search-bar__body search-bar__body--first' :disabled='searchBy !== "name"' v-model="searchName">
+      <input 
+        class='search-bar__body search-bar__body--first' 
+        :disabled='searchBy !== "name"' 
+        v-model="searchName">
     </div>
     <div class="search-bar__section">
       <label class="search-bar__header search-bar__header--label">
@@ -20,11 +23,14 @@
         @click="isSearchButtonActive && onSearchBtnClick()"
         :disabled='!isSearchButtonActive'>Search</button>
     </div>
+    {{searchingParamsState}}
   </div>
 </template>
 
 <script>
 import { getIngredients } from '../services/apiService';
+import {SEARCH_BY} from '../consts/consts'
+import { mapState } from 'vuex'
 
 export default {
   name: 'search-bar',
@@ -32,17 +38,18 @@ export default {
     return{
       searchName: null,
       searchIngredient: null,
-      searchBy: 'name',
+      searchBy: null,
       ingredients: [],
     }
   },
-  computed:{
+  computed:mapState({
+    searchingParamsState: state => state.searching,
     isSearchButtonActive(){
       return this.searchBy === 'name'
         ? !!this.searchName
         : !!this.searchIngredient
     }
-  },
+  }),
   watch:{
     searchBy: function(newValue, oldValue){
       if(newValue === 'name') this.searchIngredient = null
@@ -51,6 +58,12 @@ export default {
   },
   methods:{
     onSearchBtnClick: function(){
+      this.$store.dispatch('changeSearchingParams', {
+        name: this.searchName,
+        ingredient: this.searchIngredient,
+        searchBy: this.searchBy
+      })
+
       if(this.searchBy === 'name')
         this.$emit('searchByName', this.searchName);
       else
@@ -58,6 +71,9 @@ export default {
     }
   },
   created: function(){
+    this.searchName = this.searchingParamsState.name;
+    this.searchIngredient = this.searchingParamsState.ingredient;
+    this.searchBy = this.searchingParamsState.searchBy;
     getIngredients()
       .then(ingredients => this.ingredients = ingredients)
       .catch(function (error) {})

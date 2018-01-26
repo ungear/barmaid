@@ -1,7 +1,10 @@
 <template>
   <div class="drink-searching">
     <h3 class='drink-searching__title'>Search drinks</h3>
-    <search-bar class='drink-searching__searchbar' @searchByName="searchByName" @searchByIngredient='searchByIngredient'></search-bar>
+    <search-bar 
+      class='drink-searching__searchbar' 
+      @searchByName="searchByName" 
+      @searchByIngredient='searchByIngredient'></search-bar>
     <results v-if="currentSearchingStage == searchingStages.resultsFound" class='drink-searching__results' :collection="collection"></results>
     <spinner class='drink-searching__spinner' v-if="currentSearchingStage == searchingStages.searchingInProgress"></spinner>
     <span v-if="currentSearchingStage == searchingStages.noResults">No drinks</span>

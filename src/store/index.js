@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as favoriteDrinksStorage from '../services/favoriteDrinksService'
+import {SEARCH_BY} from '../consts/consts'
+
 
 Vue.use(Vuex)
 
 const state = {
-  favoriteDrinkIds: favoriteDrinksStorage.getFavoriteDrinkIds()
+  favoriteDrinkIds: favoriteDrinksStorage.getFavoriteDrinkIds(),
+  searching:{ 
+    name: null, 
+    ingredient: null, 
+    searchBy: SEARCH_BY.name,
+    results: []
+  }
 }
 
 const actions = {
@@ -21,6 +29,9 @@ const actions = {
     favoriteDrinksStorage.setFavoriteDrinkIds(state.favoriteDrinkIds)
   },
 
+  changeSearchingParams: ({ commit, state }, newParams)  => {
+    commit('changeSearchingParams', newParams)
+  }
   // increment: ({ commit }) => commit('increment'),
   // decrement: ({ commit }) => commit('decrement'),
   // incrementIfOdd ({ commit, state }) {
@@ -46,7 +57,11 @@ const mutations = {
     let index = state.favoriteDrinkIds.indexOf(drinkId);
     if(index >= 0) state.favoriteDrinkIds.splice(index, 1)
   },
-
+  changeSearchingParams(state, newParams){
+    state.searching.name = newParams.name;
+    state.searching.ingredient = newParams.ingredient;
+    state.searching.searchBy = newParams.searchBy;
+  }
   // increment (state) {
   //   state.count++
   // },

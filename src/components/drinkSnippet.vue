@@ -72,7 +72,6 @@ export default {
       return state.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
     },
     drinkLinkString(){
-      console.log(this.drinkBaseData.strDrink)
       return [
         this.drinkBaseData.idDrink,
         this.drinkBaseData.strDrink.toLowerCase().replace(/\s/g, '-')
@@ -103,7 +102,7 @@ export default {
   $alcColor: red;
   $nonAlcColor: green;
   $optionalColor: orange;
-
+  $tagColor: #555;
   .drink-snippet{
     display: flex;
     .drink-snippet__thumb{
@@ -187,11 +186,12 @@ export default {
     .ingredients-list{   
       .ingredients-list__tag{
         display: inline-block;
-        border: 1px solid black;
+        border: 1px solid $tagColor;
         border-radius: 5px;
         background: #eee;
         padding: 0px 7px;
         margin: 5px 10px 0 0;
+        color: $tagColor;
       }
     }
   }

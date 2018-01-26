@@ -23,7 +23,6 @@
         @click="isSearchButtonActive && onSearchBtnClick()"
         :disabled='!isSearchButtonActive'>Search</button>
     </div>
-    {{searchingParamsState}}
   </div>
 </template>
 
@@ -73,7 +72,7 @@ export default {
       : null;
     this.searchBy = this.searchingParamsState.searchBy;
     this.searchByTypes = SEARCH_BY;
-    
+
     getIngredients()
       .then(ingredients => this.ingredients = ingredients)
       .catch(function (error) {})

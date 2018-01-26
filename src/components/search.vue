@@ -1,13 +1,15 @@
 <template>
   <div class="drink-searching">
     <h3 class='drink-searching__title'>Search drinks</h3>
-    <search-bar 
-      class='drink-searching__searchbar' 
-      @searchByName="searchByName" 
-      @searchByIngredient='searchByIngredient'></search-bar>
-    <results v-if="currentSearchingStage == searchingStages.resultsFound" class='drink-searching__results' :collection="collection"></results>
-    <spinner class='drink-searching__spinner' v-if="currentSearchingStage == searchingStages.searchingInProgress"></spinner>
-    <span v-if="currentSearchingStage == searchingStages.noResults">No drinks</span>
+    <search-bar class='drink-searching__searchbar'></search-bar>
+    <results 
+      v-if="searchingStage == searchingStages.drinksFound" 
+      class='drink-searching__results' 
+      :collection="results"></results>
+    <spinner 
+      class='drink-searching__spinner' 
+      v-if="searchingStage == searchingStages.inProgress"></spinner>
+    <span v-if="searchingStage == searchingStages.noResults">No drinks</span>
   </div>
 </template>
 
@@ -15,57 +17,21 @@
 import SearchBar from './search-bar.vue';
 import Results from './results.vue';
 import Spinner from './spinner.vue';
-import { searchDrinksByName, searchDrinksByIng } from '../services/apiService';
-import {DrinkShort} from '../models/drinkShort';
-
-const searchingStages = {
-  noResults: 0,
-  searchingInProgress: 1,
-  resultsFound: 2,
-  initialStage: 3
-}
+import { DrinkShort } from '../models/drinkShort';
+import { mapState } from 'vuex'
+import { DRINK_SEARCHING_STAGES } from '../consts/consts'
 
 export default {
   name: 'home',
-  data(){
-    return {
-      currentSearchingStage: searchingStages.initialStage,
-      collection: []
-    };
-  },
   components:{ SearchBar, Results, Spinner},
-  computed: {
-    favoriteDrinks () {
-      return this.$store.state.favoriteDrinkIds
-    }
-  },
+  computed: mapState({
+    favoriteDrinks: state => state.favoriteDrinkIds,
+    searchingStage: state => state.searching.searchingStage,
+    results: state => state.searching.results
+  }),
   created(){
-    this.searchingStages = searchingStages;
+    this.searchingStages = DRINK_SEARCHING_STAGES;
   },
-  methods:{
-    searchByName: function(name){
-      this.collection = [];
-      this.currentSearchingStage = this.searchingStages.searchingInProgress;
-      searchDrinksByName(name)
-        .then(this._processSearchRequest.bind(this))
-    },
-    searchByIngredient: function(ing){
-      this.collection = [];
-      this.currentSearchingStage = this.searchingStages.searchingInProgress;
-      searchDrinksByIng(ing)
-        .then(this._processSearchRequest.bind(this))
-    },
-    _processSearchRequest(response){
-      this.searchingInProgress = false;
-      this.collection = response.data.drinks
-        ? response.data.drinks.map(x => new DrinkShort(x))
-        : [];
-      
-      this.currentSearchingStage = this.collection.length
-        ? this.searchingStages.resultsFound
-        : this.searchingStages.noResults
-    }
-  }
 }
 </script>
 

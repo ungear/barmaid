@@ -64,10 +64,10 @@ export default {
     }
   },
   created: function(){
-    this.searchName = this.searchingParamsState.searchBy === SEARCH_BY.name 
+    this.searchName = this.$store.getters.isSearchingByName 
       ? this.searchingParamsState.param
       : null;
-    this.searchIngredient = this.searchingParamsState.searchBy === SEARCH_BY.ingredient 
+    this.searchIngredient = this.$store.getters.isSearchingByIngredient 
       ? this.searchingParamsState.param
       : null;
     this.searchBy = this.searchingParamsState.searchBy;

@@ -13,9 +13,16 @@
       <label class="search-bar__header search-bar__header--label">
         <input type="radio" name="search-by" v-model='searchBy' :value="searchByTypes.ingredient"> by ingredient
       </label>
-      <select class='search-bar__body' :disabled='searchBy !== searchByTypes.ingredient' v-model='searchIngredient'>
+      <select 
+        class='search-bar__body' 
+        :disabled='searchBy !== searchByTypes.ingredient' 
+        v-model='searchIngredient'
+        v-if='getIngredientsStage === getIngredientsStages.dataReceived'>
         <option v-for="ing in ingredients" v-bind:value="ing" :key='ing'>{{ing}}</option>
       </select>
+      <spinner 
+        class='search-bar__body search-bar__body--spinner' 
+        v-if='getIngredientsStage === getIngredientsStages.inProgress'></spinner>
     </div>
     <div class="search-bar__section">
       <div class="search-bar__header"></div>
@@ -29,9 +36,12 @@
 <script>
 import {SEARCH_BY} from '../consts/consts'
 import { mapState } from 'vuex'
+import { GET_INGREDIENTS_STAGES } from '../consts/consts';
+import Spinner from './spinner.vue';
 
 export default {
   name: 'search-bar',
+  components: {Spinner}, 
   data: function(){
     return {
       searchName: null,
@@ -42,6 +52,7 @@ export default {
   computed:mapState({
     searchingParamsState: state => state.searching,
     ingredients: state => state.ingredients.flatNamesList,
+    getIngredientsStage: state => state.ingredients.gettingIngredientsStatus,
     isSearchButtonActive(){
       return this.searchBy === SEARCH_BY.name
         ? !!this.searchName
@@ -72,6 +83,7 @@ export default {
       : null;
     this.searchBy = this.searchingParamsState.searchBy;
     this.searchByTypes = SEARCH_BY;
+    this.getIngredientsStages = GET_INGREDIENTS_STAGES;
     this.$store.dispatch('getAllIngredients')
   }
 }
@@ -122,6 +134,11 @@ export default {
       &:disabled{
         cursor: not-allowed;
       }
+    }
+    &--spinner{
+      height: 30px !important;
+      width: 120px !important;
+      background: #eee;
     }
   }
 </style>

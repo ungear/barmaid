@@ -10,3 +10,10 @@ export const DRINK_SEARCHING_STAGES = {
   noResults: 3,
   failed: 4
 }
+
+export const GET_INGREDIENTS_STAGES = {
+  notStartedYet: 0,
+  inProgress: 1,
+  dataReceived: 2,
+  failed: 3
+}

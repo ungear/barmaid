@@ -1,14 +1,13 @@
 import VueRouter from 'vue-router'
 
-import Search from './components/search.vue'
-import Drink from './components/drink.vue'
-
+const lazySearching = () => import(/* webpackChunkName: "searching" */'./components/search.vue')
 const lazyFavoriteDrinks = () => import(/* webpackChunkName: "favoriteDrinks" */'./components/favoriteDrinks.vue')
+const lazyDrink = () => import(/* webpackChunkName: "drink" */'./components/drink.vue')
 
 const routes = [
-  { path: '/', name: 'search', component: Search },
+  { path: '/', name: 'search', component: lazySearching },
   { path: '/favorite-drinks', name: 'favorite', component: lazyFavoriteDrinks },
-  { path: '/drink/:link', name: 'drink',component: Drink },
+  { path: '/drink/:link', name: 'drink', component: lazyDrink },
   { path: '*', redirect: { name: 'search'} },
 ]
 export default new VueRouter({

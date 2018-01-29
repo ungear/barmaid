@@ -8,8 +8,8 @@ const state = {
 
 const actions = {
   getAllIngredients:({ commit, state }) => {
-    commit('changeRequestStage', GET_INGREDIENTS_STAGES.inProgress)
     if(state.flatNamesList.length === 0){
+      commit('changeRequestStage', GET_INGREDIENTS_STAGES.inProgress)
       getIngredients()
         .then(ingredients => {
           commit('changeRequestStage', GET_INGREDIENTS_STAGES.dataReceived)

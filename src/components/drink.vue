@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="drink-details">
+  <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
       <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
       <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
@@ -31,18 +31,31 @@ import { getDrinkById, getIngredientByName } from '../services/apiService';
 import { mapState } from 'vuex'
 import FavoriteMark from './favorite-mark.vue'
 
+const drinkLoadingStages = {
+  inProgress: 1,
+  success: 2,
+  failed: 3
+}
+
 export default {
   name: 'drink',
   components:{
     FavoriteMark
   },
   data(){
-    return {drinkData: {}, detailedIngredients: []}
+    return {
+      drinkId: null, 
+      detailedIngredients: [],
+      currentDrinkLoadingStage: null
+    }
   },
   computed: mapState({
     isFavorite(state){
       return state.favorites.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
-    }
+    },
+    drinkData(state){
+      return state.drinks.fullData[this.drinkId];
+    },
   }),
   methods:{
     toggleFavorite(){
@@ -50,17 +63,23 @@ export default {
     }
   },
   created(){
-    let drinkId = this.$route.params.link.split('-')[0];
-    getDrinkById(drinkId)
-      .then(drinkFullModel => {
-          this.drinkData = drinkFullModel;
-          this.drinkData.ingredients.forEach(({name}) => {
-            getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
-          })
+    this.drinkId = this.$route.params.link.split('-')[0];
+    this.drinkLoadingStages = drinkLoadingStages;
+    if(this.drinkData){
+      this.currentDrinkLoadingStage = drinkLoadingStages.success;
+      this.drinkData.ingredients.forEach(({name}) => {
+        getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
+      })
+    } 
+    else{
+      this.currentDrinkLoadingStage = drinkLoadingStages.inProgress;
+      this.$store.dispatch('loadDrinkFullData', this.drinkId).then(() => {
+        this.currentDrinkLoadingStage = drinkLoadingStages.success;
+        this.drinkData.ingredients.forEach(({name}) => {
+          getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
         })
-        .catch(function (error) {
-          debugger
-        })
+      })
+    }
   }
 }
 </script>

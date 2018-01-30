@@ -1,6 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
 
+// a temporary solution to hide deprecation warnings caused by vue-loader
+// https://github.com/vuejs/vue-loader/issues/666
+process.noDeprecation = true;
+
 module.exports = {
   entry: './src/main.js',
   output: {

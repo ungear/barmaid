@@ -1,6 +1,6 @@
 <template>
   <div class='found-drinks'>
-    <drink-snippet class='found-drinks__item' :drinkShort="x" v-for="x in collection" v-bind:key="x.idDrink"></drink-snippet>
+    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in drinkIds" v-bind:key="x"></drink-snippet>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: 'results',
   components: {DrinkSnippet},
   props:{
-    collection: Array
+    drinkIds: Array
   },
 }
 </script>

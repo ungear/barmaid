@@ -2,7 +2,7 @@
   <div class='found-drinks'>
     <h3>Your favorite drinks:</h3>
     <div class='found-drinks__list'>
-      <drink-snippet :drinkFull="x" v-for="x in sortedFavoriteDrinks" v-bind:key="x.idDrink"></drink-snippet>
+      <drink-snippet :drinkId="x.idDrink" v-for="x in sortedFavoriteDrinks" v-bind:key="x.idDrink"></drink-snippet>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
   components: {DrinkSnippet},
   computed: mapState({
     favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
+    drinksFullData: state => state.drinks.fullData,
     sortedFavoriteDrinks: function() {
       return this.favoriteDrinks.slice().sort(sortDrinksByName);
     }
@@ -28,9 +29,13 @@ export default {
   },
   created: function(){
     this.favoriteDrinkIds.forEach(id => {
-      getDrinkById(id).then(drink => { 
-        this.favoriteDrinks.push(drink)
-      })
+      if(this.drinksFullData[id])
+        this.favoriteDrinks.push(this.drinksFullData[id])
+      else {
+        this.$store.dispatch('loadDrinkFullData', id).then((drink) => { 
+          this.favoriteDrinks.push(drink)
+        })
+      }
     })
   }
 }

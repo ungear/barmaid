@@ -1,25 +1,25 @@
 <template>
   <div class='drink-snippet'>
     <div class='drink-snippet__thumb'>
-      <img class='drink-snippet__thumb-image' :src="drinkBaseData.strDrinkThumb" alt="">
+      <img class='drink-snippet__thumb-image' :src="drinkShortData.strDrinkThumb" alt="">
     </div>
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
-        <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drinkBaseData.strDrink}}</router-link>
+        <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drinkShortData.strDrink}}</router-link>
         <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
       </div>
       <div class='drink-snippet__row'>
         <spinner class='drink-snippet__spinner'
-          v-if="currentDetailsLoadingStage == detailsLoadingStages.inProgress" ></spinner>
+          v-if="currentDetailsLoadingStage === detailsLoadingStages.inProgress" ></spinner>
         <div 
           class='drink-snippet__alc-type-icon'
-          :class='"drink-snippet__alc-type-icon--" + drinkDetails.strAlcoholic[0].toLowerCase()'
-          v-if='drinkDetails.strAlcoholic' :title='drinkDetails.strAlcoholic'>
-          <span>{{drinkDetails.strAlcoholic[0]}}</span>
+          :class='"drink-snippet__alc-type-icon--" + drinkFullData.strAlcoholic[0].toLowerCase()'
+          v-if='drinkFullData && drinkFullData.strAlcoholic' :title='drinkFullData.strAlcoholic'>
+          <span>{{drinkFullData.strAlcoholic[0]}}</span>
         </div>
-        <div class='drink-snippet__ingredients'>
+        <div class='drink-snippet__ingredients' v-if="drinkFullData">
           <div class="ingredients-list">
-            <span v-for='(ing, key) in drinkDetails.ingredients' 
+            <span v-for='(ing, key) in drinkFullData.ingredients' 
               class='ingredients-list__tag'
               :key='key'
               >{{ing.name}}</span>
@@ -36,7 +36,6 @@ import { getDrinkById } from '../services/apiService';
 import FavoriteMark from './favorite-mark.vue';
 import Spinner from './spinner.vue';
 import {DrinkShort} from '../models/drinkShort';
-import {DrinkFull} from '../models/drinkFull';
 
 const detailsLoadingStages = {
   inProgress: 0,
@@ -48,46 +47,44 @@ export default {
   name: 'drink-snippet',
   components:{ FavoriteMark, Spinner },
   props:{
-    drinkShort: DrinkShort,
-    drinkFull: DrinkFull
+    drinkId: String,
   },
   data: function(){
     return {
-      drinkDetails: {},
       currentDetailsLoadingStage: null
     }
   },
   methods:{
     toggleFavorite(){
-      this.$store.dispatch('toggleFavoriteDrink', this.drinkBaseData.idDrink)
+      this.$store.dispatch('toggleFavoriteDrink', this.drinkId)
     }
   },
   computed: mapState({
-    drinkBaseData(){
-      let dataSource = this.drinkFull ? this.drinkFull : this.drinkShort;
-      return new DrinkShort(dataSource)
+    drinkShortData(state){
+      return state.drinks.shortData[this.drinkId];
+    },
+    drinkFullData(state){
+      return state.drinks.fullData[this.drinkId];
     },
     favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
     isFavorite(state){
-      return this.favoriteDrinkIds.indexOf(this.drinkBaseData.idDrink) >= 0
+      return this.favoriteDrinkIds.indexOf(this.drinkId) >= 0
     },
     drinkLinkString(){
       return [
-        this.drinkBaseData.idDrink,
-        this.drinkBaseData.strDrink.toLowerCase().replace(/\s/g, '-')
+        this.drinkId,
+        this.drinkShortData.strDrink.toLowerCase().replace(/\s/g, '-')
       ].join('-');
     }
   }),
   created(){
     this.detailsLoadingStages = detailsLoadingStages;
-    if(this.drinkFull){
-      this.drinkDetails = this.drinkFull;
+    if(this.drinkFullData){
       this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
     }
     else {
       this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
-      getDrinkById(this.drinkBaseData.idDrink).then(drinkFull => {
-        this.drinkDetails = drinkFull;
+      this.$store.dispatch('loadDrinkFullData', this.drinkId).then(() => {
         this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
       })
     }

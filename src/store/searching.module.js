@@ -6,11 +6,11 @@ const state = {
   param: null, 
   searchBy: SEARCH_BY.name,
   searchingStage: DRINK_SEARCHING_STAGES.notStartedYet,
-  results: []
+  resultIds: []
 }
 
 const actions = {
-  startDrinkSearching: ({ commit, state }, {param, searchBy}) => {
+  startDrinkSearching: ({ commit, state, dispatch }, {param, searchBy}) => {
     commit('setDrinkSearchingFlag', DRINK_SEARCHING_STAGES.inProgress)
     commit('changeSearchingParams', {param, searchBy})
     commit('setDrinkSearchingResults', [])
@@ -23,7 +23,8 @@ const actions = {
       commit('setDrinkSearchingFlag', drinks.length === 0 
         ? DRINK_SEARCHING_STAGES.noResults
         : DRINK_SEARCHING_STAGES.drinksFound)
-      commit('setDrinkSearchingResults', drinks)
+      commit('setDrinkSearchingResults', drinks.map(d => d.idDrink))
+      drinks.forEach(d => dispatch('saveDrinkShortData', d))      
     })
     .catch(x => commit('setDrinkSearchingFlag', DRINK_SEARCHING_STAGES.failed))
   }
@@ -37,8 +38,8 @@ const mutations = {
   setDrinkSearchingFlag(state, newStage){
     state.searchingStage = newStage;
   },
-  setDrinkSearchingResults(state, results){
-    state.results = results;
+  setDrinkSearchingResults(state, resultIds){
+    state.resultIds = resultIds;
   }
 }
 

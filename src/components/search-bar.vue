@@ -6,8 +6,9 @@
       </label>
       <input 
         class='search-bar__body search-bar__body--first' 
-        :disabled='searchBy !== searchByTypes.name' 
-        v-model="searchName">
+        :disabled='!isSearchNameFieldEnabled' 
+        v-model="searchName"
+        :placeholder='isSearchNameFieldEnabled ? "Enter a drink name": ""'>
     </div>
     <div class="search-bar__section">
       <label class="search-bar__header search-bar__header--label">
@@ -57,6 +58,9 @@ export default {
       return this.searchBy === SEARCH_BY.name
         ? !!this.searchName
         : !!this.searchIngredient
+    },
+    isSearchNameFieldEnabled(){
+      return this.searchBy === this.searchByTypes.name;
     }
   }),
   watch:{

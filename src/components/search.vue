@@ -2,9 +2,9 @@
   <div class="drink-searching">
     <h3 class='drink-searching__title'>Search drinks</h3>
     <search-bar class='drink-searching__searchbar'></search-bar>
-    <results 
+    <drinks-list 
       v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'></results>
+      class='drink-searching__results'></drinks-list>
     <spinner 
       class='drink-searching__spinner' 
       v-if="searchingStage == searchingStages.inProgress"></spinner>
@@ -14,14 +14,14 @@
 
 <script>
 import SearchBar from './search-bar.vue';
-import Results from './results.vue';
+import DrinksList from './drinksList.vue';
 import Spinner from './spinner.vue';
 import { mapState } from 'vuex'
 import { DRINK_SEARCHING_STAGES } from '../consts/consts'
 
 export default {
   name: 'search',
-  components:{ SearchBar, Results, Spinner},
+  components:{ SearchBar, DrinksList, Spinner},
   computed: mapState({
     searchingStage: state => state.searching.searchingStage,
   }),

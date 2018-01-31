@@ -1,7 +1,14 @@
 <template>
   <div class='found-drinks'>
-    <div>Count: {{drinksRawData.length}}</div>
-    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in drinkIds" v-bind:key="x"></drink-snippet>
+    <div>
+      Sort by 
+      <select 
+        v-model='sortBy'>
+        <option value="name">Name</option>
+        <option value="type">Type</option>
+      </select>
+    </div>
+    <drink-snippet class='found-drinks__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
   </div>
 </template>
 
@@ -15,9 +22,19 @@ export default {
   props:{
     drinkIds: Array
   },
+  data: function(){
+    return {
+      sortBy: 'name'
+    }
+  },
   computed: mapState({
     drinksRawData(state){
       return this.drinkIds.map(x => state.drinks.fullData[x]).filter(x => x)
+    },
+    processedDrinksData(){
+      return this.sortBy === 'name'
+        ? this.drinksRawData.slice().sort(sortDrinksByName)
+        : this.drinksRawData.slice().sort(sortDrinksByTypeThenName)
     }
   }),
   created(){
@@ -27,6 +44,18 @@ export default {
       }
     })
   }
+}
+
+function sortDrinksByName(a,b){
+  if(a.strDrink < b.strDrink) return -1
+  else if (a.strDrink > b.strDrink) return 1
+  else return 0
+}
+
+function sortDrinksByTypeThenName(a,b){
+  if(a.strAlcoholic < b.strAlcoholic) return -1
+  else if (a.strAlcoholic > b.strAlcoholic) return 1
+  else return sortDrinksByName(a,b)
 }
 </script>
 

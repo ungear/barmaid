@@ -28,6 +28,7 @@ export default {
     }
   },
   computed: mapState({
+    drinksCache: state => state.drinks.fullData,
     drinksRawData(state){
       return this.drinkIds.map(x => state.drinks.fullData[x]).filter(x => x)
     },
@@ -39,7 +40,7 @@ export default {
   }),
   created(){
     this.drinkIds.forEach(id => {
-      if(!this.drinksRawData[id]){
+      if(!this.drinksCache[id]){
         this.$store.dispatch('loadDrinkFullData', id)
       }
     })

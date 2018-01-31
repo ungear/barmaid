@@ -4,8 +4,7 @@
     <search-bar class='drink-searching__searchbar'></search-bar>
     <results 
       v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results' 
-      :drinkIds="resultIds"></results>
+      class='drink-searching__results'></results>
     <spinner 
       class='drink-searching__spinner' 
       v-if="searchingStage == searchingStages.inProgress"></spinner>
@@ -17,7 +16,6 @@
 import SearchBar from './search-bar.vue';
 import Results from './results.vue';
 import Spinner from './spinner.vue';
-import { DrinkShort } from '../models/drinkShort';
 import { mapState } from 'vuex'
 import { DRINK_SEARCHING_STAGES } from '../consts/consts'
 
@@ -25,9 +23,7 @@ export default {
   name: 'home',
   components:{ SearchBar, Results, Spinner},
   computed: mapState({
-    favoriteDrinks: state => state.favoriteDrinkIds,
     searchingStage: state => state.searching.searchingStage,
-    resultIds: state => state.searching.resultIds
   }),
   created(){
     this.searchingStages = DRINK_SEARCHING_STAGES;

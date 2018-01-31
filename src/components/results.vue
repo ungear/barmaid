@@ -1,18 +1,19 @@
 <template>
   <div class='found-drinks'>
-    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in drinkIds" v-bind:key="x"></drink-snippet>
+    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in resultIds" v-bind:key="x"></drink-snippet>
   </div>
 </template>
 
 <script>
 import DrinkSnippet from './drinkSnippet.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'results',
   components: {DrinkSnippet},
-  props:{
-    drinkIds: Array
-  },
+  computed: mapState({
+    resultIds: state => state.searching.resultIds
+  }),
 }
 </script>
 

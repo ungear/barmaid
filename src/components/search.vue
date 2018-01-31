@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
 import { DRINK_SEARCHING_STAGES } from '../consts/consts'
 
 export default {
-  name: 'home',
+  name: 'search',
   components:{ SearchBar, Results, Spinner},
   computed: mapState({
     searchingStage: state => state.searching.searchingStage,

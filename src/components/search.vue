@@ -4,7 +4,8 @@
     <search-bar class='drink-searching__searchbar'></search-bar>
     <drinks-list 
       v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'></drinks-list>
+      class='drink-searching__results'
+      :drinkIds="resultIds"></drinks-list>
     <spinner 
       class='drink-searching__spinner' 
       v-if="searchingStage == searchingStages.inProgress"></spinner>
@@ -24,6 +25,7 @@ export default {
   components:{ SearchBar, DrinksList, Spinner},
   computed: mapState({
     searchingStage: state => state.searching.searchingStage,
+    resultIds: state => state.searching.resultIds
   }),
   created(){
     this.searchingStages = DRINK_SEARCHING_STAGES;

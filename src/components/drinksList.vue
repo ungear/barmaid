@@ -1,6 +1,7 @@
 <template>
   <div class='found-drinks'>
-    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in resultIds" v-bind:key="x"></drink-snippet>
+    <div>Count: {{drinksRawData.length}}</div>
+    <drink-snippet class='found-drinks__item' :drinkId="x" v-for="x in drinkIds" v-bind:key="x"></drink-snippet>
   </div>
 </template>
 
@@ -11,9 +12,21 @@ import { mapState } from 'vuex'
 export default {
   name: 'drinks-list',
   components: {DrinkSnippet},
+  props:{
+    drinkIds: Array
+  },
   computed: mapState({
-    resultIds: state => state.searching.resultIds
+    drinksRawData(state){
+      return this.drinkIds.map(x => state.drinks.fullData[x]).filter(x => x)
+    }
   }),
+  created(){
+    this.drinkIds.forEach(id => {
+      if(!this.drinksRawData[id]){
+        this.$store.dispatch('loadDrinkFullData', id)
+      }
+    })
+  }
 }
 </script>
 

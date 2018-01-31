@@ -49,11 +49,6 @@ export default {
   props:{
     drinkId: String,
   },
-  data: function(){
-    return {
-      currentDetailsLoadingStage: null
-    }
-  },
   methods:{
     toggleFavorite(){
       this.$store.dispatch('toggleFavoriteDrink', this.drinkId)
@@ -65,6 +60,11 @@ export default {
     },
     drinkFullData(state){
       return state.drinks.fullData[this.drinkId];
+    },
+    currentDetailsLoadingStage(){
+      return this.drinkFullData
+        ? this.detailsLoadingStages.loaded
+        : this.detailsLoadingStages.inProgress
     },
     favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
     isFavorite(state){
@@ -79,15 +79,6 @@ export default {
   }),
   created(){
     this.detailsLoadingStages = detailsLoadingStages;
-    if(this.drinkFullData){
-      this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
-    }
-    else {
-      this.currentDetailsLoadingStage = this.detailsLoadingStages.inProgress;
-      this.$store.dispatch('loadDrinkFullData', this.drinkId).then(() => {
-        this.currentDetailsLoadingStage = this.detailsLoadingStages.loaded;
-      })
-    }
   }
 }
 </script>

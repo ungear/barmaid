@@ -39,7 +39,7 @@ export default {
     margin-top: 0.5em;
   }
   .drink-searching__results{
-    margin-top:1em;
+    margin:1em 0;
   }
   .drink-searching__spinner{
     margin: 20px 0 0 20px;

@@ -1,6 +1,6 @@
 <template>
   <div class='favorite-drinks'>
-    <h3>Your favorite drinks:</h3>
+    <h3>Your favorite drinks</h3>
     <drinks-list
       class='favorite-drinks__list'
       :drinkIds="favoriteDrinkIds"></drinks-list>
@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
   .favorite-drinks{
     .favorite-drinks__list{
-      margin-top: 1em;
+      margin: 1em 0;
     }
   }
 </style>

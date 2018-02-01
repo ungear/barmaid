@@ -1,8 +1,8 @@
 <template>
-  <div class='found-drinks'>
+  <div class='favorite-drinks'>
     <h3>Your favorite drinks:</h3>
     <drinks-list
-      class='found-drinks__list'
+      class='favorite-drinks__list'
       :drinkIds="favoriteDrinkIds"></drinks-list>
   </div>
 </template>
@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .found-drinks{
-    .found-drinks__list{
+  .favorite-drinks{
+    .favorite-drinks__list{
       margin-top: 1em;
     }
   }

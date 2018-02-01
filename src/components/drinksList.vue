@@ -1,5 +1,5 @@
 <template>
-  <div class='found-drinks'>
+  <div class='drinks-list'>
     <div>
       Sort by 
       <select 
@@ -8,7 +8,7 @@
         <option value="type">Type</option>
       </select>
     </div>
-    <drink-snippet class='found-drinks__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
+    <drink-snippet class='drinks-list__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
   </div>
 </template>
 
@@ -61,12 +61,11 @@ function sortDrinksByTypeThenName(a,b){
 </script>
 
 <style lang="scss" scoped>
-  .found-drinks{
-    padding: 1em 0;
-    .found-drinks__item{
+  .drinks-list{
+    &__item{
       display: flex;
     }
-    .found-drinks__item + .found-drinks__item {
+    &__item + &__item {
       padding-top: 1em;
       border-top: 1px solid #ccc;
       margin-top: 1em;

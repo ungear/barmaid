@@ -19,7 +19,6 @@ export default {
 
 <style lang="scss" scoped>
   .found-drinks{
-    padding: 1em 0;
     .found-drinks__item{
       display: flex;
     }

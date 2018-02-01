@@ -9,7 +9,7 @@
           <option value="type">Type</option>
         </select>
       </div>
-      <div class='dashboard__section'>Filters</div>
+      <div class='dashboard__section'>Filters {{drinksAlcTypes}}</div>
     </div>
     <drink-snippet class='drinks-list__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
   </div>
@@ -39,6 +39,12 @@ export default {
       return this.sortBy === 'name'
         ? this.drinksRawData.slice().sort(sortDrinksByName)
         : this.drinksRawData.slice().sort(sortDrinksByTypeThenName)
+    },
+    drinksAlcTypes(){
+      return this.drinksRawData.reduce((uniqueArray, drink) => {
+        if(!uniqueArray.includes(drink.strAlcoholic))
+          uniqueArray.push(drink.strAlcoholic)
+        return uniqueArray}, [])
     }
   }),
   created(){

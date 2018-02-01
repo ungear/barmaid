@@ -9,25 +9,41 @@
           <option value="type">Type</option>
         </select>
       </div>
-      <div class='dashboard__section'>Filters {{drinksAlcTypes}}</div>
+      <div class='dashboard__section dashboard-filters'>
+        <span class='dashboard-filters__label'>Filters</span>
+        <drink-alc-type-icon 
+          class='dashboard-filters__type-icon'
+          :class="{ 'dashboard-filters__type-icon--inactive': hiddenTypes.includes(x)}"
+          @click.native='onTypeFilterClick(x)'
+          v-for='x in drinksAlcTypes'
+          :key='x'
+          :alcType='x'></drink-alc-type-icon>
+      </div>
     </div>
-    <drink-snippet class='drinks-list__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
+    <drink-snippet 
+      class='drinks-list__item'
+      :class="{'drinks-list__item--hidden': hiddenTypes.includes(x.strAlcoholic)}" 
+      :drinkId="x.idDrink" 
+      v-for="x in processedDrinksData" 
+      v-bind:key="x.idDrink"></drink-snippet>
   </div>
 </template>
 
 <script>
 import DrinkSnippet from './drinkSnippet.vue'
 import { mapState } from 'vuex'
+import DrinkAlcTypeIcon from './drinkAlcTypeIcon.vue';
 
 export default {
   name: 'drinks-list',
-  components: {DrinkSnippet},
+  components: {DrinkSnippet, DrinkAlcTypeIcon},
   props:{
     drinkIds: Array
   },
   data: function(){
     return {
-      sortBy: 'name'
+      sortBy: 'name',
+      hiddenTypes: []
     }
   },
   computed: mapState({
@@ -53,6 +69,16 @@ export default {
         this.$store.dispatch('loadDrinkFullData', id)
       }
     })
+  },
+  methods:{
+    onTypeFilterClick(type){
+      //toggle hidden types
+      let index = this.hiddenTypes.indexOf(type);
+      if(index >= 0)
+        this.hiddenTypes.splice(index, 1);
+      else
+        this.hiddenTypes.push(type);
+    }
   }
 }
 
@@ -79,12 +105,34 @@ function sortDrinksByTypeThenName(a,b){
       border-top: 1px solid #ccc;
       margin-top: 1em;
     }
+    .drinks-list__item--hidden{
+      display: none;
+    }
     .dashboard{
       display: flex;
       margin-bottom: 1em;
       .dashboard__section + .dashboard__section{
-        margin-left: 1em;
+        margin-left: 2em;
       };
+      .dashboard-filters{
+        display: flex;
+        height: 20px;
+        .dashboard-filters__label{
+          margin-right: 0.5em;
+        }
+        .dashboard-filters__type-icon{
+          width: 20px;
+          cursor: pointer;
+          user-select: none;
+          &--inactive{
+            filter: grayscale(100%) opacity(25%);
+          }
+        }
+        .dashboard-filters__type-icon +.dashboard-filters__type-icon{
+          margin-left: 0.5em;
+        }
+      }
+
     }
   }
 </style>

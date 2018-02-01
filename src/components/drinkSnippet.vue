@@ -11,12 +11,13 @@
       <div class='drink-snippet__row'>
         <spinner class='drink-snippet__spinner'
           v-if="currentDetailsLoadingStage === detailsLoadingStages.inProgress" ></spinner>
-        <div 
+        <drink-alc-type-icon class='drink-snippet__type-icon' :alcType='drinkFullData.strAlcoholic'></drink-alc-type-icon>
+        <!-- <div 
           class='drink-snippet__alc-type-icon'
           :class='"drink-snippet__alc-type-icon--" + drinkFullData.strAlcoholic[0].toLowerCase()'
           v-if='drinkFullData && drinkFullData.strAlcoholic' :title='drinkFullData.strAlcoholic'>
           <span>{{drinkFullData.strAlcoholic[0]}}</span>
-        </div>
+        </div> -->
         <div class='drink-snippet__ingredients' v-if="drinkFullData">
           <div class="ingredients-list">
             <span v-for='(ing, key) in drinkFullData.ingredients' 
@@ -36,6 +37,7 @@ import { getDrinkById } from '../services/apiService';
 import FavoriteMark from './favorite-mark.vue';
 import Spinner from './spinner.vue';
 import {DrinkShort} from '../models/drinkShort';
+import DrinkAlcTypeIcon from './drinkAlcTypeIcon.vue';
 
 const detailsLoadingStages = {
   inProgress: 0,
@@ -45,7 +47,7 @@ const detailsLoadingStages = {
 
 export default {
   name: 'drink-snippet',
-  components:{ FavoriteMark, Spinner },
+  components:{ FavoriteMark, Spinner, DrinkAlcTypeIcon },
   props:{
     drinkId: String,
   },
@@ -87,9 +89,7 @@ export default {
   @import '../colorScheme.scss';
   @import '../functions.scss';
 
-  $alcColor: red;
-  $nonAlcColor: green;
-  $optionalColor: orange;
+
   $tagColor: #555;
   .drink-snippet{
     display: flex;
@@ -137,32 +137,9 @@ export default {
         color: $blueMunsell;
       }
     }
-    .drink-snippet__alc-type-icon{
-      border: 1px solid black;
-      border-radius: 50%;
-      padding: 3px;
-      display: flex;
+    .drink-snippet__type-icon{
+      width: 30px;
       height: 30px;
-      flex: 0 0 30px;
-      font-size:0.8em;
-      align-items: center;
-      justify-content: center;
-      cursor: default;
-      &--a{
-        border-color: $alcColor;
-        background-color:tint($alcColor, 80%);
-        color: $alcColor;
-      }
-      &--n{
-        border-color: $nonAlcColor;
-        background-color:tint($nonAlcColor, 80%);
-        color: $nonAlcColor;
-      }
-      &--o{
-        border-color: $optionalColor;
-        background-color:tint($optionalColor, 80%);
-        color: $optionalColor;
-      }
     }
     .drink-snippet__ingredients{
       display: flex;

@@ -1,12 +1,15 @@
 <template>
   <div class='drinks-list'>
-    <div>
-      Sort by 
-      <select 
-        v-model='sortBy'>
-        <option value="name">Name</option>
-        <option value="type">Type</option>
-      </select>
+    <div class='dashboard'>
+      <div class='dashboard__section'>
+        Sort by 
+        <select 
+          v-model='sortBy'>
+          <option value="name">Name</option>
+          <option value="type">Type</option>
+        </select>
+      </div>
+      <div class='dashboard__section'>Filters</div>
     </div>
     <drink-snippet class='drinks-list__item' :drinkId="x.idDrink" v-for="x in processedDrinksData" v-bind:key="x.idDrink"></drink-snippet>
   </div>
@@ -69,6 +72,13 @@ function sortDrinksByTypeThenName(a,b){
       padding-top: 1em;
       border-top: 1px solid #ccc;
       margin-top: 1em;
+    }
+    .dashboard{
+      display: flex;
+      margin-bottom: 1em;
+      .dashboard__section + .dashboard__section{
+        margin-left: 1em;
+      };
     }
   }
 </style>

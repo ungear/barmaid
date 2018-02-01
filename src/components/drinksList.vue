@@ -17,7 +17,8 @@
           @click.native='onTypeFilterClick(x)'
           v-for='x in drinksAlcTypes'
           :key='x'
-          :alcType='x'></drink-alc-type-icon>
+          :alcType='x'
+          :title="hiddenTypes.includes(x) ? 'Show ' + x : 'Hide ' + x "></drink-alc-type-icon>
       </div>
     </div>
     <drink-snippet 

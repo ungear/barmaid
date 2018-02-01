@@ -61,7 +61,7 @@ export default {
       return this.drinksRawData.reduce((uniqueArray, drink) => {
         if(!uniqueArray.includes(drink.strAlcoholic))
           uniqueArray.push(drink.strAlcoholic)
-        return uniqueArray}, [])
+        return uniqueArray}, []).sort()
     }
   }),
   created(){

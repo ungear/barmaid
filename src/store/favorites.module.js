@@ -2,6 +2,7 @@ import * as favoriteDrinksStorage from '../services/favoriteDrinksService'
 
 const state = {
   favoriteDrinkIds: favoriteDrinksStorage.getFavoriteDrinkIds(),
+  dislikedDrinkIds: []
 }
 
 const actions = {
@@ -15,7 +16,13 @@ const actions = {
 
     // save to local storage
     favoriteDrinksStorage.setFavoriteDrinkIds(state.favoriteDrinkIds)
+  },
+  restoreDislikedDrinks:({commit, state}) => {
+    state.dislikedDrinkIds.forEach(id => commit('likeDrink', id))
+    favoriteDrinksStorage.setFavoriteDrinkIds(state.favoriteDrinkIds)
+    commit('clearDislikedList')
   }
+
 }
 
 const mutations = {
@@ -24,7 +31,11 @@ const mutations = {
   },
   dislikeDrink(state, drinkId){
     let index = state.favoriteDrinkIds.indexOf(drinkId);
-    if(index >= 0) state.favoriteDrinkIds.splice(index, 1)
+    if(index >= 0) state.favoriteDrinkIds.splice(index, 1);
+    state.dislikedDrinkIds.push(drinkId)
+  },
+  clearDislikedList(state){
+    state.dislikedDrinkIds = [];
   }
 }
 

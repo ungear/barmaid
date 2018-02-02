@@ -22,7 +22,7 @@ const actions = {
     favoriteDrinksStorage.setFavoriteDrinkIds(state.favoriteDrinkIds)
     commit('clearDislikedList')
   }
-
+  
 }
 
 const mutations = {

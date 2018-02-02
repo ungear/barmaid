@@ -32,6 +32,10 @@ export default {
     onRestoreClick(){
       this.$store.dispatch('restoreDislikedDrinks')
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    this.$store.commit('clearDislikedList')
+    next()
   }
 }
 </script>

@@ -16,8 +16,7 @@
           <div class="ingredients-list">
             <span v-for='(ing, key) in drinkFullData.ingredients' 
               class='ingredients-list__tag'
-              :key='key'
-              >{{ing.name}}</span>
+              :key='key'>{{ing.name}}</span>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@
       <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
       <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
     </div>
-    <img :src="drinkData.strDrinkThumb" width='200' height='200'>
+    <img :src="drinkThumbSrc" width='200' height='200'>
     <h4>Ingredients:</h4>
     <div class='ingredients-thumbs'>
       <img v-for='dIng in detailedIngredients' 
@@ -56,6 +56,11 @@ export default {
     drinkData(state){
       return state.drinks.fullData[this.drinkId];
     },
+    drinkThumbSrc(){
+      return this.drinkData.strDrinkThumb.indexOf('http://') === 0
+        ? this.drinkData.strDrinkThumb
+        : 'http://' + this.drinkData.strDrinkThumb
+    }
   }),
   methods:{
     toggleFavorite(){

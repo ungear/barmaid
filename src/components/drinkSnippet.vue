@@ -1,7 +1,7 @@
 <template>
   <div class='drink-snippet'>
     <div class='drink-snippet__thumb'>
-      <img class='drink-snippet__thumb-image' :src="drinkShortData.strDrinkThumb" alt="">
+      <img class='drink-snippet__thumb-image' :src="drinkThumbSrc" alt="">
     </div>
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
@@ -12,12 +12,6 @@
         <spinner class='drink-snippet__spinner'
           v-if="currentDetailsLoadingStage === detailsLoadingStages.inProgress" ></spinner>
         <drink-alc-type-icon class='drink-snippet__type-icon' :alcType='drinkFullData.strAlcoholic'></drink-alc-type-icon>
-        <!-- <div 
-          class='drink-snippet__alc-type-icon'
-          :class='"drink-snippet__alc-type-icon--" + drinkFullData.strAlcoholic[0].toLowerCase()'
-          v-if='drinkFullData && drinkFullData.strAlcoholic' :title='drinkFullData.strAlcoholic'>
-          <span>{{drinkFullData.strAlcoholic[0]}}</span>
-        </div> -->
         <div class='drink-snippet__ingredients' v-if="drinkFullData">
           <div class="ingredients-list">
             <span v-for='(ing, key) in drinkFullData.ingredients' 
@@ -77,6 +71,11 @@ export default {
         this.drinkId,
         this.drinkShortData.strDrink.toLowerCase().replace(/\s/g, '-')
       ].join('-');
+    },
+    drinkThumbSrc(){
+      return this.drinkShortData.strDrinkThumb.indexOf('http://') === 0
+        ? this.drinkShortData.strDrinkThumb
+        : 'http://' + this.drinkShortData.strDrinkThumb
     }
   }),
   created(){

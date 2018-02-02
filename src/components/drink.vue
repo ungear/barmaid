@@ -2,7 +2,7 @@
   <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
       <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
-      <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
+      <favorite-mark :drinkId="drinkData.idDrink"></favorite-mark>
     </div>
     <img :src="drinkThumbSrc" width='200' height='200'>
     <h4>Ingredients:</h4>
@@ -50,9 +50,6 @@ export default {
     }
   },
   computed: mapState({
-    isFavorite(state){
-      return state.favorites.favoriteDrinkIds.indexOf(this.drinkData.idDrink) >= 0
-    },
     drinkData(state){
       return state.drinks.fullData[this.drinkId];
     },
@@ -62,11 +59,6 @@ export default {
         : 'http://' + this.drinkData.strDrinkThumb
     }
   }),
-  methods:{
-    toggleFavorite(){
-      this.$store.dispatch('toggleFavoriteDrink', this.drinkData.idDrink)
-    }
-  },
   created(){
     this.drinkId = this.$route.params.link.split('-')[0];
     this.drinkLoadingStages = drinkLoadingStages;

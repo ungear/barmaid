@@ -6,21 +6,26 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'favorite-mark',
   props:{
-    isFavorite: Boolean
+    drinkId: String
   },
-  computed:{
+  computed: mapState({
     title(){
       return this.isFavorite
         ? 'Delete from the Favorite list'
         : 'Add to the Favotire list'
-    }
-  },
+    },
+    favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
+    isFavorite(state){
+      return this.favoriteDrinkIds.includes(this.drinkId)
+    },
+  }),
   methods:{
     toggle(){
-      this.$emit('toggle');
+      this.$store.dispatch('toggleFavoriteDrink', this.drinkId)
     }
   },
 }

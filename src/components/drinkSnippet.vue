@@ -6,7 +6,7 @@
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
         <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drinkShortData.strDrink}}</router-link>
-        <favorite-mark :isFavorite="isFavorite" @toggle='toggleFavorite'></favorite-mark>
+        <favorite-mark :drinkId="drinkShortData.idDrink"></favorite-mark>
       </div>
       <div class='drink-snippet__row'>
         <spinner class='drink-snippet__spinner'
@@ -45,11 +45,6 @@ export default {
   props:{
     drinkId: String,
   },
-  methods:{
-    toggleFavorite(){
-      this.$store.dispatch('toggleFavoriteDrink', this.drinkId)
-    }
-  },
   computed: mapState({
     drinkShortData(state){
       return state.drinks.shortData[this.drinkId];
@@ -61,10 +56,6 @@ export default {
       return this.drinkFullData
         ? this.detailsLoadingStages.loaded
         : this.detailsLoadingStages.inProgress
-    },
-    favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
-    isFavorite(state){
-      return this.favoriteDrinkIds.indexOf(this.drinkId) >= 0
     },
     drinkLinkString(){
       return [

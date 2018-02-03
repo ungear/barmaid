@@ -10,6 +10,7 @@
           </span>
         </div>
       </router-link>
+      <router-link class='header-row__item' :to="{name:'about'}">About</router-link>
     </div>
   </header>
 </template>

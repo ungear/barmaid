@@ -7,15 +7,15 @@
     <img :src="drinkThumbSrc" width='200' height='200'>
     <h4>Ingredients:</h4>
     <div class='ingredients-thumbs'>
-      <img v-for='dIng in detailedIngredients' 
+      <img v-for='dIng in drinkData.ingredients' 
         class='ingredients-thumbs__thumb' 
-        :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.strIngredient + "-Small.png"'
-        :alt='dIng.strIngredient'
-        :title='dIng.strIngredient'/>
+        :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
+        :alt='dIng.name'
+        :title='dIng.name'/>
     </div>
     <ul class='ingredients-list'>
       <li v-for='ing in drinkData.ingredients' v-if="ing.name">
-        <span>{{ing.name}}</span>
+        <span :title="detailedIngredients[ing.name.toLowerCase()] ? detailedIngredients[ing.name.toLowerCase()].strDescription : ''">{{ing.name}}</span>
         <span v-if="ing.measure"> - {{ing.measure}}</span>
       </li>
     </ul>
@@ -45,7 +45,6 @@ export default {
   data(){
     return {
       drinkId: null, 
-      //detailedIngredients: [],
       currentDrinkLoadingStage: null
     }
   },
@@ -59,7 +58,11 @@ export default {
         : 'http://' + this.drinkData.strDrinkThumb
     },
     detailedIngredients(state, getters){
-      return this.drinkData.ingredients.map(({name}) => getters.getIngredientByName(name)).filter(x => x)
+       // .reduce is used to convert an array to a map
+      return this.drinkData.ingredients
+        .map(({name}) => getters.getIngredientByName(name))
+        .filter(x => x)
+        .reduce((result, ing) => { result[ing.strIngredient.toLowerCase()] = ing; return result}, {})
     }
   }),
   created(){
@@ -69,7 +72,6 @@ export default {
       this.currentDrinkLoadingStage = drinkLoadingStages.success;
       this.drinkData.ingredients.forEach(({name}) => {
         this.$store.dispatch('getDetailedIngredientByName', name);
-        //getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
       })
     } 
     else{
@@ -78,7 +80,6 @@ export default {
         this.currentDrinkLoadingStage = drinkLoadingStages.success;
         this.drinkData.ingredients.forEach(({name}) => {
           this.$store.dispatch('getDetailedIngredientByName', name);
-          //getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
         })
       })
     }

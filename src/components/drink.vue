@@ -45,7 +45,7 @@ export default {
   data(){
     return {
       drinkId: null, 
-      detailedIngredients: [],
+      //detailedIngredients: [],
       currentDrinkLoadingStage: null
     }
   },
@@ -57,6 +57,9 @@ export default {
       return this.drinkData.strDrinkThumb.indexOf('http://') === 0
         ? this.drinkData.strDrinkThumb
         : 'http://' + this.drinkData.strDrinkThumb
+    },
+    detailedIngredients(state, getters){
+      return this.drinkData.ingredients.map(({name}) => getters.getIngredientByName(name)).filter(x => x)
     }
   }),
   created(){
@@ -65,7 +68,8 @@ export default {
     if(this.drinkData){
       this.currentDrinkLoadingStage = drinkLoadingStages.success;
       this.drinkData.ingredients.forEach(({name}) => {
-        getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
+        this.$store.dispatch('getDetailedIngredientByName', name);
+        //getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
       })
     } 
     else{
@@ -73,7 +77,8 @@ export default {
       this.$store.dispatch('loadDrinkFullData', this.drinkId).then(() => {
         this.currentDrinkLoadingStage = drinkLoadingStages.success;
         this.drinkData.ingredients.forEach(({name}) => {
-          getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
+          this.$store.dispatch('getDetailedIngredientByName', name);
+          //getIngredientByName(name).then(ing => this.detailedIngredients.push(ing))
         })
       })
     }

@@ -1,5 +1,6 @@
 import { getIngredients, getIngredientByName } from '../services/apiService';
 import { GET_INGREDIENTS_STAGES } from '../consts/consts';
+import Vue from 'vue'
 
 const state = {
   flatNamesList: [],
@@ -21,10 +22,14 @@ const actions = {
         })
     }
   },
-  getDetailedIngredientByName: ({ commit, state }, name) => {
-    return getIngredientByName(name).then(ing => {
-      commit('saveDetailedIngredient', ing)
-    })
+  getDetailedIngredientByName: ({ commit, state, getters }, name) => {
+    let ingredientFromCache = getters.getIngredientByName(name)
+    if(ingredientFromCache) 
+      return ingredientFromCache
+    else
+      return getIngredientByName(name).then(ing => {
+        commit('saveDetailedIngredient', ing)
+      })
   },
 }
 
@@ -36,13 +41,17 @@ const mutations = {
     state.gettingIngredientsStatus = currentStage;
   },
   saveDetailedIngredient(state, ingredient){
-    Vue.set(state.detailedList, ingredient.strIngredient, ingredient)
+    Vue.set(state.detailedList, ingredient.strIngredient.toLowerCase(), ingredient)
   }
+}
+
+const getters = {
+  getIngredientByName: (state) => (name) => state.detailedList[name.toLowerCase()]
 }
 
 export default {
   state,
-  //getters,
+  getters,
   actions,
   mutations
 }

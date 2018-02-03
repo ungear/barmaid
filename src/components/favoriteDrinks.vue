@@ -45,6 +45,9 @@ export default {
     &__title{
       display: inline-block;
     }
+    &__head{
+      min-height: 24px;
+    }
     &__restore{
       margin-left: 1em;
       padding: 3px 6px;

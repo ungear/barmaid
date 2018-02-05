@@ -15,7 +15,7 @@
     </div>
     <ul class='ingredients-list'>
       <li v-for='ing in drinkData.ingredients' v-if="ing.name">
-        <span :title="detailedIngredients[ing.name.toLowerCase()] ? detailedIngredients[ing.name.toLowerCase()].strDescription : ''">{{ing.name}}</span>
+        <span :title="getIngredientDescriptionByName(ing.name)">{{ing.name}}</span>
         <span v-if="ing.measure"> - {{ing.measure}}</span>
       </li>
     </ul>
@@ -29,6 +29,7 @@
 <script>
 import { getDrinkById, getIngredientByName } from '../services/apiService';
 import { mapState } from 'vuex'
+import { getIngredientKeyByName } from '../services/ingredientsService';
 import FavoriteMark from './favorite-mark.vue'
 
 const drinkLoadingStages = {
@@ -62,7 +63,7 @@ export default {
       return this.drinkData.ingredients
         .map(({name}) => getters.getIngredientByName(name))
         .filter(x => x)
-        .reduce((result, ing) => { result[ing.strIngredient.toLowerCase()] = ing; return result}, {})
+        .reduce((result, ing) => { result[getIngredientKeyByName(ing.strIngredient)] = ing; return result}, {})
     }
   }),
   created(){
@@ -82,6 +83,14 @@ export default {
           this.$store.dispatch('getDetailedIngredientByName', name);
         })
       })
+    }
+  },
+  methods: {
+    getIngredientDescriptionByName(name){
+      let ing = this.detailedIngredients[getIngredientKeyByName(name)];
+      return ing
+        ? ing.strDescription
+        : null
     }
   }
 }

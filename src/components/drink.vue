@@ -1,28 +1,34 @@
 <template lang="html">
   <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
-      <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
+      <h2 class='drink-details__name'>{{drinkData.strDrink}}</h2>
       <favorite-mark :drinkId="drinkId"></favorite-mark>
     </div>
     <img :src="drinkThumbSrc" width='200' height='200'>
-    <h4>Ingredients:</h4>
-    <div class='ingredients-thumbs'>
-      <img v-for='dIng in drinkData.ingredients' 
-        class='ingredients-thumbs__thumb' 
-        :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
-        :alt='dIng.name'
-        :title='dIng.name'/>
+    <div class='section'>
+      <h3>Ingredients</h3>
+      <div class='ingredients-thumbs'>
+        <img v-for='dIng in drinkData.ingredients' 
+          class='ingredients-thumbs__thumb' 
+          :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
+          :alt='dIng.name'
+          :title='dIng.name'/>
+      </div>
+      <ul class='ingredients-list'>
+        <li v-for='ing in drinkData.ingredients' v-if="ing.name">
+          <span :title="getIngredientDescriptionByName(ing.name)">{{ing.name}}</span>
+          <span v-if="ing.measure"> - {{ing.measure}}</span>
+        </li>
+      </ul>
     </div>
-    <ul class='ingredients-list'>
-      <li v-for='ing in drinkData.ingredients' v-if="ing.name">
-        <span :title="getIngredientDescriptionByName(ing.name)">{{ing.name}}</span>
-        <span v-if="ing.measure"> - {{ing.measure}}</span>
-      </li>
-    </ul>
-    <h4>Glass</h4>
-    <p>{{drinkData.strGlass}}</p>
-    <h4>Instructions</h4>
-    <p>{{drinkData.strInstructions}}</p>
+    <div class='section'>
+      <h3>Glass</h3>
+      <p>{{drinkData.strGlass}}</p>
+    </div>
+    <div class='section'>
+      <h3>Instructions</h3>
+      <p>{{drinkData.strInstructions}}</p>
+    </div>
   </div>
 </template>
 
@@ -99,8 +105,14 @@ export default {
 
 <style lang="scss" scoped>
 .drink-details{
+  .drink-details__header{
+    padding: 10px 0;
+  }
   .drink-details__name{
-    display: inline-block
+    display: inline-block;
+  }
+  .section{
+    padding: 5px 0;
   }
   .ingredients-thumbs{
     padding: 10px 0;

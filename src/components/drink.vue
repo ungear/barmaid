@@ -2,7 +2,7 @@
   <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
       <h3 class='drink-details__name'>{{drinkData.strDrink}}</h3>
-      <favorite-mark :drinkId="drinkData.idDrink"></favorite-mark>
+      <favorite-mark :drinkId="drinkId"></favorite-mark>
     </div>
     <img :src="drinkThumbSrc" width='200' height='200'>
     <h4>Ingredients:</h4>
@@ -45,7 +45,6 @@ export default {
   },
   data(){
     return {
-      drinkId: null, 
       currentDrinkLoadingStage: null
     }
   },
@@ -64,10 +63,12 @@ export default {
         .map(({name}) => getters.getIngredientByName(name))
         .filter(x => x)
         .reduce((result, ing) => { result[getIngredientKeyByName(ing.strIngredient)] = ing; return result}, {})
+    },
+    drinkId() {
+      return this.$route.params.link.split('-')[0];
     }
   }),
   created(){
-    this.drinkId = this.$route.params.link.split('-')[0];
     this.drinkLoadingStages = drinkLoadingStages;
     if(this.drinkData){
       this.currentDrinkLoadingStage = drinkLoadingStages.success;

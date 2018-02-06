@@ -2,12 +2,6 @@
   <div class='favorite-drinks'>
     <div class="favorite-drinks__head">
       <h3 class='favorite-drinks__title'>Your favorite drinks</h3>
-      <transition name="fade">
-        <button 
-          class='favorite-drinks__restore' 
-          v-if='someDrinksWereDisliked'
-          @click='onRestoreClick()'>Restore</button>
-      </transition>
     </div>
     <drinks-list
       class='favorite-drinks__list'
@@ -24,18 +18,11 @@ import { getDrinkById } from '../services/apiService';
 export default {
   name: 'favoriteDrinks',
   components: {DrinkSnippet,DrinksList},
-  computed: mapState({
-    favoriteDrinkIds: state => state.favorites.favoriteDrinkIds,
-    someDrinksWereDisliked: state => state.favorites.dislikedDrinkIds.length > 0
-  }),
-  methods:{
-    onRestoreClick(){
-      this.$store.dispatch('restoreDislikedDrinks')
+  data(){
+    return {
+      // .slice is used to prevent further changes in the array when drinks are disliked
+      favoriteDrinkIds: this.$store.state.favorites.favoriteDrinkIds.slice()
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    this.$store.commit('clearDislikedList')
-    next()
   }
 }
 </script>

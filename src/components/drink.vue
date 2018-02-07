@@ -2,6 +2,7 @@
   <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
       <h2 class='drink-details__name'>{{drinkData.strDrink}}</h2>
+      <drink-alc-type-icon class='drink-details__type-icon' :alcType='drinkData.strAlcoholic'></drink-alc-type-icon>
       <favorite-mark :drinkId="drinkId"></favorite-mark>
     </div>
     <img :src="drinkThumbSrc" width='200' height='200'>
@@ -44,6 +45,7 @@ import { getDrinkById, getIngredientByName } from '../services/apiService';
 import { mapState } from 'vuex'
 import { getIngredientKeyByName } from '../services/ingredientsService';
 import FavoriteMark from './favorite-mark.vue'
+import DrinkAlcTypeIcon from './drinkAlcTypeIcon.vue';
 
 const drinkLoadingStages = {
   inProgress: 1,
@@ -54,7 +56,7 @@ const drinkLoadingStages = {
 export default {
   name: 'drink',
   components:{
-    FavoriteMark
+    FavoriteMark, DrinkAlcTypeIcon
   },
   data(){
     return {
@@ -122,9 +124,13 @@ export default {
 .drink-details{
   .drink-details__header{
     padding: 10px 0;
+    display: flex;
+    align-items: center;
   }
-  .drink-details__name{
-    display: inline-block;
+  .drink-details__type-icon{
+    width: 20px;
+    height: 20px;
+    margin: 0 0 0 10px;
   }
   .section{
     padding: 5px 0;

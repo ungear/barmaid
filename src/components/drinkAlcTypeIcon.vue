@@ -1,7 +1,8 @@
 <template>
   <div 
     class="drink-alc-type-icon"
-    :class='"drink-alc-type-icon--" + this.alcType[0].toLowerCase()'>
+    :class='"drink-alc-type-icon--" + this.alcType[0].toLowerCase()'
+    :title='this.alcType'>
     {{this.alcType[0].toUpperCase()}}</div>
 </template>
 

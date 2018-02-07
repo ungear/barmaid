@@ -1,7 +1,7 @@
 <template>
   <span class='favorite-mark' 
     :class="isFavorite ? 'favorite-mark--favorite' : ''" 
-    :title=title
+    :title='title'
     @click='toggle'></span>
 </template>
 

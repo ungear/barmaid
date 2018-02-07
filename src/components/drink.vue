@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="drink-details" v-if='currentDrinkLoadingStage === drinkLoadingStages.success'>
     <div class='drink-details__header'>
       <h2 class='drink-details__name'>{{drinkData.strDrink}}</h2>
@@ -12,12 +12,19 @@
           class='ingredients-thumbs__thumb' 
           :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
           :alt='dIng.name'
-          :title='dIng.name'/>
+          :title='dIng.name'
+          :key='dIng.name'/>
       </div>
       <ul class='ingredients-list'>
-        <li v-for='ing in drinkData.ingredients' v-if="ing.name">
-          <span :title="getIngredientDescriptionByName(ing.name)">{{ing.name}}</span>
+        <li class='ingredients-list__item' v-for='ing in drinkData.ingredients' v-if="ing.name" :key="ing.name">
+          <span
+            class='ingredients-list__ingredient-name' 
+            :class="{ 'ingredients-list__ingredient-name--active': getIngredientDescriptionByName(ing.name)}"
+            @click='getIngredientDescriptionByName(ing.name) && onIngredientNameClick(ing.name)'>{{ing.name}}</span>
           <span v-if="ing.measure"> - {{ing.measure}}</span>
+          <p
+            class='ingredients-list__ingredient-description' 
+            v-if='ingredientsDescriptionsToShow.includes(ing.name)'>{{getIngredientDescriptionByName(ing.name)}}</p>
         </li>
       </ul>
     </div>
@@ -51,7 +58,8 @@ export default {
   },
   data(){
     return {
-      currentDrinkLoadingStage: null
+      currentDrinkLoadingStage: null,
+      ingredientsDescriptionsToShow:[]
     }
   },
   computed: mapState({
@@ -98,6 +106,13 @@ export default {
       return ing
         ? ing.strDescription
         : null
+    },
+    onIngredientNameClick(name){
+      let index = this.ingredientsDescriptionsToShow.indexOf(name)
+      if(index >= 0)
+        this.ingredientsDescriptionsToShow.splice(index, 1)
+      else
+        this.ingredientsDescriptionsToShow.push(name)
     }
   }
 }
@@ -119,6 +134,22 @@ export default {
   }
   .ingredients-list{
     margin-left: 20px;
+    .ingredients-list__item{
+      margin: 5px 0;
+    }
+    .ingredients-list__ingredient-name{
+      &--active{
+        border-bottom: 1px dotted #222;
+        cursor: pointer;
+      }
+    }
+    .ingredients-list__ingredient-description{
+      padding: 10px;
+      background: #eee;
+      border: 1px solid #333;
+      border-radius: 5px;
+      margin: 5px 0;
+    }
   }
 }
 </style>

@@ -9,15 +9,15 @@
     <div class='section'>
       <h3>Ingredients</h3>
       <div class='ingredients-thumbs'>
-        <img v-for='dIng in drinkData.ingredients' 
+        <img v-for='(dIng, key) in drinkData.ingredients' 
           class='ingredients-thumbs__thumb' 
           :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
           :alt='dIng.name'
           :title='dIng.name'
-          :key='dIng.name'/>
+          :key='key'/>
       </div>
       <ul class='ingredients-list'>
-        <li class='ingredients-list__item' v-for='ing in drinkData.ingredients' v-if="ing.name" :key="ing.name">
+        <li class='ingredients-list__item' v-for='(ing, ingKey)  in drinkData.ingredients' v-if="ing.name" :key="ingKey">
           <span
             class='ingredients-list__ingredient-name' 
             :class="{ 'ingredients-list__ingredient-name--active': getIngredientDescriptionByName(ing.name)}"

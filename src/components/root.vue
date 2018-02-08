@@ -23,6 +23,14 @@ export default {
 <style lang="scss">
   @import '../colorScheme.scss';
   @import '~normalize.css/normalize.css';
+  *{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+  }
+  html, body{
+    height: 100%
+  }
   html{
     font-family: Arial, Helvetica, sans-serif;
   }

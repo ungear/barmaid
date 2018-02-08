@@ -23,6 +23,9 @@ export default {
 <style lang="scss">
   @import '../colorScheme.scss';
   @import '~normalize.css/normalize.css';
+  html{
+    font-family: Arial, Helvetica, sans-serif;
+  }
   #app{
     display: flex;
     flex-direction: column;

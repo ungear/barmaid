@@ -1,16 +1,20 @@
 <template>
   <header class='header-row'>
     <div class='container header__header-container'>
-      <router-link class='header-row__item' :to="{name:'search'}">Search</router-link>
-      <router-link class='header-row__item marked-item' :to="{name:'favorite'}">
-        <span>Favorite</span>
+      <div class='header-row__item'>
+        <router-link :to="{name:'search'}">Search</router-link>
+      </div>
+      <div class='header-row__item marked-item'>
+        <router-link :to="{name:'favorite'}">Favorite</router-link>
         <div class='marked-item__number-container' v-if='favoriteDrinksnumber > 0'>
           <span class='marked-item__number'>
             {{favoriteDrinksnumber}}
           </span>
         </div>
-      </router-link>
-      <router-link class='header-row__item' :to="{name:'about'}">About</router-link>
+      </div>
+      <div class='header-row__item'>
+        <router-link :to="{name:'about'}">About</router-link>
+      </div>
     </div>
   </header>
 </template>
@@ -39,10 +43,27 @@ export default {
       background-repeat: no-repeat;
       padding-left: 40px;
     }
-    .header-row__item{
+    .header-row__item a{
       color:#fff;
       text-decoration: none;
-      font-weight: 900; 
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 2px;
+      &::after{
+        content:'';
+        position: absolute;
+        left: 50%;
+        bottom:0;
+        width:0;
+        height: 2px;
+        background: #fff;
+        transition: all .3s;
+        margin-top: 5px;
+      }
+      &:hover::after, &.router-link-exact-active::after{
+        left:0;
+        width: 100%
+      } 
     }
     .header-row__item + .header-row__item{
       margin-left: 0.5em;
@@ -52,9 +73,9 @@ export default {
       align-items: center;
       &__number-container{
         display: flex;
+        align-items: center;
         width: 15px;
         height: 15px;
-        align-items: center;
         justify-content: center;
         margin: 0 0 10px 0px;
         border-radius: 50%;

@@ -40,10 +40,16 @@ export default {
     font-size: 1.6em;
   }
   .favorite-mark::before{
-    content: '☆';
+    font-family: 'barmaid';
+    font-style: normal;
+    font-weight: normal;
+    content: '\e80f';
   }
   .favorite-mark--favorite::before{
-    content: '★';
+    font-family: 'barmaid';
+    font-style: normal;
+    font-weight: normal;
+    content: '\e80e';
     color: $gold;
   }
 </style>

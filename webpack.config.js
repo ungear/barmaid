@@ -37,7 +37,11 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
+      {
+        test: /\.(svg|woff|woff2|ttf|eot|ico)$/,
+        loader: 'file-loader?name=[name].[hash].[ext]'
+      },
     ]
   },
   resolve: {

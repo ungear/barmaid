@@ -58,6 +58,17 @@ export default {
     width: 800px;
     margin: auto;
   }
+
+  @font-face {
+    font-family: 'barmaid';
+    src: url('../assets/barmaid.eot');
+    src: url('../assets/barmaid.eot#iefix') format('embedded-opentype'),
+          url('../assets/barmaid.woff') format('woff'),
+          url('../assets/barmaid.ttf') format('truetype'),
+          url('../assets/barmaid.svg#barmaid') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
 </style>
 
 

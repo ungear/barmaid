@@ -23,9 +23,11 @@
             :class="{ 'ingredients-list__ingredient-name--active': getIngredientDescriptionByName(ing.name)}"
             @click='getIngredientDescriptionByName(ing.name) && onIngredientNameClick(ing.name)'>{{ing.name}}</span>
           <span v-if="ing.measure"> - {{ing.measure}}</span>
-          <p
-            class='ingredients-list__ingredient-description' 
-            v-if='ingredientsDescriptionsToShow.includes(ing.name)'>{{getIngredientDescriptionByName(ing.name)}}</p>
+          <transition name="fade">
+            <p
+              class='ingredients-list__ingredient-description' 
+              v-if='ingredientsDescriptionsToShow.includes(ing.name)'>{{getIngredientDescriptionByName(ing.name)}}</p>
+          </transition>
         </li>
       </ul>
     </div>

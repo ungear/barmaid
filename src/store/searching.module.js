@@ -18,8 +18,8 @@ const actions = {
     let searching = searchBy === SEARCH_BY.name
       ? searchDrinksByName(param)
       : searchDrinksByIng(param)
-    searching.then(response => {
-      let drinks = response.data.drinks.map(x => new DrinkShort(x))
+    searching.then(rawDrinksData => {
+      let drinks = rawDrinksData.map(x => new DrinkShort(x))
       commit('setDrinkSearchingFlag', drinks.length === 0 
         ? DRINK_SEARCHING_STAGES.noResults
         : DRINK_SEARCHING_STAGES.drinksFound)

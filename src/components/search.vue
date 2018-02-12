@@ -9,7 +9,9 @@
     <spinner 
       class='drink-searching__spinner' 
       v-if="searchingStage == searchingStages.inProgress"></spinner>
-    <span v-if="searchingStage == searchingStages.noResults">No drinks</span>
+    <div 
+      class='drink-searching__zero-result'
+      v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
   </div>
 </template>
 
@@ -43,6 +45,11 @@ export default {
   }
   .drink-searching__spinner{
     margin: 20px 0 0 20px;
+  }
+  .drink-searching__zero-result{
+    text-align: center;
+    padding-top: 30px;
+    font-weight: 600; 
   }
 }
 </style>

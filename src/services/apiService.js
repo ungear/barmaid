@@ -12,12 +12,12 @@ export const getDrinksByIngreidient = function(ingredient){
 
 export const searchDrinksByName = function(name){
   let url = API_BASE_URL + 'search.php?s=' + name;
-  return axios.get(url);
+  return axios.get(url).then(response => response.data.drinks ? response.data.drinks : []);
 }
 
 export const searchDrinksByIng = function(ing){
   let url = API_BASE_URL + 'filter.php?i=' + ing;
-  return axios.get(url);
+  return axios.get(url).then(response => response.data.drinks ? response.data.drinks : []);
 }
 
 export const getDrinkById = function(id){

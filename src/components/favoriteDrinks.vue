@@ -5,7 +5,11 @@
     </div>
     <drinks-list
       class='favorite-drinks__list'
-      :drinkIds="favoriteDrinkIds"></drinks-list>
+      :drinkIds="favoriteDrinkIds"
+      v-if='favoriteDrinkIds.length'></drinks-list>
+    <div 
+      class='favorite-drinks__empty' 
+      v-if='favoriteDrinkIds.length === 0'>It seams that your Favorite list is empty so far</div>
   </div>
 </template>
 
@@ -46,7 +50,9 @@ export default {
     .favorite-drinks__list{
       margin: 1em 0;
     }
-
+    .favorite-drinks__empty{
+      padding-top: 30px;
+    }
     .fade-leave-active, .fade-enter-active {
       transition: opacity .3s;
     }

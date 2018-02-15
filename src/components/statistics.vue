@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Statistics</h3>
+    <h3 class='title'>Statistics</h3>
     <div v-for='(ing, key) in ingredientsStatistics' :key='key'>
       {{ing.ingredientName}} - {{ing.drinks.length}}
     </div>
@@ -28,9 +28,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h3{
-    padding: 20px 0;
-  }
   p{
     padding: 10px 0;
   }

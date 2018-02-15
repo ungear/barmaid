@@ -13,6 +13,9 @@
         </div>
       </div>
       <div class='header-row__item'>
+        <router-link :to="{name:'statistics'}">Statistics</router-link>
+      </div>
+      <div class='header-row__item'>
         <router-link :to="{name:'about'}">About</router-link>
       </div>
     </div>

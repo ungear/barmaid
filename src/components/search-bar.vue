@@ -25,7 +25,7 @@
         class='search-bar__body search-bar__body--spinner' 
         v-if='getIngredientsStage === getIngredientsStages.inProgress'></spinner>
     </div>
-    <div class="search-bar__section">
+    <div class="search-bar__section search-bar__section--button">
       <div class="search-bar__header"></div>
       <button class="search-bar__body search-bar__body--button" 
         @click="isSearchButtonActive && onSearchBtnClick()"
@@ -101,6 +101,14 @@ export default {
   $formBorderRadius: 5px;
   .search-bar{
     display: flex;
+  }
+  .search-bar__section{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    &--button{
+      overflow: visible;
+    }
   }
   .search-bar__header{
     height: 20px;

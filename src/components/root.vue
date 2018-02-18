@@ -55,8 +55,13 @@ export default {
   }
 
   .container{
-    width: 800px;
-    margin: auto;
+  }
+
+  @media (min-width: 800px){
+    .container{
+      width: 800px;
+      margin: auto;
+    }
   }
 
   @font-face {

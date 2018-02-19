@@ -2,24 +2,23 @@
   <div>
     <h3 class='title'>Statistics</h3>
     <svg width='800' height='500'>
-      <circle v-for='(ing, key) in ingredientsStatistics' 
+      <circle v-for='(ing, key, index) in ingredientsStatistics.ingredients' 
         :key='key' 
-        :cx="Math.cos(2 * Math.PI * key/ ingredientsStatistics.length)*200 + 400" 
-        :cy="Math.sin(2 * Math.PI * key/ ingredientsStatistics.length)*200 + 250"
+        :cx="Math.cos(2 * Math.PI * index/ ingredientsCount)*200 + 400" 
+        :cy="Math.sin(2 * Math.PI * index/ ingredientsCount)*200 + 250"
         :r="3"
         :title='ing.ingredientName'>
-        <title>{{ing.ingredientName}} - {{ing.drinks.length}}</title>
+        <title>{{ing.name}} - {{ing.drinkIds.length}}</title>
       </circle>
     </svg>
-    <div v-for='(ing, key) in ingredientsStatistics' :key='key'>
-      {{ing.ingredientName}} - {{ing.drinks.length}}
-    </div>
   </div>
 </template>
 <script>
 const ingredientsStatistics = require('../assets/ingredients-statistics.json');
-// capitalize ingredient names
-ingredientsStatistics.forEach(x => x.ingredientName = x.ingredientName[0].toUpperCase() + x.ingredientName.slice(1));
+
+
+let ingredientsCount = 0;
+for(let f in ingredientsStatistics.ingredients){ingredientsCount++}
 
 // sort ingrediants by drinks number then name
 // ingredientsStatistics.sort((a,b) => {
@@ -32,7 +31,8 @@ export default {
   name: 'about',
   data: function(){
     return{
-      ingredientsStatistics
+      ingredientsStatistics,
+      ingredientsCount
     }
   }  
 }

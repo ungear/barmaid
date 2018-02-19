@@ -2,6 +2,13 @@
   <div>
     <h3 class='title'>Statistics</h3>
     <svg width='800' height='500'>
+      <line v-for='(l, key) in lines'
+        :key='key + "line"'
+        :x1="l.fromX" 
+        :y1="l.fromY"
+        :x2="l.toX"
+        :y2="l.toY" 
+        stroke='rgba(100,100,100,0.2)' />
       <circle v-for='(n, key) in drinkNodes' 
         :key='key' 
         :cx="n.x" 
@@ -9,16 +16,15 @@
         :r="2"
         fill='red'
         stroke='black'>
-        <title>{{n.strDrink}}</title>
+        <title>{{n.name}}</title>
       </circle>
 
-      <circle v-for='(ing, key, index) in ingredientsStatistics.ingredients' 
+      <circle v-for='(n, key) in ingNodes' 
         :key='key' 
-        :cx="Math.cos(2 * Math.PI * index/ ingredientsCount)*200 + 400" 
-        :cy="Math.sin(2 * Math.PI * index/ ingredientsCount)*200 + 250"
-        :r="3"
-        :title='ing.ingredientName'>
-        <title>{{ing.name}} - {{ing.drinkIds.length}}</title>
+        :cx="n.x" 
+        :cy="n.y"
+        :r="3">
+        <title>{{n.name}}</title>
       </circle>
     </svg>
   </div>
@@ -28,17 +34,40 @@ const ingredientsStatistics = require('../assets/ingredients-statistics.json');
 let ingredientsCount = 0;
 for(let f in ingredientsStatistics.ingredients){ingredientsCount++}
 
-const drinkNodes = {};
 const maxX = 800;
 const maxY = 500;
+const ingCircleRadius = 200;
+const drinkNodes = {};
 for(let dId in ingredientsStatistics.drinks){
   let drink = ingredientsStatistics.drinks[dId]
   drinkNodes[dId] = {
-    strDrink: drink.strDrink,
+    name: drink.name,
     x: Math.ceil(Math.random() * maxX),
     y: Math.ceil(Math.random() * maxY),
   }
 }
+
+const ingNodes = ingredientsStatistics.ingredients.map((ing, index) => {
+  return {
+    name: ing.name,
+    x: Math.cos(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + maxX/2,
+    y: Math.sin(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + maxY/2,
+    drinkIds: ing.drinkIds
+  }
+});
+
+const lines = [];
+ingNodes.forEach(ingNode => {
+  ingNode.drinkIds.forEach(drinkId => {
+    let drinkNode = drinkNodes[drinkId];
+    lines.push({
+      fromX: ingNode.x,
+      fromY: ingNode.y,
+      toX: drinkNode.x,
+      toY: drinkNode.y
+    })
+  })
+})
 
 // sort ingrediants by drinks number then name
 // ingredientsStatistics.sort((a,b) => {
@@ -53,7 +82,9 @@ export default {
     return{
       ingredientsStatistics,
       ingredientsCount,
-      drinkNodes
+      drinkNodes,
+      ingNodes,
+      lines
     }
   }  
 }

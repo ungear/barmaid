@@ -24,7 +24,7 @@
         :key='n.id' 
         :cx="n.x" 
         :cy="n.y"
-        :r="3"
+        class='ingredient-node'
         @mouseenter='onIngMouseEnter(n)'
         @mouseleave='onIngMouseLeave(n)' >
         <title>{{n.name}}</title>
@@ -133,6 +133,13 @@ function getRandomInteger(min, max){
 <style lang="scss" scoped>
   p{
     padding: 10px 0;
+  }
+  .ingredient-node{
+    r: 4;
+    &:hover{
+      r:5;
+      fill: red;
+    }
   }
   .line--highlighted{
     stroke: red;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class='title'>Statistics</h3>
-    <svg width='800' height='500'>
+    <svg :width='graphWidth' :height='graphHeight'>
       <line v-for='(l, key) in lines'
         :key='key + "line"'
         :x1="l.fromX" 
@@ -39,15 +39,30 @@ let ingredientsCount = 0;
 for(let f in ingredientsStatistics.ingredients){ingredientsCount++}
 
 const maxX = 800;
-const maxY = 500;
-const ingCircleRadius = 200;
+const maxY = 800;
+const padding = 5;
+const ingCircleRadius = 300;
+const ingCircleCenterX = maxX/2;
+const ingCircleCenterY = maxY/2;
+const ingRingWidth = 30;
 const drinkNodes = {};
 for(let dId in ingredientsStatistics.drinks){
   let drink = ingredientsStatistics.drinks[dId]
+  let nodeX;
+  let nodeY;
+  let coordsOk;
+  do{
+    nodeX = getRandomInteger(padding, maxX - padding);
+    nodeY = getRandomInteger(padding, maxY - padding);
+    let distanceFromIngCircleToNode = Math.sqrt((nodeX - ingCircleCenterX) **2  + (nodeY - ingCircleCenterY)**2)
+    coordsOk = distanceFromIngCircleToNode < (ingCircleRadius - ingRingWidth/2) 
+      || distanceFromIngCircleToNode > (ingCircleRadius + ingRingWidth/2)
+  } while(!coordsOk)
+
   drinkNodes[dId] = {
     name: drink.name,
-    x: Math.ceil(Math.random() * maxX),
-    y: Math.ceil(Math.random() * maxY),
+    x: nodeX,
+    y: nodeY,
   }
 }
 
@@ -56,8 +71,8 @@ const ingNodes = ingredientsStatistics.ingredients.map((ing, index) => {
   return {
     id: ++initialIngId,
     name: ing.name,
-    x: Math.cos(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + maxX/2,
-    y: Math.sin(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + maxY/2,
+    x: Math.cos(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterX,
+    y: Math.sin(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterY,
     drinkIds: ing.drinkIds,
   }
 });
@@ -93,6 +108,8 @@ export default {
       ingNodes,
       lines,
       selectedIngNodeId: null,
+      graphWidth: maxX,
+      graphHeight: maxY
     }
   },
   methods:{
@@ -103,6 +120,10 @@ export default {
       this.selectedIngNodeId = null;
     }
   }  
+}
+
+function getRandomInteger(min, max){
+  return Math.ceil(min + Math.random() * (max - min));
 }
 </script>
 

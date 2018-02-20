@@ -15,9 +15,8 @@
         :key='key' 
         :cx="n.x" 
         :cy="n.y"
-        :r="2"
-        fill='red'
-        stroke='black'>
+        class='drink-node'
+        :class="n.ingredientNodeIds.includes(selectedIngNodeId) ? 'drink-node--highlighted' : ''" >
         <title>{{n.name}}</title>
       </circle>
 
@@ -45,6 +44,18 @@ const ingCircleRadius = 300;
 const ingCircleCenterX = maxX/2;
 const ingCircleCenterY = maxY/2;
 const ingRingWidth = 30;
+
+let initialIngId = 0;
+const ingNodes = ingredientsStatistics.ingredients.map((ing, index) => {
+  return {
+    id: ++initialIngId,
+    name: ing.name,
+    x: Math.cos(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterX,
+    y: Math.sin(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterY,
+    drinkIds: ing.drinkIds,
+  }
+});
+
 const drinkNodes = {};
 for(let dId in ingredientsStatistics.drinks){
   let drink = ingredientsStatistics.drinks[dId]
@@ -61,21 +72,13 @@ for(let dId in ingredientsStatistics.drinks){
 
   drinkNodes[dId] = {
     name: drink.name,
+    ingredientNodeIds: drink.ingredientIds.map(ingName => ingNodes.filter(ingNode => ingNode.name === ingName)[0].id),
     x: nodeX,
     y: nodeY,
   }
 }
 
-let initialIngId = 0;
-const ingNodes = ingredientsStatistics.ingredients.map((ing, index) => {
-  return {
-    id: ++initialIngId,
-    name: ing.name,
-    x: Math.cos(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterX,
-    y: Math.sin(2 * Math.PI * index/ ingredientsCount)*ingCircleRadius + ingCircleCenterY,
-    drinkIds: ing.drinkIds,
-  }
-});
+
 
 const lines = [];
 ingNodes.forEach(ingNode => {
@@ -133,6 +136,15 @@ function getRandomInteger(min, max){
   }
   .line--highlighted{
     stroke: red;
+  }
+  .drink-node{
+    r: 2;
+    fill:red;
+    stroke:black;
+    &--highlighted{
+      fill: green;
+      r: 3;
+    }
   }
 </style>
 

@@ -6,6 +6,15 @@ import Root from './components/root.vue'
 import store from './store'
 import router from './routing'
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/dist/sw.js')
+    .then(function(reg) {
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch(function(error) {
+      console.log('Registration failed with ' + error);
+    });
+}
+
 Vue.use(VueRouter)
 
 // reguster the root component before initialize the Vue application

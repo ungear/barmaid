@@ -63,9 +63,9 @@ export default {
       ].join('-');
     },
     drinkThumbSrc(){
-      return this.drinkShortData.strDrinkThumb.indexOf('http://') === 0
+      return this.drinkShortData.strDrinkThumb.indexOf('https://') === 0
         ? this.drinkShortData.strDrinkThumb
-        : 'http://' + this.drinkShortData.strDrinkThumb
+        : 'https://' + this.drinkShortData.strDrinkThumb
     }
   }),
   created(){

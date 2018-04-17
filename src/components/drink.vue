@@ -11,7 +11,7 @@
       <div class='ingredients-thumbs'>
         <img v-for='(dIng, key) in drinkData.ingredients' 
           class='ingredients-thumbs__thumb' 
-          :src='"http://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
+          :src='"https://www.thecocktaildb.com/images/ingredients/" + dIng.name + "-Small.png"'
           :alt='dIng.name'
           :title='dIng.name'
           :key='key'/>
@@ -71,9 +71,9 @@ export default {
       return state.drinks.fullData[this.drinkId];
     },
     drinkThumbSrc(){
-      return this.drinkData.strDrinkThumb.indexOf('http://') === 0
+      return this.drinkData.strDrinkThumb.indexOf('https://') === 0
         ? this.drinkData.strDrinkThumb
-        : 'http://' + this.drinkData.strDrinkThumb
+        : 'https://' + this.drinkData.strDrinkThumb
     },
     detailedIngredients(state, getters){
        // .reduce is used to convert an array to a map

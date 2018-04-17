@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {DrinkFull} from '../models/drinkFull';
 
-const API_URL = 'http://www.thecocktaildb.com/api/json/v1/';
+const API_URL = 'https://www.thecocktaildb.com/api/json/v1/';
 const API_KEY = '1';
 const API_BASE_URL = API_URL + API_KEY + '/';
 

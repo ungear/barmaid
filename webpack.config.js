@@ -61,14 +61,14 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map',
-  plugins:[
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(srcPath, './sw.js'),
-        to: path.resolve(buildPath, './sw.js')
-      },
-    ])
-  ]
+  // plugins:[
+  //   new CopyWebpackPlugin([
+  //     {
+  //       from: path.resolve(srcPath, './sw.js'),
+  //       to: path.resolve(__dirname, './sw.js')
+  //     },
+  //   ])
+  // ]
 }
 
 if (process.env.NODE_ENV === 'production') {

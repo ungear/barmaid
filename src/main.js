@@ -7,7 +7,7 @@ import store from './store'
 import router from './routing'
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/dist/sw.js')
+  navigator.serviceWorker.register('/sw.js')
     .then(function(reg) {
       console.log('Registration succeeded. Scope is ' + reg.scope);
     }).catch(function(error) {

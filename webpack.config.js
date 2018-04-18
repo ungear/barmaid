@@ -1,5 +1,9 @@
 var path = require('path')
 var webpack = require('webpack')
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
+var buildPath = path.resolve(__dirname, './dist');
+var srcPath = path.resolve(__dirname, './src');
 
 // a temporary solution to hide deprecation warnings caused by vue-loader
 // https://github.com/vuejs/vue-loader/issues/666
@@ -56,7 +60,15 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  // plugins:[
+  //   new CopyWebpackPlugin([
+  //     {
+  //       from: path.resolve(srcPath, './sw.js'),
+  //       to: path.resolve(__dirname, './sw.js')
+  //     },
+  //   ])
+  // ]
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -1,4 +1,8 @@
-let cacheKey = 'v1';
+const cacheKey = 'v1';
+const urlPatternsToCache = [
+  /www.thecocktaildb.com\/images/,
+
+]
 self.addEventListener('install', function(event) {
   console.log('Installation stage. Started caching')
   event.waitUntil(
@@ -26,6 +30,11 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+  let shouldBeCached = urlPatternsToCache.some(regExp => regExp.test(event.request.url));
+  if(!shouldBeCached){
+    console.log("SW rejected caching the resource " + event.request.url)
+    return;
+  }
   console.log("SW is processing the resource " + event.request.url)
   let pr = caches.match(event.request).then(function(response) {
     if(response)
@@ -36,12 +45,13 @@ self.addEventListener('fetch', function(event) {
     return response || fetch(event.request)
       .then(response => caches.open(cacheKey)
         .then(cache => { 
-          if(!response.ok){
-            console.log(event.request.url + ' failed')
-          } else{
-            cache.put(event.request, response.clone()); 
-            console.log(event.request.url + ' has been added to cache')
-          }
+          // if(!response.ok){
+          //   console.log(event.request.url + ' failed')
+          // } else{
+          //   cache.put(event.request, response.clone()); 
+          //   console.log(event.request.url + ' has been added to cache')
+          // }
+          cache.put(event.request, response.clone()); 
           return response;
         }) 
       )

@@ -6,11 +6,6 @@
       </div>
       <div class='header-row__item marked-item'>
         <router-link :to="{name:'favorite'}">Favorite</router-link>
-        <div class='marked-item__number-container' v-if='favoriteDrinksnumber > 0'>
-          <span class='marked-item__number'>
-            {{favoriteDrinksnumber}}
-          </span>
-        </div>
       </div>
       <div class='header-row__item'>
         <router-link :to="{name:'statistics'}">Statistics</router-link>
@@ -27,9 +22,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'app-header',
-  computed: mapState({
-    favoriteDrinksnumber: state => state.favorites.favoriteDrinkIds.length
-  }),
 }
 </script>
 
@@ -74,19 +66,6 @@ export default {
     .marked-item{
       display: flex;
       align-items: center;
-      &__number-container{
-        display: flex;
-        align-items: center;
-        width: 15px;
-        height: 15px;
-        justify-content: center;
-        margin: 0 0 10px 0px;
-        border-radius: 50%;
-        background: #f5af47;
-        font-size: 0.7em;
-        padding: 3px;
-        color: #7e375f;
-      }
     }
   }
 </style>

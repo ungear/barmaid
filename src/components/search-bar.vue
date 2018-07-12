@@ -18,7 +18,8 @@
         class='search-bar__body' 
         :disabled='searchBy !== searchByTypes.ingredient' 
         v-model='searchIngredient'
-        v-if='getIngredientsStage === getIngredientsStages.dataReceived'>
+        v-if='getIngredientsStage === getIngredientsStages.dataReceived'
+        @change="onIngedientSelect()">
         <option v-for="ing in ingredients" v-bind:value="ing" :key='ing'>{{ing}}</option>
       </select>
       <spinner 
@@ -72,6 +73,12 @@ export default {
   },
   methods:{
     onSearchBtnClick: function(){
+      this._startSearshing()
+    },
+    onIngedientSelect: function(){
+      this._startSearshing()
+    },
+    _startSearshing(){
       this.$store.dispatch('startDrinkSearching', {
         param: this.searchBy === SEARCH_BY.name ? this.searchName : this.searchIngredient,
         searchBy: this.searchBy

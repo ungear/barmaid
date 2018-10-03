@@ -17,7 +17,7 @@
       <select 
         class='search-bar__body' 
         :disabled='searchBy !== searchByTypes.ingredient' 
-        v-model='searchIngredient'
+        v-model='searchIngredientId'
         v-if='getIngredientsStage === getIngredientsStages.dataReceived'
         @change="onIngedientSelect()">
         <option v-for="ing in ingredients" v-bind:value="ing._id" :key='ing._id'>{{ing.ingredientName}}</option>
@@ -47,7 +47,7 @@ export default {
   data: function() {
     return {
       searchName: null,
-      searchIngredient: null,
+      searchIngredientId: null,
       searchBy: null
     };
   },
@@ -58,7 +58,7 @@ export default {
     isSearchButtonActive() {
       return this.searchBy === SEARCH_BY.name
         ? !!this.searchName
-        : !!this.searchIngredient;
+        : !!this.searchIngredientId;
     },
     isSearchNameFieldEnabled() {
       return this.searchBy === this.searchByTypes.name;
@@ -67,7 +67,7 @@ export default {
   watch: {
     searchBy: function(newValue, oldValue) {
       // clean form feilds
-      if (newValue === SEARCH_BY.name) this.searchIngredient = null;
+      if (newValue === SEARCH_BY.name) this.searchIngredientId = null;
       else this.searchName = null;
     }
   },
@@ -83,7 +83,7 @@ export default {
         param:
           this.searchBy === SEARCH_BY.name
             ? this.searchName
-            : this.searchIngredient,
+            : this.searchIngredientId,
         searchBy: this.searchBy
       });
     }
@@ -92,7 +92,7 @@ export default {
     this.searchName = this.$store.getters.isSearchingByName
       ? this.searchingParamsState.param
       : null;
-    this.searchIngredient = this.$store.getters.isSearchingByIngredient
+    this.searchIngredientId = this.$store.getters.isSearchingByIngredient
       ? this.searchingParamsState.param
       : null;
     this.searchBy = this.searchingParamsState.searchBy;

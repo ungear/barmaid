@@ -20,7 +20,7 @@
         v-model='searchIngredient'
         v-if='getIngredientsStage === getIngredientsStages.dataReceived'
         @change="onIngedientSelect()">
-        <option v-for="ing in ingredients" v-bind:value="ing" :key='ing'>{{ing}}</option>
+        <option v-for="ing in ingredients" v-bind:value="ing._id" :key='ing._id'>{{ing.ingredientName}}</option>
       </select>
       <spinner 
         class='search-bar__body search-bar__body--spinner' 
@@ -36,128 +36,130 @@
 </template>
 
 <script>
-import {SEARCH_BY} from '../consts/consts'
-import { mapState } from 'vuex'
-import { GET_INGREDIENTS_STAGES } from '../consts/consts';
-import Spinner from './spinner.vue';
+import { SEARCH_BY } from "../consts/consts";
+import { mapState } from "vuex";
+import { GET_INGREDIENTS_STAGES } from "../consts/consts";
+import Spinner from "./spinner.vue";
 
 export default {
-  name: 'search-bar',
-  components: {Spinner}, 
-  data: function(){
+  name: "search-bar",
+  components: { Spinner },
+  data: function() {
     return {
       searchName: null,
       searchIngredient: null,
-      searchBy: null,
-    }
+      searchBy: null
+    };
   },
-  computed:mapState({
+  computed: mapState({
     searchingParamsState: state => state.searching,
-    ingredients: state => state.ingredients.flatNamesList,
+    ingredients: state => state.ingredients.ingredientsList,
     getIngredientsStage: state => state.ingredients.gettingIngredientsStatus,
-    isSearchButtonActive(){
+    isSearchButtonActive() {
       return this.searchBy === SEARCH_BY.name
         ? !!this.searchName
-        : !!this.searchIngredient
+        : !!this.searchIngredient;
     },
-    isSearchNameFieldEnabled(){
+    isSearchNameFieldEnabled() {
       return this.searchBy === this.searchByTypes.name;
     }
   }),
-  watch:{
-    searchBy: function(newValue, oldValue){
+  watch: {
+    searchBy: function(newValue, oldValue) {
       // clean form feilds
-      if(newValue === SEARCH_BY.name) this.searchIngredient = null
-      else this.searchName = null
+      if (newValue === SEARCH_BY.name) this.searchIngredient = null;
+      else this.searchName = null;
     }
   },
-  methods:{
-    onSearchBtnClick: function(){
-      this._startSearshing()
+  methods: {
+    onSearchBtnClick: function() {
+      this._startSearshing();
     },
-    onIngedientSelect: function(){
-      this._startSearshing()
+    onIngedientSelect: function() {
+      this._startSearshing();
     },
-    _startSearshing(){
-      this.$store.dispatch('startDrinkSearching', {
-        param: this.searchBy === SEARCH_BY.name ? this.searchName : this.searchIngredient,
+    _startSearshing() {
+      this.$store.dispatch("startDrinkSearching", {
+        param:
+          this.searchBy === SEARCH_BY.name
+            ? this.searchName
+            : this.searchIngredient,
         searchBy: this.searchBy
-      })
+      });
     }
   },
-  created: function(){
-    this.searchName = this.$store.getters.isSearchingByName 
+  created: function() {
+    this.searchName = this.$store.getters.isSearchingByName
       ? this.searchingParamsState.param
       : null;
-    this.searchIngredient = this.$store.getters.isSearchingByIngredient 
+    this.searchIngredient = this.$store.getters.isSearchingByIngredient
       ? this.searchingParamsState.param
       : null;
     this.searchBy = this.searchingParamsState.searchBy;
     this.searchByTypes = SEARCH_BY;
     this.getIngredientsStages = GET_INGREDIENTS_STAGES;
-    this.$store.dispatch('getAllIngredients')
+    this.$store.dispatch("getAllIngredients");
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
-  @import '../colorScheme.scss';
-  @import '../functions.scss';
+@import "../colorScheme.scss";
+@import "../functions.scss";
 
-  $formBorderRadius: 5px;
-  .search-bar{
-    display: flex;
+$formBorderRadius: 5px;
+.search-bar {
+  display: flex;
+}
+.search-bar__section {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  &--button {
+    overflow: visible;
   }
-  .search-bar__section{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    &--button{
-      overflow: visible;
+}
+.search-bar__header {
+  height: 20px;
+  display: block;
+  &--label {
+    cursor: pointer;
+    &:hover {
+      color: $blueMunsell;
     }
   }
-  .search-bar__header{
-    height: 20px;
-    display: block;
-    &--label{
-      cursor: pointer;
-      &:hover{
-        color: $blueMunsell;
-      }
-    }
+}
+.search-bar__body {
+  border: 1px solid #ccc;
+  display: block;
+  height: 30px;
+  padding: 5px;
+  background: $white;
+  transition: background-color 0.2s;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  &:disabled {
+    background: #eee;
   }
-  .search-bar__body{
-    border: 1px solid #ccc;
-    display: block;
-    height: 30px;
-    padding: 5px;
-    background:$white;
-    transition: background-color 0.2s;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    &:disabled{
+  &--first {
+    border-top-left-radius: $formBorderRadius;
+    border-bottom-left-radius: $formBorderRadius;
+  }
+  &--button {
+    cursor: pointer;
+    border-top-right-radius: $formBorderRadius;
+    border-bottom-right-radius: $formBorderRadius;
+    padding: 6px 12px;
+    &:hover {
       background: #eee;
     }
-    &--first{
-      border-top-left-radius: $formBorderRadius;
-      border-bottom-left-radius: $formBorderRadius;
-    }
-    &--button{
-      cursor: pointer;
-      border-top-right-radius: $formBorderRadius;
-      border-bottom-right-radius: $formBorderRadius;
-      padding: 6px 12px;
-      &:hover{
-        background: #eee;
-      };
-      &:disabled{
-        cursor: not-allowed;
-      }
-    }
-    &--spinner{
-      height: 30px !important;
-      width: 120px !important;
-      background: #eee;
+    &:disabled {
+      cursor: not-allowed;
     }
   }
+  &--spinner {
+    height: 30px !important;
+    width: 120px !important;
+    background: #eee;
+  }
+}
 </style>

@@ -12,9 +12,9 @@
         <drink-alc-type-icon class='drink-snippet__type-icon' :alcType='drink.alcType'></drink-alc-type-icon>
         <div class='drink-snippet__ingredients'>
           <div class="ingredients-list">
-            <span v-for='(ing, key) in drink.ingredients' 
+            <span v-for='(name, key) in drinkIngredientNames' 
               class='ingredients-list__tag'
-              :key='key'>{{ing.name}}</span>
+              :key='key'>{{name}}</span>
           </div>
         </div>
       </div>
@@ -37,6 +37,7 @@ export default {
     drink: Object
   },
   computed: mapState({
+    ingredientsList: state => state.ingredients.ingredientsList,
     drinkLinkString() {
       return [
         this.drink._id,
@@ -47,6 +48,11 @@ export default {
       return this.drink.thumbImageUrl.indexOf("https://") === 0
         ? this.drink.thumbImageUrl
         : "https://" + this.drink.thumbImageUrl;
+    },
+    drinkIngredientNames() {
+      return this.drink.ingredients.map(
+        x => this.ingredientsList.find(t => t._id === x.ingId).ingredientName
+      );
     }
   }),
   created() {}

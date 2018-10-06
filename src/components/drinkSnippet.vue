@@ -5,16 +5,14 @@
     </div>
     <div class='drink-snippet__info'>
       <div class='drink-snippet__row'>
-        <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drinkShortData.strDrink}}</router-link>
-        <favorite-mark :drinkId="drinkShortData.idDrink"></favorite-mark>
+        <router-link class='drink-snippet__name' :to='{name: "drink", params: {link: drinkLinkString}}'>{{drink.name}}</router-link>
+        <favorite-mark :drinkId="drink._id"></favorite-mark>
       </div>
       <div class='drink-snippet__row'>
-        <spinner class='drink-snippet__spinner'
-          v-if="currentDetailsLoadingStage === detailsLoadingStages.inProgress" ></spinner>
-        <drink-alc-type-icon class='drink-snippet__type-icon' :alcType='drinkFullData.strAlcoholic'></drink-alc-type-icon>
-        <div class='drink-snippet__ingredients' v-if="drinkFullData">
+        <drink-alc-type-icon class='drink-snippet__type-icon' :alcType='drink.alcType'></drink-alc-type-icon>
+        <div class='drink-snippet__ingredients'>
           <div class="ingredients-list">
-            <span v-for='(ing, key) in drinkFullData.ingredients' 
+            <span v-for='(ing, key) in drink.ingredients' 
               class='ingredients-list__tag'
               :key='key'>{{ing.name}}</span>
           </div>
@@ -25,130 +23,110 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { getDrinkById } from '../services/apiService';
-import FavoriteMark from './favorite-mark.vue';
-import Spinner from './spinner.vue';
-import {DrinkShort} from '../models/drinkShort';
-import DrinkAlcTypeIcon from './drinkAlcTypeIcon.vue';
-
-const detailsLoadingStages = {
-  inProgress: 0,
-  loaded: 1,
-  failed: 2
-}
+import { mapState } from "vuex";
+import { getDrinkById } from "../services/apiService";
+import FavoriteMark from "./favorite-mark.vue";
+import Spinner from "./spinner.vue";
+import { DrinkShort } from "../models/drinkShort";
+import DrinkAlcTypeIcon from "./drinkAlcTypeIcon.vue";
 
 export default {
-  name: 'drink-snippet',
-  components:{ FavoriteMark, Spinner, DrinkAlcTypeIcon },
-  props:{
-    drinkId: String,
+  name: "drink-snippet",
+  components: { FavoriteMark, Spinner, DrinkAlcTypeIcon },
+  props: {
+    drink: Object
   },
   computed: mapState({
-    drinkShortData(state){
-      return state.drinks.shortData[this.drinkId];
-    },
-    drinkFullData(state){
-      return state.drinks.fullData[this.drinkId];
-    },
-    currentDetailsLoadingStage(){
-      return this.drinkFullData
-        ? this.detailsLoadingStages.loaded
-        : this.detailsLoadingStages.inProgress
-    },
-    drinkLinkString(){
+    drinkLinkString() {
       return [
-        this.drinkId,
-        this.drinkShortData.strDrink.toLowerCase().replace(/\s/g, '-')
-      ].join('-');
+        this.drink._id,
+        this.drink.name.toLowerCase().replace(/\s/g, "-")
+      ].join("-");
     },
-    drinkThumbSrc(){
-      return this.drinkShortData.strDrinkThumb.indexOf('https://') === 0
-        ? this.drinkShortData.strDrinkThumb
-        : 'https://' + this.drinkShortData.strDrinkThumb
+    drinkThumbSrc() {
+      return this.drink.thumbImageUrl.indexOf("https://") === 0
+        ? this.drink.thumbImageUrl
+        : "https://" + this.drink.thumbImageUrl;
     }
   }),
-  created(){
-    this.detailsLoadingStages = detailsLoadingStages;
-  }
-}
+  created() {}
+};
 </script>
 
 <style lang="scss" scoped>
-  @import '../colorScheme.scss';
-  @import '../functions.scss';
+@import "../colorScheme.scss";
+@import "../functions.scss";
 
-
-  $tagColor: #555;
-  .drink-snippet{
+$tagColor: #555;
+.drink-snippet {
+  display: flex;
+  .drink-snippet__thumb {
+    width: 100px;
+    height: 100px;
+    flex: 0 0 auto;
+    background: #ccc;
+    border-radius: 50%;
+    overflow: hidden;
     display: flex;
-    .drink-snippet__thumb{
+    align-items: center;
+    justify-content: center;
+    .drink-snippet__thumb-image {
       width: 100px;
       height: 100px;
-      flex: 0 0 auto;
-      background: #ccc;
-      border-radius: 50%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .drink-snippet__thumb-image{
-        width: 100px;
-        height: 100px;
-        transition: width .5s, height .5s;
-        &:hover{
-          width: 120px;
-          height: 120px;
-        }
-      }
-    }
-    .drink-snippet__info{
-      display: flex;
-      flex-direction: column;
-      margin-left: 1em;
-      width: 100%;
-      .drink-snippet__row{
-        display: flex;
-        height: 100%;
-        width: 100%;
-        align-items: center;
-      }
-    }
-    .drink-snippet__spinner{
-      transform: scale(0.5);
-    }
-    .drink-snippet__name{
-      text-decoration: none;
-      color: #000;
-      font-weight: 700;
-      font-size: 1.3em;
-      &:hover{
-        color: $blueMunsell;
-      }
-    }
-    .drink-snippet__type-icon{
-      width: 30px;
-      height: 30px;
-    }
-    .drink-snippet__ingredients{
-      display: flex;
-      flex-wrap: nowrap;
-      overflow: hidden;
-      margin-left: 10px;
-      width: 100%;
-    }
-    .ingredients-list{   
-      .ingredients-list__tag{
-        display: inline-block;
-        border: 1px solid $tagColor;
-        border-radius: 5px;
-        background: #eee;
-        padding: 0px 7px;
-        margin: 5px 10px 0 0;
-        color: $tagColor;
+      transition: width 0.5s, height 0.5s;
+      &:hover {
+        width: 120px;
+        height: 120px;
       }
     }
   }
+  .drink-snippet__info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1em;
+    width: 100%;
+    .drink-snippet__row {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+    }
+  }
+  .drink-snippet__spinner {
+    transform: scale(0.5);
+  }
+  .drink-snippet__name {
+    text-decoration: none;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.3em;
+    &:hover {
+      color: $blueMunsell;
+    }
+  }
+  .drink-snippet__type-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .drink-snippet__ingredients {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    margin-left: 10px;
+    width: 100%;
+  }
+  .ingredients-list {
+    .ingredients-list__tag {
+      display: inline-block;
+      border: 1px solid $tagColor;
+      border-radius: 5px;
+      background: #eee;
+      padding: 0px 7px;
+      margin: 5px 10px 0 0;
+      color: $tagColor;
+    }
+  }
+}
 </style>
 
 

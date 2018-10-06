@@ -19,10 +19,8 @@ export const searchDrinksByName = function(name) {
 };
 
 export const searchDrinksByIng = function(ing) {
-  let url = API_BASE_URL + "filter.php?i=" + ing;
-  return axios
-    .get(url)
-    .then(response => (response.data.drinks ? response.data.drinks : []));
+  let url = API_BASE_URL + "drinks/by-ingredients?ingIds=" + ing;
+  return axios.get(url).then(response => response.data);
 };
 
 export const getDrinkById = function(id) {

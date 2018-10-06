@@ -9,71 +9,75 @@
 </template>
 
 <script>
-import AppHeader from './app-header.vue'
-import AppFooter from './app-footer.vue'
+import AppHeader from "./app-header.vue";
+import AppFooter from "./app-footer.vue";
 
 export default {
-  name: 'root',
-  components:{
-    AppHeader, AppFooter
-  },
-}
+  name: "root",
+  components: {
+    AppHeader,
+    AppFooter
+  }
+};
 </script>
 
 <style lang="scss">
-  @import '../colorScheme.scss';
-  @import '~normalize.css/normalize.css';
-  *{
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
-  }
-  html, body{
-    height: 100%
-  }
-  html{
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  #app{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  #main{
-    flex: 1;
-    padding: 0.5em;
-  }
-  footer{
-    background:$lightGray
-  }
+@import "../colorScheme.scss";
+@import "~normalize.css/normalize.css";
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#main {
+  flex: 1;
+  padding: 0.5em;
+}
+footer {
+  background: $lightGray;
+}
 
-  .fade-leave-active, .fade-enter-active {
-    transition: opacity .3s;
-  }
-  .fade-enter, .fade-leave-to{
-    opacity: 0;
-  }
+.fade-leave-active,
+.fade-enter-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 
-  .container{
-  }
+.container {
+}
 
-  @media (min-width: 800px){
-    .container{
-      width: 800px;
-      margin: auto;
-    }
+@media (min-width: 800px) {
+  .container {
+    width: 800px;
+    margin: auto;
   }
+}
 
-  @font-face {
-    font-family: 'barmaid';
-    src: url('../assets/barmaid.eot');
-    src: url('../assets/barmaid.eot#iefix') format('embedded-opentype'),
-          url('../assets/barmaid.woff') format('woff'),
-          url('../assets/barmaid.ttf') format('truetype'),
-          url('../assets/barmaid.svg#barmaid') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
+@font-face {
+  font-family: "barmaid";
+  src: url("../assets/barmaid.eot");
+  src: url("../assets/barmaid.eot#iefix") format("embedded-opentype"),
+    url("../assets/barmaid.woff") format("woff"),
+    url("../assets/barmaid.ttf") format("truetype"),
+    url("../assets/barmaid.svg#barmaid") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
 </style>
 
 

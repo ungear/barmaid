@@ -24,10 +24,8 @@ export const searchDrinksByIng = function(ing) {
 };
 
 export const getDrinkById = function(id) {
-  let url = API_BASE_URL + "lookup.php?i=" + id;
-  return axios
-    .get(url)
-    .then(response => new DrinkFull(response.data.drinks[0]));
+  let url = API_BASE_URL + "drinks/full/" + id;
+  return axios.get(url).then(response => response.data);
 };
 
 export const getIngredients = function() {

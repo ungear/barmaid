@@ -5,7 +5,7 @@
     </div>
     <drinks-list
       class='favorite-drinks__list'
-      :drinkIds="favoriteDrinkIds"
+      :drinks="favoriteDrinksData"
       v-if='favoriteDrinkIds.length'></drinks-list>
     <div 
       class='favorite-drinks__empty' 
@@ -14,52 +14,59 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import DrinkSnippet from './drinkSnippet.vue'
-import DrinksList from './drinksList.vue';
-import { getDrinkById } from '../services/apiService';
+import { mapState } from "vuex";
+import DrinksList from "./drinksList.vue";
+import { getDrinkById } from "../services/apiService";
 
 export default {
-  name: 'favoriteDrinks',
-  components: {DrinkSnippet,DrinksList},
-  data(){
+  name: "favoriteDrinks",
+  components: { DrinksList },
+  data() {
     return {
       // .slice is used to prevent further changes in the array when drinks are disliked
-      favoriteDrinkIds: this.$store.state.favorites.favoriteDrinkIds.slice()
-    }
+      favoriteDrinkIds: this.$store.state.favorites.favoriteDrinkIds.slice(),
+      favoriteDrinksData: []
+    };
+  },
+  created() {
+    Promise.all(this.favoriteDrinkIds.map(x => getDrinkById(x))).then(data => {
+      this.favoriteDrinksData = data;
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .favorite-drinks{
-    &__title{
-      display: inline-block;
-    }
-    &__head{
-      min-height: 24px;
-    }
-    &__restore{
-      margin-left: 1em;
-      padding: 3px 6px;
-      font-size: 0.8em;
-      border: 1px solid #ccc;
-      background: #eee;
-      border-radius: 3px;
-    }
-    .favorite-drinks__list{
-      margin: 1em 0;
-    }
-    .favorite-drinks__empty{
-      padding-top: 30px;
-    }
-    .fade-leave-active, .fade-enter-active {
-      transition: opacity .3s;
-    }
-    .fade-enter, .fade-leave-to{
-      opacity: 0;
-    }
+.favorite-drinks {
+  &__title {
+    display: inline-block;
   }
+  &__head {
+    min-height: 24px;
+  }
+  &__restore {
+    margin-left: 1em;
+    padding: 3px 6px;
+    font-size: 0.8em;
+    border: 1px solid #ccc;
+    background: #eee;
+    border-radius: 3px;
+  }
+  .favorite-drinks__list {
+    margin: 1em 0;
+  }
+  .favorite-drinks__empty {
+    padding-top: 30px;
+  }
+  .fade-leave-active,
+  .fade-enter-active {
+    transition: opacity 0.3s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
 </style>
 
 

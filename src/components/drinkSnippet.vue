@@ -24,7 +24,6 @@
 
 <script>
 import { mapState } from "vuex";
-import { getDrinkById } from "../services/apiService";
 import FavoriteMark from "./favorite-mark.vue";
 import Spinner from "./spinner.vue";
 import { DrinkShort } from "../models/drinkShort";

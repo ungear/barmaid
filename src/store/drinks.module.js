@@ -1,4 +1,4 @@
-import { getDrinkById } from "../services/apiService";
+import { getDrinkFullDataById } from "../services/apiService";
 import Vue from "vue";
 
 const state = {
@@ -10,7 +10,7 @@ const state = {
 const actions = {
   loadDrinkFullData: ({ commit, state }, drinkId) => {
     return new Promise((resolve, reject) => {
-      getDrinkById(drinkId).then(drinkFull => {
+      getDrinkFullDataById(drinkId).then(drinkFull => {
         commit("addDrinkFullData", drinkFull);
         resolve(drinkFull);
       });

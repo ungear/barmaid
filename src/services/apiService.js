@@ -6,11 +6,6 @@ import { DrinkFull } from "../models/drinkFull";
 // const API_BASE_URL = API_URL + API_KEY + '/';
 const API_BASE_URL = "https://barmaid-api.ungear.ru/";
 
-export const getDrinksByIngreidient = function(ingredient) {
-  let url = API_BASE_URL + "filter.php?i=" + ingredient;
-  return axios.get(url);
-};
-
 export const searchDrinksByName = function(name) {
   let url = API_BASE_URL + "search.php?s=" + name;
   return axios
@@ -24,6 +19,11 @@ export const searchDrinksByIng = function(ing) {
 };
 
 export const getDrinkById = function(id) {
+  let url = API_BASE_URL + "drinks/" + id;
+  return axios.get(url).then(response => response.data);
+};
+
+export const getDrinkFullDataById = function(id) {
   let url = API_BASE_URL + "drinks/full/" + id;
   return axios.get(url).then(response => response.data);
 };

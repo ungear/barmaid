@@ -20,6 +20,8 @@ const actions = {
         .catch(function(error) {
           commit("changeRequestStage", GET_INGREDIENTS_STAGES.failed);
         });
+    } else {
+      commit("changeRequestStage", GET_INGREDIENTS_STAGES.dataReceived);
     }
   }
   // getDetailedIngredientByName: ({ commit, state, getters }, name) => {

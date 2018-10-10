@@ -7,10 +7,8 @@ import { DrinkFull } from "../models/drinkFull";
 const API_BASE_URL = "https://barmaid-api.ungear.ru/";
 
 export const searchDrinksByName = function(name) {
-  let url = API_BASE_URL + "search.php?s=" + name;
-  return axios
-    .get(url)
-    .then(response => (response.data.drinks ? response.data.drinks : []));
+  let url = API_BASE_URL + "drinks/by-name?like=" + name;
+  return axios.get(url).then(response => response.data);
 };
 
 export const searchDrinksByIng = function(ing) {

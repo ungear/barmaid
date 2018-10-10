@@ -35,11 +35,6 @@ export const getIngredients = function() {
   });
 };
 
-export const getIngredientByName = function(name) {
-  let url = API_BASE_URL + "search.php?i=" + name;
-  return axios.get(url).then(response => response.data.ingredients[0]);
-};
-
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

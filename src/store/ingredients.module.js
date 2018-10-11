@@ -1,7 +1,5 @@
 import { getIngredients } from "../services/apiService";
 import { GET_INGREDIENTS_STAGES } from "../consts/consts";
-import { getIngredientKeyByName } from "../services/ingredientsService";
-import Vue from "vue";
 
 const state = {
   ingredientsList: [],
@@ -33,13 +31,6 @@ const mutations = {
   changeRequestStage(state, currentStage) {
     state.gettingIngredientsStatus = currentStage;
   }
-  // saveDetailedIngredient(state, ingredient) {
-  //   Vue.set(
-  //     state.detailedList,
-  //     getIngredientKeyByName(ingredient.strIngredient),
-  //     ingredient
-  //   );
-  // }
 };
 
 export default {

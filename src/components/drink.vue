@@ -44,7 +44,6 @@
 
 <script>
 import { mapState } from "vuex";
-import { getIngredientKeyByName } from "../services/ingredientsService";
 import FavoriteMark from "./favorite-mark.vue";
 import DrinkAlcTypeIcon from "./drinkAlcTypeIcon.vue";
 

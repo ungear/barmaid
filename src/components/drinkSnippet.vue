@@ -26,7 +26,6 @@
 import { mapState } from "vuex";
 import FavoriteMark from "./favorite-mark.vue";
 import Spinner from "./spinner.vue";
-import { DrinkShort } from "../models/drinkShort";
 import DrinkAlcTypeIcon from "./drinkAlcTypeIcon.vue";
 
 export default {

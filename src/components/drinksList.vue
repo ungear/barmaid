@@ -23,7 +23,7 @@
     </div>
     <drink-snippet 
       class='drinks-list__item'
-      :class="{'drinks-list__item--hidden': hiddenTypes.includes(x.strAlcoholic)}" 
+      :class="{'drinks-list__item--hidden': hiddenTypes.includes(x.alcType)}" 
       :drink="x" 
       v-for="x in processedDrinksData" 
       v-bind:key="x.idDrink"></drink-snippet>
@@ -75,14 +75,14 @@ export default {
 };
 
 function sortDrinksByName(a, b) {
-  if (a.strDrink < b.strDrink) return -1;
-  else if (a.strDrink > b.strDrink) return 1;
+  if (a.name < b.name) return -1;
+  else if (a.name > b.name) return 1;
   else return 0;
 }
 
 function sortDrinksByTypeThenName(a, b) {
-  if (a.strAlcoholic < b.strAlcoholic) return -1;
-  else if (a.strAlcoholic > b.strAlcoholic) return 1;
+  if (a.alcType < b.alcType) return -1;
+  else if (a.alcType > b.alcType) return 1;
   else return sortDrinksByName(a, b);
 }
 </script>

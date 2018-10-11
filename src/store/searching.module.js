@@ -1,6 +1,5 @@
 import { SEARCH_BY, DRINK_SEARCHING_STAGES } from "../consts/consts";
 import { searchDrinksByName, searchDrinksByIng } from "../services/apiService";
-import { DrinkShort } from "../models/drinkShort";
 
 const state = {
   param: null,
@@ -28,7 +27,6 @@ const actions = {
             : DRINK_SEARCHING_STAGES.drinksFound
         );
         commit("setDrinkSearchingResults", drinks);
-        //drinks.forEach(d => dispatch("saveDrinkShortData", d));
       })
       .catch(x =>
         commit("setDrinkSearchingFlag", DRINK_SEARCHING_STAGES.failed)

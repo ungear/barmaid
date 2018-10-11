@@ -1,9 +1,5 @@
 import axios from "axios";
-import { DrinkFull } from "../models/drinkFull";
 
-// const API_URL = 'https://www.thecocktaildb.com/api/json/v1/';
-// const API_KEY = '1';
-// const API_BASE_URL = API_URL + API_KEY + '/';
 const API_BASE_URL = "https://barmaid-api.ungear.ru/";
 
 export const searchDrinksByName = function(name) {

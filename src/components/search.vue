@@ -1,5 +1,9 @@
 <template>
   <div class="drink-searching">
+    <ul class="tabs">
+      <li class="tabs__tab">Search by name</li>
+      <li class="tabs__tab">Search by ingredients</li>
+    </ul>
     <h3 class='drink-searching__title'>Search drinks</h3>
     <search-bar class='drink-searching__searchbar'></search-bar>
     <drinks-list 
@@ -36,6 +40,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$tabs-border-color: #ccc;
+.tabs {
+  list-style: none;
+  display: flex;
+  &__tab {
+    border: 1px solid $tabs-border-color;
+    border-radius: 5px;
+    border-bottom-color: transparent;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 5px 10px;
+  }
+}
+
 .drink-searching {
   .drink-searching__searchbar {
     margin-top: 0.5em;

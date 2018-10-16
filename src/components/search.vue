@@ -1,9 +1,9 @@
 <template>
   <div class="drink-searching">
-    <ul class="tabs">
-      <li class="tabs__tab">Search by name</li>
-      <li class="tabs__tab">Search by ingredients</li>
-    </ul>
+    <search-tabs
+      :activeTab="activeTab"
+      @switchTab="onTabSwitched($event)"
+    ></search-tabs>
     <h3 class='drink-searching__title'>Search drinks</h3>
     <search-bar class='drink-searching__searchbar'></search-bar>
     <drinks-list 
@@ -23,37 +23,34 @@
 import SearchBar from "./search-bar.vue";
 import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
+import SearchTabs from "./search-tabs.vue";
 import { mapState } from "vuex";
 import { DRINK_SEARCHING_STAGES } from "../consts/consts";
 
 export default {
   name: "search",
-  components: { SearchBar, DrinksList, Spinner },
+  data:function() {
+    return {
+      activeTab: "name",
+    };
+  },
+  components: { SearchBar, DrinksList, Spinner, SearchTabs },
   computed: mapState({
     searchingStage: state => state.searching.searchingStage,
     result: state => state.searching.result
   }),
   created() {
     this.searchingStages = DRINK_SEARCHING_STAGES;
+  },
+  methods:{
+    onTabSwitched: function(tabName){
+      this.activeTab = tabName
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-$tabs-border-color: #ccc;
-.tabs {
-  list-style: none;
-  display: flex;
-  &__tab {
-    border: 1px solid $tabs-border-color;
-    border-radius: 5px;
-    border-bottom-color: transparent;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    padding: 5px 10px;
-  }
-}
-
 .drink-searching {
   .drink-searching__searchbar {
     margin-top: 0.5em;

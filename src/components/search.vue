@@ -25,13 +25,13 @@ import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
 import SearchTabs from "./search-tabs.vue";
 import { mapState } from "vuex";
-import { DRINK_SEARCHING_STAGES } from "../consts/consts";
+import { DRINK_SEARCHING_STAGES, SEARCHING_TABS } from "../consts/consts";
 
 export default {
   name: "search",
   data:function() {
     return {
-      activeTab: "name",
+      activeTab: SEARCHING_TABS.name,
     };
   },
   components: { SearchBar, DrinksList, Spinner, SearchTabs },
@@ -43,8 +43,8 @@ export default {
     this.searchingStages = DRINK_SEARCHING_STAGES;
   },
   methods:{
-    onTabSwitched: function(tabName){
-      this.activeTab = tabName
+    onTabSwitched: function(tab){
+      this.activeTab = tab
     }
   }
 };

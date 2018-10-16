@@ -17,3 +17,8 @@ export const GET_INGREDIENTS_STAGES = {
   dataReceived: 2,
   failed: 3
 }
+
+export const SEARCHING_TABS = {
+  name: "name",
+  ingredients: "ingredients",
+}

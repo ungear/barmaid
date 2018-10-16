@@ -2,25 +2,32 @@
   <ul class="tabs">
     <li 
       class="tabs__tab" 
-      :class="{ 'tabs__tab--active': activeTab === 'name'}"
-      @click='onTabClick("name")'>Search by name</li>
+      :class="{ 'tabs__tab--active': activeTab === SEARCHING_TABS.name}"
+      @click='onTabClick(SEARCHING_TABS.name)'>Search by name</li>
     <li 
       class="tabs__tab"
-      :class="{ 'tabs__tab--active': activeTab === 'ingredients'}"
-      @click='onTabClick("ingredients")'>Search by ingredients</li>
+      :class="{ 'tabs__tab--active': activeTab === SEARCHING_TABS.ingredients}"
+      @click='onTabClick(SEARCHING_TABS.ingredients)'>Search by ingredients</li>
   </ul>
 </template>
 
 <script>
+import { SEARCHING_TABS } from "../consts/consts";
+
 export default {
   name: "search-tabs",
   props: {
     activeTab:String
   },
+  data: function(){
+    return{
+      SEARCHING_TABS: SEARCHING_TABS
+    }
+  },
   methods:{
-    onTabClick: function(tabName){
-      if(tabName !== this.activeTab)
-        this.$emit('switchTab', tabName)
+    onTabClick: function(tab){
+      if(tab !== this.activeTab)
+        this.$emit('switchTab', tab)
     }
   }
 }

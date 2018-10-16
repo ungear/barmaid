@@ -1,8 +1,8 @@
 <template>
   <div class="drink-searching">
     <div class="searchbar">
-      <input type="text" v-model="searchName"/>
-      <button @click="onSearchClick()">search</button>
+      <input class="searchbar__input" type="text" v-model="searchName"/>
+      <button class="searchbar__button" @click="onSearchClick()">Search</button>
     </div>
     <drinks-list 
       v-if="searchingStage == searchingStages.drinksFound" 
@@ -19,31 +19,38 @@
 
 <script>
 import { DRINK_SEARCHING_STAGES } from "../consts/consts";
+import { searchDrinksByName } from "../services/apiService";
 import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
 
 export default {
   name: "search-by-name",
-  data:function() {
+  data: function() {
     return {
       searchName: "",
-      searchingStage:DRINK_SEARCHING_STAGES.notStartedYet,
+      searchingStage: DRINK_SEARCHING_STAGES.notStartedYet,
+      result: null
     };
   },
   components: { DrinksList, Spinner },
-  // computed: mapState({
-  //   searchingStage: state => state.searching.searchingStage,
-  //   result: state => state.searching.result
-  // }),
   created() {
     this.searchingStages = DRINK_SEARCHING_STAGES;
   },
-  methods:{
-    onSearchClick: function(){
-      console.log(this.searchName)
+  methods: {
+    onSearchClick: function() {
+      this.searchingStage = DRINK_SEARCHING_STAGES.inProgress;
+      searchDrinksByName(this.searchName).then(drinks => {
+        if (drinks.length === 0) {
+          this.searchingStage = DRINK_SEARCHING_STAGES.noResults;
+          return;
+        }
+
+        this.searchingStage = DRINK_SEARCHING_STAGES.drinksFound;
+        this.result = drinks;
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +68,27 @@ export default {
     text-align: center;
     padding-top: 30px;
     font-weight: 600;
+  }
+}
+
+.searchbar {
+  display: flex;
+  height: 30px;
+  max-width: 300px;
+  margin: 10px 0;
+  &__input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  &__button {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 }
 </style>

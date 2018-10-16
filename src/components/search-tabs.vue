@@ -17,7 +17,7 @@ import { SEARCHING_TABS } from "../consts/consts";
 export default {
   name: "search-tabs",
   props: {
-    activeTab:String
+    activeTab: String
   },
   data: function(){
     return{
@@ -42,14 +42,15 @@ $tabs-border-color: #ccc;
   &__tab {
     border: 1px solid $tabs-border-color;
     border-radius: 5px;
-    border-bottom-color: transparent;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    border-bottom-width: 0px;
     padding: 5px 10px;
-    background: #fff;
+    background: #eee;
     cursor: pointer;
     &--active{
       margin-bottom: -1px;
+      background: #fff;
     }
   }
   &__tab + &__tab{

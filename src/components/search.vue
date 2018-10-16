@@ -4,18 +4,25 @@
       :activeTab="activeTab"
       @switchTab="onTabSwitched($event)"
     ></search-tabs>
-    <h3 class='drink-searching__title'>Search drinks</h3>
-    <search-bar class='drink-searching__searchbar'></search-bar>
-    <drinks-list 
-      v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'
-      :drinks="result"></drinks-list>
-    <spinner 
-      class='drink-searching__spinner' 
-      v-if="searchingStage == searchingStages.inProgress"></spinner>
-    <div 
-      class='drink-searching__zero-result'
-      v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+    <div v-if="activeTab === SEARCHING_TABS.name ">
+      <div class="searchbar">
+        <input type="text" v-model="searchName"/>
+        <button @click="onSearchClick()">search</button>
+      </div>
+      <drinks-list 
+        v-if="searchingStage == searchingStages.drinksFound" 
+        class='drink-searching__results'
+        :drinks="result"></drinks-list>
+      <spinner 
+        class='drink-searching__spinner' 
+        v-if="searchingStage == searchingStages.inProgress"></spinner>
+      <div 
+        class='drink-searching__zero-result'
+        v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+    </div>
+    <div v-if="activeTab === SEARCHING_TABS.ingredients ">
+      <span>ings</span>
+    </div>
   </div>
 </template>
 
@@ -31,7 +38,9 @@ export default {
   name: "search",
   data:function() {
     return {
+      SEARCHING_TABS: SEARCHING_TABS,
       activeTab: SEARCHING_TABS.name,
+      searchName: ""
     };
   },
   components: { SearchBar, DrinksList, Spinner, SearchTabs },
@@ -45,6 +54,9 @@ export default {
   methods:{
     onTabSwitched: function(tab){
       this.activeTab = tab
+    },
+    onSearchClick: function(){
+      console.log(this.searchName)
     }
   }
 };

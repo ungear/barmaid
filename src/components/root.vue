@@ -2,7 +2,11 @@
   <div>
     <app-header ></app-header>
     <transition name="fade" mode="out-in">
-      <router-view id='main' class='container'></router-view>
+      <span v-if='getIngredientsStage === getIngredientsStages.inProgress'>loading</span>
+      <router-view 
+        v-if='getIngredientsStage === getIngredientsStages.dataReceived' 
+        id='main' 
+        class='container'></router-view>
     </transition>
     <app-footer></app-footer>
   </div>
@@ -11,12 +15,21 @@
 <script>
 import AppHeader from "./app-header.vue";
 import AppFooter from "./app-footer.vue";
+import { GET_INGREDIENTS_STAGES } from "../consts/consts";
+import { mapState } from "vuex";
 
 export default {
   name: "root",
   components: {
     AppHeader,
     AppFooter
+  },
+  computed: mapState({
+    getIngredientsStage: state => state.ingredients.gettingIngredientsStatus
+  }),
+  created: function() {
+    this.getIngredientsStages = GET_INGREDIENTS_STAGES;
+    this.$store.dispatch("getAllIngredients");
   }
 };
 </script>

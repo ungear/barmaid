@@ -2,11 +2,17 @@
   <div>
     <app-header ></app-header>
     <transition name="fade" mode="out-in">
-      <span v-if='getIngredientsStage === getIngredientsStages.inProgress'>loading</span>
-      <router-view 
-        v-if='getIngredientsStage === getIngredientsStages.dataReceived' 
-        id='main' 
-        class='container'></router-view>
+      <section class="main">
+        <div 
+          class="main__loader"
+          v-if='getIngredientsStage === getIngredientsStages.inProgress'
+        >
+          <spinner></spinner>
+        </div>
+        <router-view 
+          v-if='getIngredientsStage === getIngredientsStages.dataReceived' 
+          class='container'></router-view>
+      </section>
     </transition>
     <app-footer></app-footer>
   </div>
@@ -17,12 +23,14 @@ import AppHeader from "./app-header.vue";
 import AppFooter from "./app-footer.vue";
 import { GET_INGREDIENTS_STAGES } from "../consts/consts";
 import { mapState } from "vuex";
+import Spinner from "./spinner.vue";
 
 export default {
   name: "root",
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    Spinner
   },
   computed: mapState({
     getIngredientsStage: state => state.ingredients.gettingIngredientsStatus
@@ -54,9 +62,14 @@ html {
   flex-direction: column;
   height: 100%;
 }
-#main {
+.main {
   flex: 1;
   padding: 0.5em;
+  &__loader {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
 }
 footer {
   background: $lightGray;

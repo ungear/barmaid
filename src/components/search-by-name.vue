@@ -1,7 +1,11 @@
 <template>
   <div class="drink-searching">
     <div class="searchbar">
-      <input class="searchbar__input" type="text" v-model="searchName"/>
+      <input 
+        class="searchbar__input" 
+        type="text" 
+        placeholder="Enter a drink name"
+        v-model="searchName"/>
       <button class="searchbar__button" @click="onSearchClick()">Search</button>
     </div>
     <drinks-list 

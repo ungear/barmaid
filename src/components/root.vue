@@ -71,7 +71,9 @@ footer {
   opacity: 0;
 }
 
-.container {
+input:focus,
+button:focus {
+  outline: none;
 }
 
 @media (min-width: 800px) {

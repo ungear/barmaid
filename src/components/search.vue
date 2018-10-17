@@ -6,33 +6,33 @@
     ></search-tabs>
     <search-by-name v-if="activeTab === SEARCHING_TABS.name "></search-by-name>
     <div v-if="activeTab === SEARCHING_TABS.ingredients ">
-      <span>ings</span>
+      <search-by-ingredients></search-by-ingredients>
     </div>
   </div>
 </template>
 
 <script>
 import SearchTabs from "./search-tabs.vue";
-import SearchByName from "./search-by-name.vue"
+import SearchByName from "./search-by-name.vue";
+import SearchByIngredients from "./search-by-ingredients.vue";
 import { SEARCHING_TABS } from "../consts/consts";
 
 export default {
   name: "search",
-  data:function() {
+  data: function() {
     return {
       SEARCHING_TABS: SEARCHING_TABS,
-      activeTab: SEARCHING_TABS.name,
+      activeTab: SEARCHING_TABS.name
     };
   },
-  components: { SearchTabs, SearchByName },
-  methods:{
-    onTabSwitched: function(tab){
-      this.activeTab = tab
-    },
+  components: { SearchTabs, SearchByName, SearchByIngredients },
+  methods: {
+    onTabSwitched: function(tab) {
+      this.activeTab = tab;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

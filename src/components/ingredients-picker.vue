@@ -1,20 +1,23 @@
 <template>
-  <div class="ings-picker">
-    <div class="ings-picker__list">
-      <div 
-        class="ings-picker__list-item"
-        v-for="x in ingredients"
-        v-bind:key="x._id"
-        @click="onAddIngredientClick(x)">{{x.ingredientName}}</div>
+  <div>
+    <div class="ings-picker">
+      <div class="ings-picker__list">
+        <div 
+          class="ings-picker__list-item"
+          v-for="x in ingredients"
+          v-bind:key="x._id"
+          @click="onAddIngredientClick(x)">{{x.ingredientName}}</div>
+      </div>
+      <div class="ings-picker__list">
+        <div 
+          class="ings-picker__list-item"
+          v-for="x in selectedIngs"
+          v-bind:key="x._id"
+          @click="onRemoveIngredientClick(x)">{{x.ingredientName}}</div>
+      </div>
     </div>
-    <div class="ings-picker__list">
-      <div 
-        class="ings-picker__list-item"
-        v-for="x in selectedIngs"
-        v-bind:key="x._id"
-        @click="onRemoveIngredientClick(x)">{{x.ingredientName}}</div>
-    </div>
-  </div>  
+    <button @click="onSearchButtonClick()">Search</button>
+  </div>
 </template>
 
 <script>
@@ -36,6 +39,9 @@ export default {
     },
     onRemoveIngredientClick(x) {
       this.selectedIngs.splice(this.selectedIngs.indexOf(x), 1);
+    },
+    onSearchButtonClick(){
+      this.$emit("select", this.selectedIngs)
     }
   }
 };

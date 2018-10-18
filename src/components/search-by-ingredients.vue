@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    search by ingredients
-    <ingredients-picker></ingredients-picker>
+    <ingredients-picker
+      @select="onIngredientsSelected($event)"></ingredients-picker>
   </div>
 </template>
 
@@ -10,7 +10,12 @@ import IngredientsPicker from "./ingredients-picker.vue";
 
 export default {
   name: "search-by-ingredients",
-  components: { IngredientsPicker }
+  components: { IngredientsPicker },
+  methods: {
+    onIngredientsSelected: function(x){
+      console.log(x)
+    }
+  }
 };
 </script>
 

@@ -8,6 +8,10 @@
           v-bind:key="x._id"
           @click="onAddIngredientClick(x)">{{x.ingredientName}}</div>
       </div>
+      <div class="ings-picker__middle">
+        <span>=></span>
+        <span><=</span>
+      </div>
       <div class="ings-picker__list">
         <div 
           class="ings-picker__list-item"
@@ -16,7 +20,9 @@
           @click="onRemoveIngredientClick(x)">{{x.ingredientName}}</div>
       </div>
     </div>
-    <button @click="onSearchButtonClick()">Search</button>
+    <div class="buttons">
+      <button class="buttons__search" @click="onSearchButtonClick()">Search</button>
+    </div>
   </div>
 </template>
 
@@ -40,8 +46,8 @@ export default {
     onRemoveIngredientClick(x) {
       this.selectedIngs.splice(this.selectedIngs.indexOf(x), 1);
     },
-    onSearchButtonClick(){
-      this.$emit("select", this.selectedIngs)
+    onSearchButtonClick() {
+      this.$emit("select", this.selectedIngs);
     }
   }
 };
@@ -60,13 +66,19 @@ export default {
     overflow-y: auto;
   }
 
-  &__list + &__list {
-    margin-left: 10px;
-  }
-
   &__list-item {
     cursor: pointer;
   }
+  &__middle {
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.buttons {
+  margin-top: 10px;
 }
 </style>
 

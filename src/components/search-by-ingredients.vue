@@ -1,16 +1,16 @@
 <template>
-  <div class="drink-searching">
+  <div class="searching">
     <ingredients-picker
       @select="onIngredientsSelected($event)"></ingredients-picker>
     <drinks-list 
       v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'
+      class='searching__results'
       :drinks="result"></drinks-list>
     <spinner 
-      class='drink-searching__spinner' 
+      class='searching__spinner' 
       v-if="searchingStage == searchingStages.inProgress"></spinner>
     <div 
-      class='drink-searching__zero-result'
+      class='searching__zero-result'
       v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
   </div>
 </template>
@@ -24,18 +24,18 @@ import Spinner from "./spinner.vue";
 
 export default {
   name: "search-by-ingredients",
-  data: function(){
+  data: function() {
     return {
       searchingStage: DRINK_SEARCHING_STAGES.notStartedYet,
       result: null
-    }
+    };
   },
-  components: { IngredientsPicker,DrinksList, Spinner},
+  components: { IngredientsPicker, DrinksList, Spinner },
   created() {
     this.searchingStages = DRINK_SEARCHING_STAGES;
   },
   methods: {
-    onIngredientsSelected: function(selectedIngs){
+    onIngredientsSelected: function(selectedIngs) {
       this.searchingStage = DRINK_SEARCHING_STAGES.inProgress;
       let ingIds = selectedIngs.map(x => x._id);
       searchDrinksByIng(ingIds).then(drinks => {
@@ -53,5 +53,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.searching {
+  padding-top: 10px;
+}
 </style>
 

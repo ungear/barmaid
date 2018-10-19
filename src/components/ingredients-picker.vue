@@ -1,23 +1,28 @@
 <template>
   <div>
     <div class="ings-picker">
-      <div class="ings-picker__list">
-        <div 
-          class="ings-picker__list-item"
-          v-for="x in ingredients"
-          v-bind:key="x._id"
-          @click="onAddIngredientClick(x)">{{x.ingredientName}}</div>
+      <div class="ings-picker__column">
+        <input type="text" class="ings-picker__filter-input" placeholder="Filter ingredients">
+        <div class="ings-picker__list">
+          <div 
+            class="ings-picker__list-item"
+            v-for="x in ingredients"
+            v-bind:key="x._id"
+            @click="onAddIngredientClick(x)">{{x.ingredientName}}</div>
+        </div>
       </div>
-      <div class="ings-picker__middle">
+      <div class="ings-picker__column ings-picker__column--middle">
         <span>=></span>
         <span><=</span>
       </div>
-      <div class="ings-picker__list">
-        <div 
-          class="ings-picker__list-item"
-          v-for="x in selectedIngs"
-          v-bind:key="x._id"
-          @click="onRemoveIngredientClick(x)">{{x.ingredientName}}</div>
+      <div class="ings-picker__column ings-picker__column--right">
+        <div class="ings-picker__list">
+          <div 
+            class="ings-picker__list-item"
+            v-for="x in selectedIngs"
+            v-bind:key="x._id"
+            @click="onRemoveIngredientClick(x)">{{x.ingredientName}}</div>
+        </div>
       </div>
     </div>
     <div class="buttons">
@@ -56,13 +61,30 @@ export default {
 <style lang="scss" scoped>
 .ings-picker {
   display: flex;
-  &__list {
+  &__column{
     flex: 1;
+    max-width: 250px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    &--middle{
+      flex: 0 0 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &--right{
+      padding-top: 30px;
+    }
+  }
+
+  &__list {
+    height: 100%;
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 5px;
-    max-width: 250px;
-    height: 300px;
+
     overflow-y: auto;
   }
 
@@ -75,6 +97,13 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  &__filter-input{
+    height: 25px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    padding: 3px;
+    border-radius: 5px;
   }
 }
 .buttons {

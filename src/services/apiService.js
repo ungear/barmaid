@@ -8,7 +8,7 @@ export const searchDrinksByName = function(name) {
 };
 
 export const searchDrinksByIng = function(ing) {
-  let url = API_BASE_URL + "drinks/by-ingredients?ingIds=" + ing;
+  let url = API_BASE_URL + "drinks/by-ingredients?ingIds=" + ing.join(";");
   return axios.get(url).then(response => response.data);
 };
 

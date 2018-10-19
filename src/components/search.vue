@@ -1,55 +1,38 @@
 <template>
-  <div class="drink-searching">
-    <h3 class='drink-searching__title'>Search drinks</h3>
-    <search-bar class='drink-searching__searchbar'></search-bar>
-    <drinks-list 
-      v-if="searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'
-      :drinks="result"></drinks-list>
-    <spinner 
-      class='drink-searching__spinner' 
-      v-if="searchingStage == searchingStages.inProgress"></spinner>
-    <div 
-      class='drink-searching__zero-result'
-      v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+  <div>
+    <search-tabs
+      :activeTab="activeTab"
+      @switchTab="onTabSwitched($event)"
+    ></search-tabs>
+    <search-by-name v-if="activeTab === SEARCHING_TABS.name "></search-by-name>
+    <div v-if="activeTab === SEARCHING_TABS.ingredients ">
+      <search-by-ingredients></search-by-ingredients>
+    </div>
   </div>
 </template>
 
 <script>
-import SearchBar from "./search-bar.vue";
-import DrinksList from "./drinksList.vue";
-import Spinner from "./spinner.vue";
-import { mapState } from "vuex";
-import { DRINK_SEARCHING_STAGES } from "../consts/consts";
+import SearchTabs from "./search-tabs.vue";
+import SearchByName from "./search-by-name.vue";
+import SearchByIngredients from "./search-by-ingredients.vue";
+import { SEARCHING_TABS } from "../consts/consts";
 
 export default {
   name: "search",
-  components: { SearchBar, DrinksList, Spinner },
-  computed: mapState({
-    searchingStage: state => state.searching.searchingStage,
-    result: state => state.searching.result
-  }),
-  created() {
-    this.searchingStages = DRINK_SEARCHING_STAGES;
+  data: function() {
+    return {
+      SEARCHING_TABS: SEARCHING_TABS,
+      activeTab: SEARCHING_TABS.name
+    };
+  },
+  components: { SearchTabs, SearchByName, SearchByIngredients },
+  methods: {
+    onTabSwitched: function(tab) {
+      this.activeTab = tab;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.drink-searching {
-  .drink-searching__searchbar {
-    margin-top: 0.5em;
-  }
-  .drink-searching__results {
-    margin: 1em 0;
-  }
-  .drink-searching__spinner {
-    margin: 20px 0 0 20px;
-  }
-  .drink-searching__zero-result {
-    text-align: center;
-    padding-top: 30px;
-    font-weight: 600;
-  }
-}
 </style>

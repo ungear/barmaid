@@ -2,7 +2,17 @@
   <div>
     <app-header ></app-header>
     <transition name="fade" mode="out-in">
-      <router-view id='main' class='container'></router-view>
+      <section class="main">
+        <div 
+          class="main__loader"
+          v-if='getIngredientsStage === getIngredientsStages.inProgress'
+        >
+          <spinner></spinner>
+        </div>
+        <router-view 
+          v-if='getIngredientsStage === getIngredientsStages.dataReceived' 
+          class='container'></router-view>
+      </section>
     </transition>
     <app-footer></app-footer>
   </div>
@@ -11,12 +21,23 @@
 <script>
 import AppHeader from "./app-header.vue";
 import AppFooter from "./app-footer.vue";
+import { GET_INGREDIENTS_STAGES } from "../consts/consts";
+import { mapState } from "vuex";
+import Spinner from "./spinner.vue";
 
 export default {
   name: "root",
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    Spinner
+  },
+  computed: mapState({
+    getIngredientsStage: state => state.ingredients.gettingIngredientsStatus
+  }),
+  created: function() {
+    this.getIngredientsStages = GET_INGREDIENTS_STAGES;
+    this.$store.dispatch("getAllIngredients");
   }
 };
 </script>
@@ -41,9 +62,14 @@ html {
   flex-direction: column;
   height: 100%;
 }
-#main {
+.main {
   flex: 1;
   padding: 0.5em;
+  &__loader {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
 }
 footer {
   background: $lightGray;
@@ -58,7 +84,9 @@ footer {
   opacity: 0;
 }
 
-.container {
+input:focus,
+button:focus {
+  outline: none;
 }
 
 @media (min-width: 800px) {

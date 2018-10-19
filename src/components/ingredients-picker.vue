@@ -75,7 +75,7 @@ export default {
   &__column{
     flex: 1;
     max-width: 250px;
-    height: 300px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     &--middle{

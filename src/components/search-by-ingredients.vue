@@ -2,16 +2,16 @@
   <div class="searching">
     <ingredients-picker
       @select="onIngredientsSelected($event)"></ingredients-picker>
-    <drinks-list 
-      v-if="searchingStage == searchingStages.drinksFound" 
-      class='searching__results'
-      :drinks="result"></drinks-list>
-    <spinner 
-      class='searching__spinner' 
-      v-if="searchingStage == searchingStages.inProgress"></spinner>
-    <div 
-      class='searching__zero-result'
-      v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+    <div class="searching__results">
+      <drinks-list 
+        v-if="searchingStage == searchingStages.drinksFound" 
+        :drinks="result"></drinks-list>
+      <spinner 
+        class="searching__loader"
+        v-if="searchingStage == searchingStages.inProgress"></spinner>
+      <div 
+        v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+    </div>
   </div>
 </template>
 
@@ -55,6 +55,12 @@ export default {
 <style lang="scss" scoped>
 .searching {
   padding-top: 10px;
+  &__results{
+    margin-top: 10px;
+  }
+  &__loader{
+    margin: auto;
+  }
 }
 </style>
 

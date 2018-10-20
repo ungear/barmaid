@@ -36,6 +36,11 @@ export default {
   },
   methods: {
     onIngredientsSelected: function(selectedIngs) {
+      if (!selectedIngs.length) {
+        this.result = null;
+        this.searchingStage = DRINK_SEARCHING_STAGES.notStartedYet;
+        return;
+      }
       this.searchingStage = DRINK_SEARCHING_STAGES.inProgress;
       let ingIds = selectedIngs.map(x => x._id);
       searchDrinksByIng(ingIds).then(drinks => {
@@ -55,10 +60,10 @@ export default {
 <style lang="scss" scoped>
 .searching {
   padding-top: 10px;
-  &__results{
+  &__results {
     margin-top: 10px;
   }
-  &__loader{
+  &__loader {
     margin: auto;
   }
 }

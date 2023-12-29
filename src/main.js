@@ -18,10 +18,11 @@ import router from "./routing";
 Vue.use(VueRouter);
 
 // reguster the root component before initialize the Vue application
-Vue.component(Root.name, Root);
+//Vue.component(Root.name, Root);
 
 // initialize the Vue application
 new Vue({
   router,
-  store
+  store,
+  render: h => h(Root),
 }).$mount("#app");

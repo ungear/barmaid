@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <app-header ></app-header>
     <transition name="fade" mode="out-in">
       <section class="main">
@@ -61,6 +61,11 @@ html {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+.layout{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .main {
   flex: 1;

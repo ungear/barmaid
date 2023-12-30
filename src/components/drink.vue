@@ -67,6 +67,10 @@ export default {
   },
   computed: mapState({
     drinkData(state) {
+      const drink = state.drinks.fullData[this.drinkId];
+      drink.ingredients.forEach(x => {
+        x.name = state.ingredients.ingredientsList.find(i => i._id === x.ingId)?.ingredientName;
+      })
       return state.drinks.fullData[this.drinkId];
     },
     drinkThumbSrc() {

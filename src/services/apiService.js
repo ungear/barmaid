@@ -1,9 +1,7 @@
-import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore/lite';
 import { firebaseConfig } from "../../firebase-creds.mjs";
 
-const API_BASE_URL = "https://barmaid-api.ungear.ru/";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const drinksCollection = collection(db, 'drinks');
@@ -16,9 +14,13 @@ export const searchDrinksByName = async function(name) {
   return result
 };
 
-export const searchDrinksByIng = function(ing) {
-  let url = API_BASE_URL + "drinks/by-ingredients?ingIds=" + ing.join(";");
-  return axios.get(url).then(response => response.data);
+export const searchDrinksByIng = async function(searchIng) {
+  const drinkSnap = await getDocs(drinksCollection);
+  const result = drinkSnap.docs
+    .map(x => Object.assign(x.data(), {_id: x.id}))
+    // get only drink which comtain ALL search ingredients
+    .filter(d => d.ingredients.filter(di => searchIng.includes(di.ingId)).length === searchIng.length)
+  return result;
 };
 
 export const getDrinkById = async function(id) {

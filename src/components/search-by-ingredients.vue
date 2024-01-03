@@ -3,9 +3,11 @@
     <ingredients-picker
       @select="onIngredientsSelected($event)"></ingredients-picker>
     <div class="searching__results">
-      <drinks-list 
-        v-if="searchingStage == searchingStages.drinksFound" 
-        :drinks="result"></drinks-list>
+      <transition name="fade">
+        <drinks-list 
+          v-if="searchingStage == searchingStages.drinksFound" 
+          :drinks="result"></drinks-list>
+      </transition>
       <spinner 
         class="searching__loader"
         v-if="searchingStage == searchingStages.inProgress"></spinner>

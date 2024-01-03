@@ -8,10 +8,12 @@
         v-model="searchName"/>
       <button class="searchbar__button" @click="onSearchClick()">Search</button>
     </div>
-    <drinks-list 
-      v-if="!isDataFetching && searchingStage == searchingStages.drinksFound" 
-      class='drink-searching__results'
-      :drinks="result"></drinks-list>
+    <transition name="fade">
+      <drinks-list 
+        v-if="!isDataFetching && searchingStage == searchingStages.drinksFound" 
+        class='drink-searching__results'
+        :drinks="result"></drinks-list>
+    </transition>
     <spinner 
       class='drink-searching__spinner' 
       v-if="isDataFetching"></spinner>

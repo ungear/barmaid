@@ -3,10 +3,12 @@
     <div class="favorite-drinks__head">
       <h3 class='favorite-drinks__title'>Your favorite drinks</h3>
     </div>
-    <drinks-list
-      class='favorite-drinks__list'
-      :drinks="favoriteDrinksData"
-      v-if='favoriteDrinkIds.length && ingredients.length'></drinks-list>
+    <transition name="fade">
+      <drinks-list
+        class='favorite-drinks__list'
+        :drinks="favoriteDrinksData"
+        v-if='favoriteDrinkIds.length && ingredients.length'></drinks-list>
+    </transition>
     <div 
       class='favorite-drinks__empty' 
       v-if='favoriteDrinkIds.length === 0'>It seams that your Favorite list is empty so far</div>

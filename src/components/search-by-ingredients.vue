@@ -17,13 +17,12 @@
 </template>
 
 <script>
-import { DRINK_SEARCHING_STAGES } from "../consts/consts";
+import { DRINK_SEARCHING_STAGES, GET_INGREDIENTS_STAGES } from "../consts/consts";
 import { searchDrinksByIng } from "../services/apiService";
 import IngredientsPicker from "./ingredients-picker.vue";
 import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
 import { mapState } from "vuex";
-import { GET_INGREDIENTS_STAGES } from "../consts/consts";
 
 export default {
   name: "search-by-ingredients",

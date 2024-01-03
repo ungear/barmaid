@@ -46,6 +46,7 @@
 import { mapState } from "vuex";
 import FavoriteMark from "./favorite-mark.vue";
 import DrinkAlcTypeIcon from "./drinkAlcTypeIcon.vue";
+import { GET_INGREDIENTS_STAGES } from "../consts/consts";
 
 const drinkLoadingStages = {
   inProgress: 1,
@@ -66,11 +67,14 @@ export default {
     };
   },
   computed: mapState({
+    isIngredientsLoaded: state => state.ingredients.gettingIngredientsStatus === GET_INGREDIENTS_STAGES.dataReceived,
     drinkData(state) {
       const drink = state.drinks.fullData[this.drinkId];
-      drink.ingredients.forEach(x => {
-        x.name = state.ingredients.ingredientsList.find(i => i._id === x.ingId)?.ingredientName;
-      })
+      if(this.isIngredientsLoaded){
+        drink.ingredients.forEach(x => {
+          x.name = state.ingredients.ingredientsList.find(i => i._id === x.ingId)?.ingredientName;
+        })
+      }
       return state.drinks.fullData[this.drinkId];
     },
     drinkThumbSrc() {
@@ -83,6 +87,7 @@ export default {
     }
   }),
   created() {
+    this.$store.dispatch("getAllIngredients");
     this.drinkLoadingStages = drinkLoadingStages;
     this.currentDrinkLoadingStage = drinkLoadingStages.inProgress;
     this.$store.dispatch("loadDrinkFullData", this.drinkId).then(() => {

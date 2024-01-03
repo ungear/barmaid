@@ -4,10 +4,8 @@
       :activeTab="activeTab"
       @switchTab="onTabSwitched($event)"
     ></search-tabs>
-    <search-by-name v-if="activeTab === SEARCHING_TABS.name "></search-by-name>
-    <div v-if="activeTab === SEARCHING_TABS.ingredients ">
-      <search-by-ingredients></search-by-ingredients>
-    </div>
+    <search-by-name v-if="activeTab === SEARCHING_TABS.name"></search-by-name>
+    <search-by-ingredients v-else></search-by-ingredients>
   </div>
 </template>
 

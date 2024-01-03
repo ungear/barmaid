@@ -3,15 +3,7 @@
     <app-header ></app-header>
     <transition name="fade" mode="out-in">
       <section class="main">
-        <div 
-          class="main__loader"
-          v-if='getIngredientsStage === getIngredientsStages.inProgress'
-        >
-          <spinner></spinner>
-        </div>
-        <router-view 
-          v-if='getIngredientsStage === getIngredientsStages.dataReceived' 
-          class='container'></router-view>
+        <router-view class='container'></router-view>
       </section>
     </transition>
     <app-footer></app-footer>
@@ -21,8 +13,6 @@
 <script>
 import AppHeader from "./app-header.vue";
 import AppFooter from "./app-footer.vue";
-import { GET_INGREDIENTS_STAGES } from "../consts/consts";
-import { mapState } from "vuex";
 import Spinner from "./spinner.vue";
 
 export default {
@@ -31,13 +21,6 @@ export default {
     AppHeader,
     AppFooter,
     Spinner
-  },
-  computed: mapState({
-    getIngredientsStage: state => state.ingredients.gettingIngredientsStatus
-  }),
-  created: function() {
-    this.getIngredientsStages = GET_INGREDIENTS_STAGES;
-    this.$store.dispatch("getAllIngredients");
   }
 };
 </script>

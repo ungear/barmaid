@@ -9,23 +9,24 @@
       <button class="searchbar__button" @click="onSearchClick()">Search</button>
     </div>
     <drinks-list 
-      v-if="searchingStage == searchingStages.drinksFound" 
+      v-if="!isDataFetching && searchingStage == searchingStages.drinksFound" 
       class='drink-searching__results'
       :drinks="result"></drinks-list>
     <spinner 
       class='drink-searching__spinner' 
-      v-if="searchingStage == searchingStages.inProgress"></spinner>
+      v-if="isDataFetching"></spinner>
     <div 
       class='drink-searching__zero-result'
-      v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
+      v-if="!isDataFetching && searchingStage === searchingStages.noResults">Drinks not found</div>
   </div>
 </template>
 
 <script>
-import { DRINK_SEARCHING_STAGES } from "../consts/consts";
+import { DRINK_SEARCHING_STAGES, GET_INGREDIENTS_STAGES } from "../consts/consts";
 import { searchDrinksByName } from "../services/apiService";
 import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "search-by-name",
@@ -40,8 +41,15 @@ export default {
   created() {
     this.searchingStages = DRINK_SEARCHING_STAGES;
   },
+  computed: mapState({
+    isDataFetching(state){
+      return  state.ingredients.gettingIngredientsStatus === GET_INGREDIENTS_STAGES.inProgress
+        || this.searchingStage === DRINK_SEARCHING_STAGES.inProgress
+    }
+  }),
   methods: {
     onSearchClick: function() {
+      this.$store.dispatch("getAllIngredients");
       this.searchingStage = DRINK_SEARCHING_STAGES.inProgress;
       searchDrinksByName(this.searchName).then(drinks => {
         if (drinks.length === 0) {

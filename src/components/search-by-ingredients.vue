@@ -1,5 +1,5 @@
 <template>
-  <div class="searching">
+  <div class="searching" v-if="isIngredientsLoaded">
     <ingredients-picker
       @select="onIngredientsSelected($event)"></ingredients-picker>
     <div class="searching__results">
@@ -13,6 +13,7 @@
         v-if="searchingStage === searchingStages.noResults">Drinks not found</div>
     </div>
   </div>
+  <spinner v-else></spinner>
 </template>
 
 <script>
@@ -21,6 +22,8 @@ import { searchDrinksByIng } from "../services/apiService";
 import IngredientsPicker from "./ingredients-picker.vue";
 import DrinksList from "./drinksList.vue";
 import Spinner from "./spinner.vue";
+import { mapState } from "vuex";
+import { GET_INGREDIENTS_STAGES } from "../consts/consts";
 
 export default {
   name: "search-by-ingredients",
@@ -33,7 +36,13 @@ export default {
   components: { IngredientsPicker, DrinksList, Spinner },
   created() {
     this.searchingStages = DRINK_SEARCHING_STAGES;
+    if(!this.isIngredientsLoaded){
+      this.$store.dispatch("getAllIngredients");
+    }
   },
+  computed: mapState({
+    isIngredientsLoaded: state => state.ingredients.gettingIngredientsStatus === GET_INGREDIENTS_STAGES.dataReceived
+  }),
   methods: {
     onIngredientsSelected: function(selectedIngs) {
       if (!selectedIngs.length) {

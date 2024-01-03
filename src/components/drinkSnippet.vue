@@ -50,7 +50,7 @@ export default {
     drinkIngredientNames() {
       return this.drink.ingredients.map(
         x => this.ingredientsList.find(t => t._id === x.ingId).ingredientName
-      );
+      ).sort();
     }
   }),
   created() {}

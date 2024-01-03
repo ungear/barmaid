@@ -46,7 +46,11 @@ export default {
     };
   },
   computed: mapState({
-    ingredients: state => state.ingredients.ingredientsList,
+    ingredients: state => state.ingredients.ingredientsList.toSorted((a,b) => {
+      if(a.ingredientName < b.ingredientName) return -1;
+      if(a.ingredientName > b.ingredientName) return 1;
+      return 0;
+    }),
     visibleIngIds: function(){
       let visibleIngObjects = this.filterPattern && this.filterPattern !== ""
         ? this.ingredients.filter(x => x.ingredientName.indexOf(this.filterPattern) === 0)

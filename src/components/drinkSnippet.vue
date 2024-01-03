@@ -111,6 +111,7 @@ $tagColor: #555;
   .drink-snippet__type-icon {
     width: 30px;
     height: 30px;
+    flex: 0 0 auto;
   }
   .drink-snippet__ingredients {
     display: flex;

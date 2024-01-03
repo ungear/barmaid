@@ -4,7 +4,7 @@
       <div class='header-row__item'>
         <router-link :to="{name:'search'}">Search</router-link>
       </div>
-      <div class='header-row__item marked-item'>
+      <div class='header-row__item'>
         <router-link :to="{name:'favorite'}">Favorite</router-link>
       </div>
       <div class='header-row__item'>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
   name: 'app-header',
@@ -62,10 +61,6 @@ export default {
     }
     .header-row__item + .header-row__item{
       margin-left: 0.5em;
-    }
-    .marked-item{
-      display: flex;
-      align-items: center;
     }
   }
 </style>

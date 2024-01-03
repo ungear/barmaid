@@ -16,7 +16,7 @@
 <script>
 import { mapState } from "vuex";
 import DrinksList from "./drinksList.vue";
-import { getDrinkById } from "../services/apiService";
+import { getDrinkFullDataById } from "../services/apiService";
 
 export default {
   name: "favoriteDrinks",
@@ -33,7 +33,7 @@ export default {
   },
   created() {
     this.$store.dispatch("getAllIngredients");
-    Promise.all(this.favoriteDrinkIds.map(x => getDrinkById(x))).then(data => {
+    Promise.all(this.favoriteDrinkIds.map(x => getDrinkFullDataById(x))).then(data => {
       this.favoriteDrinksData = data;
     });
   }

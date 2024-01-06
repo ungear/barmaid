@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const lazySearching = () => import(/* webpackChunkName: "searching" */'./components/search.vue')
 const lazyFavoriteDrinks = () => import(/* webpackChunkName: "favoriteDrinks" */'./components/favoriteDrinks.vue')
@@ -12,8 +12,10 @@ const routes = [
   { path: '/drink/:link', name: 'drink', component: lazyDrink },
   { path: '/about', name: 'about', component: lazyAbout },
   { path: '/statistics', name: 'statistics', component: lazyStatistics },
-  { path: '*', redirect: { name: 'search'} },
+  //{ path: '*', redirect: { name: 'search'} },
 ]
-export default new VueRouter({
-  routes
+
+export default createRouter({
+  history: createWebHashHistory(),
+  routes,
 })

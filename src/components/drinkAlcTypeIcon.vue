@@ -1,5 +1,6 @@
 <template>
   <div 
+    @click="$emit('click')"
     class="drink-alc-type-icon"
     :class='"drink-alc-type-icon--" + this.alcType[0].toLowerCase()'
     :title='this.alcType'>
@@ -11,7 +12,8 @@ export default {
   name: "drink-alc-type-icon",
   props: {
     alcType: String
-  }
+  },
+  emits: ['click']
 };
 </script>
 

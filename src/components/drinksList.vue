@@ -14,7 +14,7 @@
         <drink-alc-type-icon 
           class='dashboard-filters__type-icon'
           :class="{ 'dashboard-filters__type-icon--inactive': hiddenTypes.includes(x)}"
-          @click.native='onTypeFilterClick(x)'
+          @click='onTypeFilterClick(x)'
           v-for='x in drinksAlcTypes'
           :key='x'
           :alcType='x'

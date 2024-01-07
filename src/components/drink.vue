@@ -17,7 +17,7 @@
           :key='key'/>
       </div>
       <ul class='ingredients-list'>
-        <li class='ingredients-list__item' v-for='(ing, ingKey)  in drinkData.ingredients' v-if="ing.name" :key="ingKey">
+        <li class='ingredients-list__item' v-for='(ing, ingKey) in drinkData.ingredients' :key="ingKey">
           <span
             class='ingredients-list__ingredient-name' 
             :class="{ 'ingredients-list__ingredient-name--active': ing.description}"

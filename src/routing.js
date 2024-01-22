@@ -12,7 +12,7 @@ const routes = [
   { path: '/drink/:link', name: 'drink', component: lazyDrink },
   { path: '/about', name: 'about', component: lazyAbout },
   { path: '/statistics', name: 'statistics', component: lazyStatistics },
-  //{ path: '*', redirect: { name: 'search'} },
+  { path:'/:pathMatch(.*)*', redirect: { name: 'search', params: {} }},
 ]
 
 export default createRouter({

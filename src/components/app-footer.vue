@@ -1,7 +1,7 @@
 <template>
   <footer class='app-footer'>
     <div class="container app-footer__container">
-      <span class='app-footer__segment'>The Barmaid Project</span>
+      <span class='app-footer__segment'><a href='https://github.com/ungear/barmaid'>Github repo</a></span>
       <span class='app-footer__segment'>
         Based on
         <a href='http://www.thecocktaildb.com'>TheCoccktailDB</a> API

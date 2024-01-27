@@ -2,7 +2,7 @@
   <div>
     <h3>About</h3>
     <p>
-      This project has been made in educational purposes to gain experiance working with the 
+      This project has been made in educational purposes to gain experience working with the 
       <a href='https://vuejs.org/'>Vue.js</a>
       framework and demonstrate some of its features.
     </p>

@@ -4,7 +4,7 @@ import { drinks } from "./source.mjs";
 
 const uniqueIngredients = getUniqueIngredientsList(drinks);
 const ingredientsToSave = uniqueIngredients.map((x, index) => ({
-  id: index + 1,
+  id: (index + 1).toString(),
   name: x
 }));
 
@@ -38,7 +38,7 @@ async function saveDrinks(drinks){
       })
     }
     const drinkItem = {
-      id: index + 1,
+      id: (index + 1).toString(),
       alcType: drink.strAlcoholic,
       glass: drink.strGlass,
       instructions: drink.strInstructions,

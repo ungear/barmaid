@@ -1,66 +1,52 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore/lite';
-import { firebaseConfig } from "../../firebase-creds.mjs";
+import * as firebaseService from "./firebaseService";
+import * as hardcodedDataService from "./hardcodedDataService";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const drinksCollection = collection(db, 'drinks');
+const useHardcoded = true;
 
-export const searchDrinksByName = async function(name) {
-  const drinkSnap = await getDocs(drinksCollection);
-  const result = drinkSnap.docs
-    .map(x => Object.assign(x.data(), {_id: x.id}))
-    .filter(x => x.name.toLowerCase().includes(name));
-  return result
+export const searchDrinksByName = async function(...args) {
+  if(useHardcoded){
+    return hardcodedDataService.searchDrinksByName.apply(hardcodedDataService, args)
+  } else {
+    return firebaseService.searchDrinksByName.apply(firebaseService, args)
+  }
 };
 
-export const searchDrinksByIng = async function(searchIng) {
-  const drinkSnap = await getDocs(drinksCollection);
-  const result = drinkSnap.docs
-    .map(x => Object.assign(x.data(), {_id: x.id}))
-    // get only drink which comtain ALL search ingredients
-    .filter(d => d.ingredients.filter(di => searchIng.includes(di.ingId)).length === searchIng.length)
-  return result;
+export const searchDrinksByIng = async function(...args) {
+  if(useHardcoded){
+    return hardcodedDataService.searchDrinksByIng.apply(hardcodedDataService, args)
+  } else {
+    return firebaseService.searchDrinksByIng.apply(firebaseService, args)
+  }
 };
 
-export const getDrinkById = async function(id) {
-  const docRef = doc(db, "drinks", id);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
+export const getDrinkById = async function(...args) {
+  if(useHardcoded){
+    return hardcodedDataService.getDrinkById.apply(hardcodedDataService, args)
+  } else {
+    return firebaseService.getDrinkById.apply(firebaseService, args)
+  }
 };
 
-export const getDrinkFullDataById = async function(id) {
-  const docRef = doc(db, "drinks", id);
-  const docSnap = await getDoc(docRef);
-  const drinkData = docSnap.data();
-  drinkData._id = docSnap.id;
-  return drinkData;
+export const getDrinkFullDataById = async function(...args) {
+  if(useHardcoded){
+    return hardcodedDataService.getDrinkFullDataById.apply(hardcodedDataService, args)
+  } else {
+    return firebaseService.getDrinkFullDataById.apply(firebaseService, args)
+  }
 };
 
-export const getAllDrinks = async function() {
-  const drinkSnap =  await getDocs(drinksCollection);
-  const result = drinkSnap.docs
-    .map(x => Object.assign(x.data(), {_id: x.id}))
-  return result;
+export const getAllDrinks = async function(...args) {
+  if(useHardcoded){
+    return hardcodedDataService.getAllDrinks.apply(hardcodedDataService, args)
+  } else {
+    return firebaseService.getAllDrinks.apply(firebaseService, args)
+  }
 };
 
 export const getIngredients = async function() {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const ingCol = collection(db, 'ingredients');
-  const ingSnap = await getDocs(ingCol);
-  
-  // TODO: get rid of reactive getters and setters added in the data by the firebase engine
-  const ingData = ingSnap.docs.map(x => {
-    const ingData = x.data();
-    return {
-      _id: x.id,
-      ingredientName: ingData.name,
-    }
-  });
-  return ingData;
+  if(useHardcoded){
+    return hardcodedDataService.getIngredients.apply(hardcodedDataService)
+  } else {
+    return firebaseService.getIngredients.apply(firebaseService)
+  }
 };
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}

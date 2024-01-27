@@ -37,6 +37,13 @@ export const getDrinkFullDataById = async function(id) {
   return drinkData;
 };
 
+export const getAllDrinks = async function() {
+  const drinkSnap =  await getDocs(drinksCollection);
+  const result = drinkSnap.docs
+    .map(x => Object.assign(x.data(), {_id: x.id}))
+  return result;
+};
+
 export const getIngredients = async function() {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);

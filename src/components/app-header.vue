@@ -2,6 +2,9 @@
   <header class='header-row'>
     <div class='container header__header-container'>
       <div class='header-row__item'>
+        <router-link :to="{name:'home'}">Home</router-link>
+      </div>
+      <div class='header-row__item'>
         <router-link :to="{name:'search'}">Search</router-link>
       </div>
       <div class='header-row__item'>

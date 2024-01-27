@@ -5,14 +5,16 @@ const lazyFavoriteDrinks = () => import(/* webpackChunkName: "favoriteDrinks" */
 const lazyDrink = () => import(/* webpackChunkName: "drink" */'./components/drink.vue')
 const lazyAbout = () => import(/* webpackChunkName: "about" */'./components/about.vue')
 const lazyStatistics = () => import(/* webpackChunkName: "statistics" */'./components/statistics.vue')
+const lazyHome = () => import('./components/home.vue');
 
 const routes = [
-  { path: '/', name: 'search', component: lazySearching },
+  { path: '/', name: 'home', component: lazyHome },
+  { path: '/search', name: 'search', component: lazySearching },
   { path: '/favorite-drinks', name: 'favorite', component: lazyFavoriteDrinks },
   { path: '/drink/:link', name: 'drink', component: lazyDrink },
   { path: '/about', name: 'about', component: lazyAbout },
   { path: '/statistics', name: 'statistics', component: lazyStatistics },
-  { path:'/:pathMatch(.*)*', redirect: { name: 'search', params: {} }},
+  { path:'/:pathMatch(.*)*', redirect: { name: 'home', params: {} }},
 ]
 
 export default createRouter({

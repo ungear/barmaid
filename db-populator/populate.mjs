@@ -2,6 +2,7 @@ import { drinks } from "./source.mjs";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where, doc, getDoc, addDoc } from 'firebase/firestore/lite';
 import { firebaseConfig } from "../firebase-creds.mjs";
+import { getUniqueIngredientsList } from './utils.mjs';
 
 const savedIngredients = [];
 // compose ingredients list
@@ -15,18 +16,6 @@ await populateIngredients(ingredients, db);
 // write drinks
 await populateDrinks(drinks, db);
 
-function getUniqueIngredientsList(drinks){
-  const ingredientsSet = new Set();
-  drinks.forEach((drink) => {
-    for(let i = 1; i<=15; i++){
-      const fieldName = "strIngredient" + i;
-      const ingredient = drink[fieldName];
-      if(!ingredient) continue;
-      ingredientsSet.add(ingredient.trim().toLowerCase())
-    }
-  })
-  return Array.from(ingredientsSet).sort();
-}
 
 async function populateIngredients(ingredientsData, db){
   const ingCol = collection(db, 'ingredients');

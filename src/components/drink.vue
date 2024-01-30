@@ -5,7 +5,9 @@
       <drink-alc-type-icon class='drink-details__type-icon' :alcType='drinkData.alcType'></drink-alc-type-icon>
       <favorite-mark :drinkId="drinkId"></favorite-mark>
     </div>
-    <img :src="drinkThumbSrc" width='200' height='200'>
+    <div class="drink-details__image">
+      <img :src="drinkThumbSrc" width='200' height='200' >
+    </div>
     <div class='section'>
       <h3>Ingredients</h3>
       <div class='ingredients-thumbs'>
@@ -106,15 +108,23 @@ export default {
 
 <style lang="scss" scoped>
 .drink-details {
-  .drink-details__header {
+  &__header {
     padding: 10px 0;
     display: flex;
     align-items: center;
   }
-  .drink-details__type-icon {
+  &__type-icon {
     width: 20px;
     height: 20px;
     margin: 0 0 0 10px;
+  }
+  &__image{
+    width: 200px;
+    height: 200px;
+    background-image: url('../assets/glass_bw_100.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ccc;
   }
   .section {
     padding: 5px 0;
